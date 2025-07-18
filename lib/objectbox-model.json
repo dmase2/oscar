@@ -1,0 +1,78 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8232101523916932536",
+      "lastPropertyId": "14:1276799510603434446",
+      "name": "OscarWinner",
+      "properties": [
+        {
+          "id": "1:7275728714612782847",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:7455885821653834255",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "5:7807431662019575191",
+          "name": "winner",
+          "type": 1
+        },
+        {
+          "id": "9:1156532430112520825",
+          "name": "yearFilm",
+          "type": 6
+        },
+        {
+          "id": "10:3549273356804532246",
+          "name": "yearCeremony",
+          "type": 6
+        },
+        {
+          "id": "11:5199642120994688846",
+          "name": "ceremony",
+          "type": 6
+        },
+        {
+          "id": "12:3918805087392333084",
+          "name": "canonCategory",
+          "type": 9
+        },
+        {
+          "id": "13:2990807629759252016",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "14:1276799510603434446",
+          "name": "film",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:8232101523916932536",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    2361008182485471480,
+    1062957096206510594,
+    4291117618097005060,
+    762299298102777391,
+    5497574396884656749
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

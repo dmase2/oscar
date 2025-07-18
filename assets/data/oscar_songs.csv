@@ -1,0 +1,494 @@
+Year,Song Title,Movie Title,Music Author,Lyric Author,IMDb ID,TMDB ID,Winner
+1934,The Continental,The Gay Divorcee,Con Conrad,Herb Magidson,tt0025150,15798,TRUE
+1934,Carioca,Flying Down to Rio,Vincent Youmans,Edward Eliscu, Gus Kahn,tt0024105,9488,FALSE
+1934,Love in Bloom,She Loves Me Not,Ralph Rainger,Leo Robin,tt0025791,62340,FALSE
+1935,Lullaby of Broadway,Gold Diggers of 1935,Harry Warren,Al Dubin,tt0026435,27926,TRUE
+1935,Lovely to Look At,Roberta,Jerome Kern,Dorothy Fields, Jimmy McHugh,tt0026938,27929,FALSE
+1935,Cheek to Cheek,Top Hat,Irving Berlin,Irving Berlin,tt0027125,15867,FALSE
+1936,The Way You Look Tonight,Swing Time,Jerome Kern,Dorothy Fields,tt0028329,15865,TRUE
+1936,I've Got You Under My Skin,Born to Dance,Cole Porter,Cole Porter,tt0027387,41097,FALSE
+1936,Pennies from Heaven,Pennies from Heaven,Arthur Johnston,Johnny Burke,tt0028109,69882,FALSE
+1936,When Did You Leave Heaven,Sing, Baby, Sing,Richard A. Whiting,Walter Bullock,tt0028264,103348,FALSE
+1936,Did I Remember,Suzy,Walter Donaldson,Harold Adamson,tt0028318,126955,FALSE
+1936,A Melody from the Sky,The Trail of the Lonesome Pine,Louis Alter,Sidney D. Mitchell,tt0028405,103349,FALSE
+1937,Sweet Leilani,Waikiki Wedding,Harry Owens,Harry Owens,tt0029743,109315,TRUE
+1937,Whispers in the Dark,Artists and Models,Friedrich Hollaender,Leo Robin,tt0028574,99617,FALSE
+1937,Remember Me,Mr. Dodd Takes the Air,Harry Warren,Al Dubin,tt0029272,126958,FALSE
+1937,They Can't Take That Away from Me,Shall We Dance,George Gershwin,Ira Gershwin,tt0029562,27930,FALSE
+1937,That Old Feeling,Walter Wanger's Vogues of 1938,Sammy Fain,Lew Brown,tt0029740,119864,FALSE
+1938,Thanks for the Memory,The Big Broadcast of 1938,Ralph Rainger,Leo Robin,tt0029929,149818,TRUE
+1938,Now It Can Be Told,Alexander's Ragtime Band,Irving Berlin,Irving Berlin,tt0030029,42417,FALSE
+1938,Change Partners,Carefree,Irving Berlin,Irving Berlin,tt0030040,43960,FALSE
+1938,The Cowboy and the Lady,The Cowboy and the Lady,Lionel Newman,Arthur Quenzer,tt0030060,119866,FALSE
+1938,Jeepers Creepers,Going Places,Harry Warren,Johnny Mercer,tt0030172,126956,FALSE
+1938,A Mist Is Over the Moon,The Lady Objects,Ben Oakland,Oscar Hammerstein II,tt0030366,133644,FALSE
+1938,Always and Always,Mannequin,Edward Ward,Chet Forrest, Bob Wright,tt0030424,126957,FALSE
+1938,Merrily We Live,Merrily We Live,Phil Charig,Arthur Quenzer,tt0030467,82381,FALSE
+1938,My Own,That Certain Age,Jimmy McHugh,Harold Adamson,tt0030831,109317,FALSE
+1938,Dust,Under Western Stars,Johnny Marvin,Johnny Marvin,tt0030919,252445,FALSE
+1939,Over the Rainbow,The Wizard of Oz,Harold Arlen,E.Y. Harburg,tt0032138,429,TRUE
+1939,Faithful Forever,Gulliver's Travels,Ralph Rainger,Leo Robin,tt0031388,14349,FALSE
+1939,Wishing,Love Affair,Buddy DeSylva,Buddy DeSylva,tt0031592,109318,FALSE
+1939,I Poured My Heart into a Song,Second Fiddle,Irving Berlin,Irving Berlin,tt0031911,109319,FALSE
+1940,When You Wish Upon a Star,Pinocchio,Leigh Harline,Ned Washington,tt0032910,10520,TRUE
+1940,Down Argentine Way,Down Argentine Way,Harry Warren,Mack Gordon,tt0032410,42418,FALSE
+1940,Who Am I?,Hit Parade of 1941,Jule Styne,Walter Bullock,tt0032598,119865,FALSE
+1940,It's a Blue World,Music in My Heart,Chet Forrest, Bob Wright,Chet Forrest, Bob Wright,tt0032822,126960,FALSE
+1940,Only Forever,Rhythm on the River,James V. Monaco,Johnny Burke,tt0032958,41100,FALSE
+1940,Love of My Life,Second Chorus,Artie Shaw,Johnny Mercer,tt0032997,41101,FALSE
+1940,Waltzing in the Clouds,Spring Parade,Robert Stolz,Gus Kahn,tt0033100,109320,FALSE
+1940,Our Love Affair,Strike Up the Band,Roger Edens, Arthur Freed,Roger Edens, Arthur Freed,tt0033120,41103,FALSE
+1941,The Last Time I Saw Paris,Lady Be Good,Jerome Kern,Oscar Hammerstein II,tt0033800,99616,TRUE
+1941,Baby Mine,Dumbo,Frank Churchill,Ned Washington,tt0033563,11361,FALSE
+1941,Blues in the Night,Blues in the Night,Harold Arlen,Johnny Mercer,tt0034538,34914,FALSE
+1941,Boogie Woogie Bugle Boy of Company B,Buck Privates,Hugh Prince, Don Raye,Hugh Prince, Don Raye,tt0033423,103350,FALSE
+1941,Chattanooga Choo Choo,Sun Valley Serenade,Harry Warren,Mack Gordon,tt0034231,103351,FALSE
+1941,Dolores,Las Vegas Nights,Louis Alter,Frank Loesser,tt0033827,99618,FALSE
+1941,Out of the Silence (Blinded by the Light),All-American Co-Ed,Walter Scharf,Frank Loesser,tt0033333,149820,FALSE
+1941,Since I Kissed My Baby Goodbye,You'll Never Get Rich,Cole Porter,Cole Porter,tt0034405,103352,FALSE
+1941,The Lamp of Memory,Gunga Din,Alfred Newman,Rudyard Kipling,tt0031379,16194,FALSE
+1941,The Song of the Volga Boatmen,The Fleet's In,Leo Robin,Walter Scharf,tt0034739,41102,FALSE
+1942,White Christmas,Holiday Inn,Irving Berlin,Irving Berlin,tt0034862,17161,TRUE
+1942,Always in My Heart,Always in My Heart,Ernesto Lecuona,Kim Gannon,tt0034444,126961,FALSE
+1942,I've Got a Gal in Kalamazoo,Orchestra Wives,Harry Warren,Mack Gordon,tt0035172,13593,FALSE
+1942,Love Is a Song,Bambi,Frank Churchill,Larry Morey,tt0034492,10414,FALSE
+1942,When There's a Breeze on the Everglades,Priorities on Parade,Jule Styne,Herb Magidson,tt0035222,126962,FALSE
+1942,There's a Breeze on the Everglades,Priorities on Parade,Jule Styne,Herb Magidson,tt0035222,126962,FALSE
+1942,Through a Thousand Dreams,A Thousand and One Nights,Frederick Hollander,Johnny Mercer,tt0035413,29302,FALSE
+1942,Why Do I Love You?,Casablanca,Herman Hupfeld,Herman Hupfeld,tt0034583,289,FALSE
+1942,There Will Never Be Another You,Iceland,Harry Warren,Mack Gordon,tt0034888,41104,FALSE
+1943,You'll Never Know,Hello, Frisco, Hello,Harry Warren,Mack Gordon,tt0035956,121703,TRUE
+1943,Change of Heart,Hit Parade of 1943,Jule Styne,Harold Adamson,tt0035991,126963,FALSE
+1943,Happiness Is a Thing Called Joe,Cabin in the Sky,Harold Arlen,E.Y. Harburg,tt0035728,14673,FALSE
+1943,My Shining Hour,The Sky's the Limit,Harold Arlen,Johnny Mercer,tt0036357,36662,FALSE
+1943,Saludos Amigos,Saludos Amigos,Charles Wolcott,Ned Washington,tt0036326,14470,FALSE
+1943,That Old Black Magic,Star Spangled Rhythm,Harold Arlen,Johnny Mercer,tt0035402,30261,FALSE
+1943,They're Either Too Young or Too Old,Thank Your Lucky Stars,Arthur Schwartz,Frank Loesser,tt0036413,27932,FALSE
+1943,Vict'ry Polka,Stage Door Canteen,Jule Styne,Sammy Cahn,tt0036382,27933,FALSE
+1944,Swinging on a Star,Going My Way,James Van Heusen,Johnny Burke,tt0036874,27931,TRUE
+1944,Candlelight and Wine,Kismet,Harold Arlen,E.Y. Harburg,tt0037007,18826,FALSE
+1944,I Couldn't Sleep a Wink Last Night,Higher and Higher,Jimmy McHugh,Harold Adamson,tt0036928,30262,FALSE
+1944,I'll Walk Alone,Follow the Boys,Jule Styne,Sammy Cahn,tt0036842,27934,FALSE
+1944,Long Ago and Far Away,Cover Girl,Jerome Kern,Ira Gershwin,tt0036723,28247,FALSE
+1944,Now I Know,Up in Arms,Harold Arlen,Ted Koehler,tt0037380,42419,FALSE
+1944,Remember Me to One Who's Gone Away,The Princess and the Pirate,Harry Warren,Johnny Mercer,tt0037190,41106,FALSE
+1944,Rio de Janeiro,Brazil,Ary Barroso,Ned Washington,tt0036668,36665,FALSE
+1944,Silver Heels,The Old Homestead,Jule Styne,Sammy Cahn,tt0037108,126965,FALSE
+1945,It Might as Well Be Spring,State Fair,Richard Rodgers,Oscar Hammerstein II,tt0038101,42416,TRUE
+1945,Accentuate the Positive,Here Come the Waves,Harold Arlen,Johnny Mercer,tt0037775,109321,FALSE
+1945,Anywhere,Centennial Summer,Jerome Kern,Leo Robin,tt0037588,61664,FALSE
+1945,Aren't You Glad You're You,The Bells of St. Mary's,James Van Heusen,Johnny Burke,tt0037536,27935,FALSE
+1945,Can't Help Singing,Can't Help Singing,Jerome Kern,E.Y. Harburg,tt0037581,109322,FALSE
+1945,Endlessly,Hit the Road,Edward Kay,Leo Robin,tt0037803,126966,FALSE
+1945,I Fall in Love Too Easily,Anchors Aweigh,Jule Styne,Sammy Cahn,tt0037500,10398,FALSE
+1945,Love Letters,Love Letters,Victor Young,Edward Heyman,tt0037887,41107,FALSE
+1945,More and More,Can't Help Singing,Jerome Kern,E.Y. Harburg,tt0037581,109322,FALSE
+1945,Symphony,The Harvey Girls,Harry Warren,Johnny Mercer,tt0038586,13437,FALSE
+1946,On the Atchison, Topeka and the Santa Fe,The Harvey Girls,Harry Warren,Johnny Mercer,tt0038586,13437,TRUE
+1946,All Through the Day,Centennial Summer,Jerome Kern,Oscar Hammerstein II,tt0038407,61664,FALSE
+1946,I'd Know You Anywhere,You'll Find Out,James Van Heusen,Johnny Burke,tt0033282,109323,FALSE
+1946,In Love in Vain,Centennial Summer,Jerome Kern,Leo Robin,tt0038407,61664,FALSE
+1946,My Heart Sings,Anchors Aweigh,Harold Rome,Harold Rome,tt0037500,10398,FALSE
+1946,Oh, But I Do!,The Dolly Sisters,Harry Warren,Mack Gordon,tt0037651,61665,FALSE
+1946,You Are My Lucky Star,Broadway Melody of 1938,Nacio Herb Brown,Arthur Freed,tt0029969,43961,FALSE
+1947,Zip-A-Dee-Doo-Dah,Song of the South,Allie Wrubel,Ray Gilbert,tt0039864,21388,TRUE
+1947,A Gal in Calico,The Time, the Place and the Girl,Arthur Schwartz,Leo Robin,tt0039912,69886,FALSE
+1947,I Wish I Didn't Love You So,The Perils of Pauline,Frank Loesser,Frank Loesser,tt0039702,41109,FALSE
+1947,Pass That Peace Pipe,Good News,Ralph Blane,Hugh Martin, Dory Previn,tt0039433,42420,FALSE
+1947,You Do,Mother Wore Tights,Joseph Myrow,Mack Gordon,tt0039643,30267,FALSE
+1948,Buttons and Bows,The Paleface,Jay Livingston,Ray Evans,tt0040685,30263,TRUE
+1948,Fiddle Dee Dee,When My Baby Smiles at Me,Harry Warren,Mack Gordon,tt0040941,126967,FALSE
+1948,One for My Baby (and One More for the Road),The Sky's the Limit,Harold Arlen,Johnny Mercer,tt0036357,36662,FALSE
+1948,The Woody Woodpecker Song,Wet Blanket Policy,George Tibbles,Ramey Idriss, George Tibbles,tt0041011,126968,FALSE
+1948,This Is the Moment,That Lady in Ermine,Frederick Hollander,Leo Robin,tt0040854,27936,FALSE
+1949,Baby, It's Cold Outside,Neptune's Daughter,Frank Loesser,Frank Loesser,tt0041680,31776,TRUE
+1949,It's a Great Feeling,It's a Great Feeling,Jule Styne,Sammy Cahn,tt0041517,30265,FALSE
+1949,Lavender Blue,So Dear to My Heart,Eliot Daniel,Larry Morey,tt0041908,41110,FALSE
+1949,My Foolish Heart,My Foolish Heart,Victor Young,Ned Washington,tt0042013,30266,FALSE
+1949,Through a Long and Sleepless Night,Come to the Stable,Alfred Newman,Mack Gordon,tt0041258,41111,FALSE
+1950,Mona Lisa,Captain Carey, U.S.A.,Jay Livingston,Ray Evans,tt0042295,61663,TRUE
+1950,Be My Love,The Toast of New Orleans,Nicholas Brodszky,Sammy Cahn,tt0043058,42421,FALSE
+1950,Bibbidi-Bobbidi-Boo,Cinderella,Al Hoffman, Jerry Livingston, Mack David,Al Hoffman, Jerry Livingston, Mack David,tt0042318,11224,FALSE
+1950,Because of You,I'll See You in My Dreams,Arthur Hammerstein,Dudley Wilkinson,tt0043666,30268,FALSE
+1950,Wilhelmina,Wabash Avenue,Harry Warren,Mack Gordon,tt0043135,109324,FALSE
+1951,In the Cool, Cool, Cool of the Evening,Here Comes the Groom,Hoagy Carmichael,Johnny Mercer,tt0043640,38173,TRUE
+1951,A Kiss to Build a Dream On,The Strip,Harry Ruby,Bert Kalmar, Oscar Hammerstein II,tt0044078,41113,FALSE
+1951,Never,The Great Caruso,Nicholas Brodszky,Sammy Cahn,tt0043598,30269,FALSE
+1951,Too Young,You're Never Too Young,Sidney Lippman,Sylvia Dee,tt0048866,126969,FALSE
+1951,Wonder Why,Rich, Young and Pretty,Nicholas Brodszky,Sammy Cahn,tt0043958,109325,FALSE
+1952,High Noon (Do Not Forsake Me, Oh My Darlin'),High Noon,Dimitri Tiomkin,Ned Washington,tt0044703,11317,TRUE
+1952,Am I in Love?,Son of Paleface,Jack Brooks,Jack Brooks,tt0045168,149819,FALSE
+1952,Because You're Mine,Because You're Mine,Nicholas Brodszky,Sammy Cahn,tt0044400,42422,FALSE
+1952,Rub-a-Dub-Dub,Hans Christian Andersen,Frank Loesser,Frank Loesser,tt0044686,10850,FALSE
+1952,Zing a Little Zong,Just for You,Harry Warren,Leo Robin,tt0044799,41114,FALSE
+1953,Secret Love,Calamity Jane,Sammy Fain,Paul Francis Webster,tt0045591,14674,TRUE
+1953,The Caddy,The Caddy,Harry Warren,Jack Brooks,tt0045595,41115,FALSE
+1953,It Must Be Love,The Glenn Miller Story,Joseph Gershenson,Joseph Gershenson,tt0046203,11188,FALSE
+1953,My Flaming Heart,Small Town Girl,Nicholas Brodszky,Sammy Cahn,tt0046342,109326,FALSE
+1953,That's Amore,The Caddy,Harry Warren,Jack Brooks,tt0045595,41115,FALSE
+1954,Three Coins in the Fountain,Three Coins in the Fountain,Jule Styne,Sammy Cahn,tt0047580,27725,TRUE
+1954,Count Your Blessings Instead of Sheep,White Christmas,Irving Berlin,Irving Berlin,tt0047683,10381,FALSE
+1954,The High and the Mighty,The High and the Mighty,Dimitri Tiomkin,Ned Washington,tt0046894,27724,FALSE
+1954,Hold My Hand,Susan Slept Here,Joseph Myrow,Mack Gordon,tt0047568,41116,FALSE
+1954,Silver Bells,The Lemon Drop Kid,Jay Livingston,Ray Evans,tt0043743,103353,FALSE
+1955,Love Is a Many-Splendored Thing,Love Is a Many-Splendored Thing,Sammy Fain,Paul Francis Webster,tt0048304,18825,TRUE
+1955,I'll Never Stop Loving You,Love Me or Leave Me,Nicholas Brodszky,Sammy Cahn,tt0048303,109327,FALSE
+1955,Something's Gotta Give,Daddy Long Legs,Johnny Mercer,Johnny Mercer,tt0047970,30270,FALSE
+1955,The Tender Trap,The Tender Trap,James Van Heusen,Sammy Cahn,tt0048706,41117,FALSE
+1955,Unchained Melody,Unchained,Alex North,Hy Zaret,tt0048733,30271,FALSE
+1956,Que Sera, Sera (Whatever Will Be, Will Be),The Man Who Knew Too Much,Jay Livingston,Ray Evans,tt0049470,11847,TRUE
+1956,Friendly Persuasion (Thee I Love),Friendly Persuasion,Dimitri Tiomkin,Paul Francis Webster,tt0049286,27937,FALSE
+1956,Julie,Julie,Leith Stevens,Tom Adair,tt0049386,41118,FALSE
+1956,Written on the Wind,Written on the Wind,Victor Young,Sammy Cahn,tt0049968,27726,FALSE
+1956,True Love,High Society,Cole Porter,Cole Porter,tt0049323,10512,FALSE
+1957,All the Way,The Joker Is Wild,James Van Heusen,Sammy Cahn,tt0050577,69888,TRUE
+1957,An Affair to Remember,An Affair to Remember,Harry Warren,Harold Adamson, Leo McCarey,tt0050105,10223,FALSE
+1957,April Love,April Love,Sammy Fain,Paul Francis Webster,tt0050146,42423,FALSE
+1957,Tammy,Tammy and the Bachelor,Ray Evans,Jay Livingston,tt0051061,41119,FALSE
+1957,Wild Is the Wind,Wild Is the Wind,Dimitri Tiomkin,Ned Washington,tt0051187,41120,FALSE
+1958,Gigi,Gigi,Frederick Loewe,Alan Jay Lerner,tt0051658,2615,TRUE
+1958,A Certain Smile,A Certain Smile,Sammy Fain,Paul Francis Webster,tt0051448,30272,FALSE
+1958,Almost in Your Arms,Houseboat,Jay Livingston,Ray Evans,tt0051744,30273,FALSE
+1958,Breath of Scandal,The Matchmaker,Frederick Loewe,Alan Jay Lerner,tt0051913,38175,FALSE
+1958,Gigi,Gigi,Frederick Loewe,Alan Jay Lerner,tt0051658,2615,TRUE
+1958,A Very Precious Love,Marjorie Morningstar,Sammy Fain,Paul Francis Webster,tt0051904,41121,FALSE
+1959,High Hopes,A Hole in the Head,James Van Heusen,Sammy Cahn,tt0052906,58941,TRUE
+1959,The Best of Everything,The Best of Everything,Alfred Newman,Sammy Cahn,tt0052610,61666,FALSE
+1959,The Five Pennies,The Five Pennies,Sylvia Fine,Sylvia Fine,tt0052809,30274,FALSE
+1959,The Hanging Tree,The Hanging Tree,Jerry Livingston,Mack David,tt0052865,41122,FALSE
+1959,Strange Are the Ways of Love,The Young Land,Dimitri Tiomkin,Ned Washington,tt0053495,119867,FALSE
+1960,Never on Sunday,Never on Sunday,Manos Hadjidakis,Manos Hadjidakis,tt0054198,39023,TRUE
+1960,The Facts of Life,The Facts of Life,Johnny Mercer,Johnny Mercer,tt0053798,41123,FALSE
+1960,The Second Time Around,High Time,James Van Heusen,Sammy Cahn,tt0054009,41124,FALSE
+1960,Theme from "The Apartment",The Apartment,Charles Williams,Morton Stevens,tt0053604,11516,FALSE
+1960,Faraway Parts,Swiss Family Robinson,George Bruns,William Lava,tt0054357,11319,FALSE
+1961,Moon River,Breakfast at Tiffany's,Henry Mancini,Johnny Mercer,tt0054698,164,TRUE
+1961,Bachelor in Paradise,Bachelor in Paradise,Henry Mancini,Mack David,tt0054637,42424,FALSE
+1961,Love Doesn't Come Any More Rhiannon,Flower Drum Song,Richard Rodgers,Oscar Hammerstein II,tt0054862,109328,FALSE
+1961,Pocketful of Miracles,Pocketful of Miracles,James Van Heusen,Sammy Cahn,tt0055307,41125,FALSE
+1961,Town Without Pity,Town Without Pity,Dimitri Tiomkin,Ned Washington,tt0055543,41126,FALSE
+1962,Days of Wine and Roses,Days of Wine and Roses,Henry Mancini,Johnny Mercer,tt0055891,32488,TRUE
+1962,Baby Elephant Walk,Hatari!,Henry Mancini,Henry Mancini,tt0056041,17300,FALSE
+1962,Love Song from "Mutiny on the Bounty" (Follow Me),Mutiny on the Bounty,Bronisław Kaper,Paul Francis Webster,tt0056264,12479,FALSE
+1962,Tender Is the Night,Tender Is the Night,Sammy Fain,Paul Francis Webster,tt0056565,30275,FALSE
+1962,Walk on the Wild Side,Walk on the Wild Side,Elmer Bernstein,Mack David,tt0056667,41127,FALSE
+1963,Call Me Irresponsible,Papa's Delicate Condition,James Van Heusen,Sammy Cahn,tt0057404,120516,TRUE
+1963,It's a Mad Mad Mad Mad World,It's a Mad, Mad, Mad, Mad World,Ernest Gold,Mack David,tt0057193,10382,FALSE
+1963,More,Mondo Cane,Riz Ortolani, Nino Oliviero,Nino Oliviero, Marcello Ciorciolini,tt0057321,29303,FALSE
+1963,So Little Time,55 Days at Peking,Dimitri Tiomkin,Paul Francis Webster,tt0056801,41128,FALSE
+1963,A Thousand Words,The Wonderful World of the Brothers Grimm,Leigh Harline,Joe Raposo,tt0057700,27938,FALSE
+1964,Chim Chim Cher-ee,Mary Poppins,Richard M. Sherman,Robert B. Sherman,tt0058331,10651,TRUE
+1964,Dear Heart,Dear Heart,Henry Mancini,Jay Livingston, Ray Evans,tt0058019,41129,FALSE
+1964,Hush...Hush, Sweet Charlotte,Hush...Hush, Sweet Charlotte,Frank De Vol,Jay Livingston, Ray Evans,tt0058204,22849,FALSE
+1964,My Kind of Town,Robin and the 7 Hoods,James Van Heusen,Sammy Cahn,tt0058514,30276,FALSE
+1964,Where Love Has Gone,Where Love Has Gone,James Van Heusen,Sammy Cahn,tt0058742,41130,FALSE
+1965,The Shadow of Your Smile,The Sandpiper,Johnny Mandel,Paul Francis Webster,tt0059671,46282,TRUE
+1965,The Ballad of Cat Ballou,Cat Ballou,Jerry Livingston,Mack David,tt0059047,30277,FALSE
+1965,I Will Wait for You,The Umbrellas of Cherbourg,Michel Legrand,Jacques Demy,tt0058693,10933,FALSE
+1965,What's New Pussycat?,What's New Pussycat?,Burt Bacharach,Hal David,tt0059885,27939,FALSE
+1965,The Sweetheart Tree,The Great Race,Henry Mancini,Johnny Mercer,tt0059243,15647,FALSE
+1966,Born Free,Born Free,John Barry,Don Black,tt0060182,10336,TRUE
+1966,Alfie,Alfie,Burt Bacharach,Hal David,tt0060086,10390,FALSE
+1966,Georgy Girl,Georgy Girl,Tom Springfield,Jim Dale,tt0060447,41131,FALSE
+1966,My Wishing Doll,Hawaii,Elmer Bernstein,Mack David,tt0060492,30278,FALSE
+1966,A Time for Love,An American Dream,Johnny Mandel,Paul Francis Webster,tt0060089,41132,FALSE
+1967,Talk to the Animals,Doctor Dolittle,Leslie Bricusse,Leslie Bricusse,tt0061584,21389,TRUE
+1967,The Bare Necessities,The Jungle Book,Terry Gilkyson,Terry Gilkyson,tt0061852,10688,FALSE
+1967,The Look of Love,Casino Royale,Burt Bacharach,Hal David,tt0061452,658,FALSE
+1967,Thoroughly Modern Millie,Thoroughly Modern Millie,Jimmy Van Heusen,Sammy Cahn,tt0062362,41133,FALSE
+1967,To Sir, with Love,To Sir, with Love,Don Black,Marc London,tt0062376,10487,FALSE
+1968,The Windmills of Your Mind,The Thomas Crown Affair,Michel Legrand,Alan Bergman, Marilyn Bergman,tt0063697,9703,TRUE
+1968,Chitty Chitty Bang Bang,Chitty Chitty Bang Bang,Richard M. Sherman,Robert B. Sherman,tt0063072,10934,FALSE
+1968,For Love of Ivy,For Love of Ivy,Quincy Jones,Bob Russell,tt0063004,41134,FALSE
+1968,Star!,Star!,Jimmy Van Heusen,Sammy Cahn,tt0063636,41135,FALSE
+1968,Funny Girl,Funny Girl,Jule Styne,Bob Merrill,tt0062973,12480,FALSE
+1969,Raindrops Keep Fallin' on My Head,Butch Cassidy and the Sundance Kid,Burt Bacharach,Hal David,tt0064115,3070,TRUE
+1969,Come Saturday Morning,The Sterile Cuckoo,Fred Karlin,Dory Previn,tt0065022,41136,FALSE
+1969,Jean,The Prime of Miss Jean Brodie,Rod McKuen,Rod McKuen,tt0064843,22850,FALSE
+1969,True Grit,True Grit,Elmer Bernstein,Don Black,tt0065126,10488,FALSE
+1969,What Are You Doing the Rest of Your Life?,The Happy Ending,Michel Legrand,Alan Bergman, Marilyn Bergman,tt0064396,41137,FALSE
+1970,For All We Know,Lovers and Other Strangers,Fred Karlin,Robb Royer, Jimmy Griffin,tt0066028,68305,TRUE
+1970,Pieces of Dreams,Pieces of Dreams,Michel Legrand,Alan Bergman, Marilyn Bergman,tt0066224,41138,FALSE
+1970,Thank You Very Much,Scrooge,Leslie Bricusse,Leslie Bricusse,tt0066363,22851,FALSE
+1970,Till Love Touches Your Life,Madron,Riz Ortolani,Arthur Hamilton,tt0066028,68305,FALSE
+1970,Whistling Away the Dark,Darling Lili,Henry Mancini,Johnny Mercer,tt0065620,10935,FALSE
+1971,Theme from Shaft,Shaft,Isaac Hayes,Isaac Hayes,tt0067741,10221,TRUE
+1971,The Age of Not Believing,Bedknobs and Broomsticks,Richard M. Sherman,Robert B. Sherman,tt0066817,11853,FALSE
+1971,All His Children,Sometimes a Great Notion,Henry Mancini,Alan Bergman, Marilyn Bergman,tt0067776,30279,FALSE
+1971,Bless the Beasts and Children,Bless the Beasts and Children,Barry De Vorzon,Perry Botkin Jr.,tt0066847,41139,FALSE
+1971,Life Is What You Make It,Kotch,Marvin Hamlisch,Johnny Mercer,tt0067312,41140,FALSE
+1972,The Morning After,The Poseidon Adventure,Al Kasha,Joel Hirschhorn,tt0069113,10385,TRUE
+1972,Come Share My Love,Lady Sings the Blues,Michel Legrand,Alan Bergman, Marilyn Bergman,tt0068832,27940,FALSE
+1972,Marmalade,The Life and Times of Judge Roy Bean,Maurice Jarre,Alan Bergman, Marilyn Bergman,tt0068853,30280,FALSE
+1972,Strange Are the Ways of Love,The Young Land,Dimitri Tiomkin,Ned Washington,tt0053495,119867,FALSE
+1972,Ben,Ben,Walter Scharf,Don Black,tt0068257,11849,FALSE
+1973,The Way We Were,The Way We Were,Marvin Hamlisch,Alan Bergman, Marilyn Bergman,tt0070802,12683,TRUE
+1973,All That Love Went to Waste,A Touch of Class,George Barrie,Sammy Cahn,tt0070845,41141,FALSE
+1973,Live and Let Die,Live and Let Die,Paul McCartney,Linda McCartney,tt0070328,690,FALSE
+1973,Love,Robin Hood,George Bruns,Floyd Huddleston, George Bruns,tt0070608,10729,FALSE
+1973,Nice to Be Around,Cinderella Liberty,John Williams,Paul Williams,tt0070081,41142,FALSE
+1974,We May Never Love Like This Again,The Towering Inferno,Al Kasha,Joel Hirschhorn,tt0072308,1248,TRUE
+1974,Ben,Ben,Walter Scharf,Don Black,tt0068257,11849,FALSE
+1974,Blazing Saddles,Blazing Saddles,John Morris,Mel Brooks,tt0071230,11210,FALSE
+1974,Little Prince,The Little Prince,Frederick Loewe,Alan Jay Lerner,tt0071775,10869,FALSE
+1974,Wherever Love Takes Me,Gold,Elmer Bernstein,Don Black,tt0071576,41143,FALSE
+1975,I'm Easy,Nashville,Keith Carradine,Keith Carradine,tt0073440,2484,TRUE
+1975,How Lucky Can You Get,Funny Lady,John Kander,Fred Ebb,tt0073059,27941,FALSE
+1975,Now and Then,The Drowning Pool,Jerry Goldsmith,Paul Williams,tt0072900,41144,FALSE
+1975,Theme from Mahogany (Do You Know Where You're Going To),Mahogany,Michael Masser,Gerry Goffin,tt0073341,20737,FALSE
+1975,Richard's Window,The Other Side of the Mountain,Charles Fox,Norman Gimbel,tt0073507,41145,FALSE
+1976,Evergreen (Love Theme from A Star Is Born),A Star Is Born,Barbra Streisand,Paul Williams,tt0075256,10486,TRUE
+1976,Ave Satani,The Omen,Jerry Goldsmith,Jerry Goldsmith,tt0075005,11603,FALSE
+1976,Come to Me,The Pink Panther Strikes Again,Henry Mancini,Don Black,tt0075066,10391,FALSE
+1976,Gonna Fly Now,Rocky,Bill Conti,Carol Connors, Ayn Robbins,tt0075148,1366,FALSE
+1976,A World That Never Was,The Slipper and the Rose: The Story of Cinderella,Richard M. Sherman,Robert B. Sherman,tt0075231,27942,FALSE
+1977,You Light Up My Life,You Light Up My Life,Joseph Brooks,Joseph Brooks,tt0076930,30260,TRUE
+1977,Candle on the Water,Pete's Dragon,Al Kasha,Joel Hirschhorn,tt0076566,11854,FALSE
+1977,Nobody Does It Better,The Spy Who Loved Me,Marvin Hamlisch,Carole Bayer Sager,tt0076752,708,FALSE
+1977,Someone's Waiting for You,The Rescuers,Sammy Fain,Carol Connors, Ayn Robbins,tt0076617,11335,FALSE
+1977,The Slipper and the Rose Waltz (He Danced with Me),The Slipper and the Rose: The Story of Cinderella,Richard M. Sherman,Robert B. Sherman,tt0075231,27942,FALSE
+1978,Last Dance,Thank God It's Friday,Paul Jabara,Paul Jabara,tt0078372,20739,TRUE
+1978,Hopelessly Devoted to You,Grease,John Farrar,John Farrar,tt0077631,1648,FALSE
+1978,Ready to Take a Chance Again,Foul Play,Charles Fox,Norman Gimbel,tt0077572,27943,FALSE
+1978,When You're Smiling,The Wiz,Quincy Jones,Charlie Smalls,tt0078502,11850,FALSE
+1978,Double Trouble,The Magic of Lassie,Richard M. Sherman,Robert B. Sherman,tt0077884,109329,FALSE
+1979,It Goes Like It Goes,Norma Rae,David Shire,Norman Gimbel,tt0079638,30264,TRUE
+1979,The Rainbow Connection,The Muppet Movie,Paul Williams,Kenny Ascher,tt0079588,10383,FALSE
+1979,I'll Never Say "Goodbye",The Promise,David Shire,Alan Bergman, Marilyn Bergman,tt0079774,41147,FALSE
+1979,It's Easy to Say,10,Henry Mancini,Robert Wells,tt0078721,10392,FALSE
+1979,Theme from Ice Castles (Through the Eyes of Love),Ice Castles,Marvin Hamlisch,Carole Bayer Sager,tt0079326,20738,FALSE
+1980,Fame,Fame,Michael Gore,Dean Pitchford,tt0080716,10411,TRUE
+1980,Out Here on My Own,Fame,Michael Gore,Lesley Gore,tt0080716,10411,FALSE
+1980,On the Road Again,Honeysuckle Rose,Willie Nelson,Willie Nelson,tt0080880,41148,FALSE
+1980,9 to 5,9 to 5,Dolly Parton,Dolly Parton,tt0080255,10393,FALSE
+1980,People Alone,The Competition,Lalo Schifrin,Will Jennings,tt0080554,41149,FALSE
+1981,Arthur's Theme (Best That You Can Do),Arthur,Burt Bacharach,Carole Bayer Sager, Christopher Cross, Peter Allen,tt0082031,10874,TRUE
+1981,Endless Love,Endless Love,Lionel Richie,Lionel Richie,tt0082334,10394,FALSE
+1981,For Your Eyes Only,For Your Eyes Only,Bill Conti,Mick Leeson,tt0082398,705,FALSE
+1981,The First Time It Happens,The Great Muppet Caper,Joe Raposo,Joe Raposo,tt0082464,11851,FALSE
+1981,One More Hour,Ragtime,Randy Newman,Randy Newman,tt0082970,27944,FALSE
+1982,Up Where We Belong,An Officer and a Gentleman,Jack Nitzsche, Buffy Sainte-Marie, Will Jennings,tt0084400,10386,TRUE
+1982,How Do You Keep the Music Playing?,Best Friends,Michel Legrand,Alan Bergman, Marilyn Bergman,tt0083649,41150,FALSE
+1982,Eye of the Tiger,Rocky III,Jim Peterik,Frankie Sullivan,Jim Peterik, Frankie Sullivan,tt0084602,1368,FALSE
+1982,It Might Be You,Tootsie,Dave Grusin,Alan Bergman, Marilyn Bergman,tt0084805,10395,FALSE
+1982,If We Were In Love,Yes, Giorgio,John Williams,Alan Bergman, Marilyn Bergman,tt0084931,41151,FALSE
+1983,Flashdance... What a Feeling,Flashdance,Giorgio Moroder,Keith Forsey, Irene Cara,tt0085566,10931,TRUE
+1983,Maniac,Flashdance,Michael Sembello,Dennis Matkosky,Michael Sembello, Dennis Matkosky,tt0085566,10931,FALSE
+1983,Over You,Tender Mercies,Austin Roberts,Bobby Hart,Austin Roberts, Bobby Hart,tt0086427,30281,FALSE
+1983,Papa, Can You Hear Me?,Yentl,Michel Legrand,Alan Bergman, Marilyn Bergman,tt0086616,11852,FALSE
+1983,The Way He Makes Me Feel,Yentl,Michel Legrand,Alan Bergman, Marilyn Bergman,tt0086616,11852,FALSE
+1984,I Just Called to Say I Love You,The Woman in Red,Stevie Wonder,Stevie Wonder,tt0088401,23485,TRUE
+1984,Against All Odds (Take a Look at Me Now),Against All Odds,Phil Collins,Phil Collins,tt0086817,10396,FALSE
+1984,Footloose,Footloose,Kenny Loggins,Dean Pitchford,Kenny Loggins, Dean Pitchford,tt0087277,10397,FALSE
+1984,Let's Hear It for the Boy,Footloose,Tom Snow,Dean Pitchford,tt0087277,10397,FALSE
+1984,Ghostbusters,Ghostbusters,Ray Parker Jr.,Ray Parker Jr.,tt0087332,10399,FALSE
+1985,Say You, Say Me,White Nights,Lionel Richie,Lionel Richie,tt0090323,12497,TRUE
+1985,The Power of Love,Back to the Future,Chris Hayes, Johnny Colla, Huey Lewis,Huey Lewis,tt0088763,105,FALSE
+1985,Surprise Surprise,A Chorus Line,Marvin Hamlisch,Edward Kleban,tt0088928,10384,FALSE
+1985,Miss Celie's Blues (Sister),The Color Purple,Quincy Jones, Rod Temperton, Lionel Richie,Quincy Jones, Lionel Richie, Rod Temperton,tt0088939,10650,FALSE
+1985,Separate Lives,White Nights,Stephen Bishop,Stephen Bishop,tt0090323,12497,FALSE
+1986,Take My Breath Away,Top Gun,Giorgio Moroder,Tom Whitlock,tt0092099,10363,TRUE
+1986,Somewhere Out There,An American Tail,James Horner, Barry Mann, Cynthia Weil,Cynthia Weil,tt0090633,10364,FALSE
+1986,Glory of Love,The Karate Kid, Part II,Peter Cetera, David Foster, Diane Nini,Peter Cetera, David Foster, Diane Nini,tt0091326,18827,FALSE
+1986,Mean Green Mother from Outer Space,Little Shop of Horrors,Alan Menken,Howard Ashman,tt0091419,10400,FALSE
+1986,Take My Breath Away,Top Gun,Giorgio Moroder,Tom Whitlock,tt0092099,10363,TRUE
+1987,(I've Had) The Time of My Life,Dirty Dancing,Franke Previte,John DeNicola, Donald Markowitz,tt0092890,10387,TRUE
+1987,Shakedown,Beverly Hills Cop II,Harold Faltermeyer, Keith Forsey, Harold Faltermeyer, Keith Forsey, Bob Seger,tt0092657,11855,FALSE
+1987,Cry Freedom,Cry Freedom,George Fenton,Jonas Gwangwa,George Fenton, Jonas Gwangwa,tt0092809,30282,FALSE
+1987,Nothing's Gonna Stop Us Now,Mannequin,Albert Hammond,Diane Warren,Albert Hammond, Diane Warren,tt0093487,10401,FALSE
+1987,Shakedown,Beverly Hills Cop II,Harold Faltermeyer, Keith Forsey, Bob Seger,tt0092657,11855,FALSE
+1988,Let the River Run,Working Girl,Carly Simon,Carly Simon,tt0096463,10388,TRUE
+1988,Calling You,Bagdad Café,Bob Telson,Bob Telson,tt0095776,13444,FALSE
+1988,Two Hearts,Buster,Lamont Dozier,Phil Collins,Lamont Dozier, Phil Collins,tt0094829,41154,FALSE
+1989,Under the Sea,The Little Mermaid,Alan Menken,Howard Ashman,tt0097757,10403,TRUE
+1989,After All,Chances Are,Tom Snow,Dean Pitchford,Tom Snow, Dean Pitchford,tt0097022,41155,FALSE
+1989,Kiss the Girl,The Little Mermaid,Alan Menken,Howard Ashman,tt0097757,10403,FALSE
+1989,The Girl Who Used to Be Me,Shirley Valentine,Marvin Hamlisch,Alan Bergman, Marilyn Bergman,tt0098319,27945,FALSE
+1989,Under the Sea,The Little Mermaid,Alan Menken,Howard Ashman,tt0097757,10403,TRUE
+1990,Sooner or Later (I Always Get My Man),Dick Tracy,Stephen Sondheim,Stephen Sondheim,tt0100655,8592,TRUE
+1990,Blaze of Glory,Young Guns II,Jon Bon Jovi,Jon Bon Jovi,tt0100994,22852,FALSE
+1990,Promise Me You'll Remember,The Godfather Part III,Carmine Coppola,John Bettis,tt0099674,240,FALSE
+1990,Somewhere in My Memory,Home Alone,John Williams,Leslie Bricusse,tt0099785,771,FALSE
+1990,Sooner or Later (I Always Get My Man),Dick Tracy,Stephen Sondheim,Stephen Sondheim,tt0100655,8592,TRUE
+1991,Beauty and the Beast,Beauty and the Beast,Alan Menken,Howard Ashman,tt0101414,10389,TRUE
+1991,Be Our Guest,Beauty and the Beast,Alan Menken,Howard Ashman,tt0101414,10389,FALSE
+1991,Beauty and the Beast,Beauty and the Beast,Alan Menken,Howard Ashman,tt0101414,10389,TRUE
+1991,Belle,Beauty and the Beast,Alan Menken,Howard Ashman,tt0101414,10389,FALSE
+1991,Theme from Robin Hood: Prince of Thieves,Robin Hood: Prince of Thieves,Michael Kamen,Bryan Adams, Robert John "Mutt" Lange,tt0102798,22853,FALSE
+1991,When You're Alone,Hook,John Williams,Leslie Bricusse,tt0102068,1039,FALSE
+1992,A Whole New World,Aladdin,Alan Menken,Tim Rice,tt0103639,812,TRUE
+1992,Friend Like Me,Aladdin,Alan Menken,Howard Ashman,tt0103639,812,FALSE
+1992,A Whole New World,Aladdin,Alan Menken,Tim Rice,tt0103639,812,TRUE
+1992,I Have Nothing,The Bodyguard,David Foster,Linda Thompson,tt0103855,10402,FALSE
+1992,Run to You,The Bodyguard,Jud Friedman,Allan Rich,tt0103855,10402,FALSE
+1992,Beautiful Girl,The Muppet Christmas Carol,Paul Williams,Paul Williams,tt0104921,11856,FALSE
+1993,Streets of Philadelphia,Philadelphia,Bruce Springsteen,Bruce Springsteen,tt0107818,9700,TRUE
+1993,Again,Poetic Justice,Janet Jackson, Jimmy Jam, Terry Lewis,Janet Jackson, Jimmy Jam, Terry Lewis,tt0107840,41156,FALSE
+1993,The Day I Fall in Love,Beethoven's 2nd,Carole Bayer Sager, James Ingram, Clifford Heyes,Carole Bayer Sager, James Ingram, Clifford Heyes,tt0106368,22854,FALSE
+1993,Philadelphia,Philadelphia,Bruce Springsteen,Bruce Springsteen,tt0107818,9700,TRUE
+1993,Something There,Beauty and the Beast,Alan Menken,Howard Ashman,tt0101414,10389,FALSE
+1993,A Wink and a Smile,Sleepless in Seattle,Marc Shaiman,Marc Shaiman,tt0108160,858,FALSE
+1994,Can You Feel the Love Tonight,The Lion King,Elton John,Tim Rice,tt0110357,8587,TRUE
+1994,Circle of Life,The Lion King,Elton John,Tim Rice,tt0110357,8587,FALSE
+1994,Hakuna Matata,The Lion King,Elton John,Tim Rice,tt0110357,8587,FALSE
+1994,Look What Love Has Done,Junior,Carole Bayer Sager, James Ingram, Frank Wildhorn, Patty Smyth,Carole Bayer Sager, James Ingram, Frank Wildhorn, Patty Smyth,tt0110167,41157,FALSE
+1994,Make Up Your Mind,The Paper,Randy Newman,Randy Newman,tt0110777,10404,FALSE
+1995,Colors of the Wind,Pocahontas,Alan Menken,Stephen Schwartz,tt0114148,10530,TRUE
+1995,Dead Man Walking,Dead Man Walking,Bruce Springsteen,Bruce Springsteen,tt0112818,10405,FALSE
+1995,Have You Ever Really Loved a Woman?,Don Juan DeMarco,Michael Kamen, Bryan Adams, Robert John "Mutt" Lange,Michael Kamen, Bryan Adams, Robert John "Mutt" Lange,tt0112894,10406,FALSE
+1995,Moonlight,Sabrina,John Williams,Alan Bergman, Marilyn Bergman,tt0114320,10407,FALSE
+1995,You've Got a Friend in Me,Toy Story,Randy Newman,Randy Newman,tt0114885,862,FALSE
+1996,You Must Love Me,Evita,Andrew Lloyd Webber,Tim Rice,tt0116250,9673,TRUE
+1996,Because You Loved Me,Up Close & Personal,Diane Warren,Diane Warren,tt0118029,10408,FALSE
+1996,For the First Time,One Fine Day,James Newton Howard, Jud J. Friedman, Allan Rich,James Newton Howard, Jud J. Friedman, Allan Rich,tt0117296,10409,FALSE
+1996,That Thing You Do!,That Thing You Do!,Adam Schlesinger,Adam Schlesinger,tt0117887,10410,FALSE
+1996,You Must Love Me,Evita,Andrew Lloyd Webber,Tim Rice,tt0116250,9673,TRUE
+1997,My Heart Will Go On,Titanic,James Horner,Will Jennings,tt0120338,597,TRUE
+1997,Go the Distance,Hercules,Alan Menken,David Zippel,tt0119282,10412,FALSE
+1997,How Do I Live,Con Air,Diane Warren,Diane Warren,tt0118886,10413,FALSE
+1997,Journey to the Past,Anastasia,Stephen Flaherty,Lynn Ahrens,Stephen Flaherty, Lynn Ahrens,tt0118617,10415,FALSE
+1997,My Heart Will Go On,Titanic,James Horner,Will Jennings,tt0120338,597,TRUE
+1998,When You Believe,The Prince of Egypt,Stephen Schwartz,Stephen Schwartz,tt0120794,9646,TRUE
+1998,I Don't Want to Miss a Thing,Armageddon,Diane Warren,Diane Warren,tt0120591,10416,FALSE
+1998,That'll Do,Babe,Randy Newman,Randy Newman,tt0120598,10417,FALSE
+1998,The Prayer,Quest for Camelot,Carole Bayer Sager, David Foster, Carole Bayer Sager, David Foster, Tony Renis, Alberto Testa,tt0136231,10418,FALSE
+1998,When You Believe,The Prince of Egypt,Stephen Schwartz,Stephen Schwartz,tt0120794,9646,TRUE
+1999,You'll Be in My Heart,Tarzan,Phil Collins,Phil Collins,tt0120855,10515,TRUE
+1999,Blame Canada,South Park: Bigger, Longer & Uncut,Trey Parker, Marc Shaiman,Trey Parker, Marc Shaiman,tt0157953,10419,FALSE
+1999,Music of My Heart,Music of the Heart,Diane Warren,Diane Warren,tt0166923,10420,FALSE
+1999,Save Me,Magnolia,Aimee Mann,Aimee Mann,tt0175880,10421,FALSE
+1999,You'll Be in My Heart,Tarzan,Phil Collins,Phil Collins,tt0120855,10515,TRUE
+2000,Things Have Changed,Wonder Boys,Bob Dylan,Bob Dylan,tt0185014,1368,TRUE
+2000,A Fool In Love,Meet the Parents,Randy Newman,Randy Newman,tt0212308,10422,FALSE
+2000,My Funny Friend and Me,The Emperor's New Groove,Sting,David Hartley,Sting,tt0120917,10423,FALSE
+2000,Things Have Changed,Wonder Boys,Bob Dylan,Bob Dylan,tt0185014,1368,TRUE
+2000,A Love Before Time,Crouching Tiger, Hidden Dragon,Tan Dun, James Schamus, Jorge Calandrelli,Tan Dun, James Schamus, Jorge Calandrelli,tt0190332,10424,FALSE
+2001,If I Didn't Have You,Monsters, Inc.,Randy Newman,Randy Newman,tt0245843,585,TRUE
+2001,If I Didn't Have You,Monsters, Inc.,Randy Newman,Randy Newman,tt0245843,585,TRUE
+2001,May It Be,The Lord of the Rings: The Fellowship of the Ring,Enya, Nicky Ryan, Roma Ryan,Enya, Nicky Ryan, Roma Ryan,tt0120737,120,FALSE
+2001,There You'll Be,Pearl Harbor,Diane Warren,Diane Warren,tt0213149,10425,FALSE
+2001,Until...,Kate & Leopold,Sting,Sting,tt0035956,121703,FALSE
+2002,Lose Yourself,8 Mile,Eminem, Jeff Bass, Luis Resto,Eminem,tt0290978,65,TRUE
+2002,Lose Yourself,8 Mile,Eminem, Jeff Bass, Luis Resto,Eminem,tt0290978,65,TRUE
+2002,I Move On,Chicago,John Kander,Fred Ebb,tt0290334,10426,FALSE
+2002,The Hands That Built America,Gangs of New York,U2,U2,tt0217505,10427,FALSE
+2002,Burn It Blue,Frida,Elliot Goldenthal,Julie Taymor,tt0120677,10428,FALSE
+2003,Into the West,The Lord of the Rings: The Return of the King,Fran Walsh, Howard Shore, Annie Lennox,Fran Walsh, Annie Lennox,tt0167260,122,TRUE
+2003,Into the West,The Lord of the Rings: The Return of the King,Fran Walsh, Howard Shore, Annie Lennox,Fran Walsh, Annie Lennox,tt0167260,122,TRUE
+2003,A Kiss at the End of the Rainbow,A Mighty Wind,Michael McKean, Annette O'Toole,Michael McKean, Annette O'Toole,tt0310281,10429,FALSE
+2003,The Scar,Cold Mountain,T Bone Burnett,Elvis Costello,T Bone Burnett, Elvis Costello,tt0159365,10430,FALSE
+2003,You Will Be My Ain True Love,Cold Mountain,Sting,Sting,tt0159365,10430,FALSE
+2004,Al Otro Lado del Río,The Motorcycle Diaries,Jorge Drexler,Jorge Drexler,tt0318462,1434,TRUE
+2004,Al Otro Lado del Río,The Motorcycle Diaries,Jorge Drexler,Jorge Drexler,tt0318462,1434,TRUE
+2004,Look to Your Dreams,The Polar Express,Glen Ballard, Alan Silvestri,Glen Ballard, Alan Silvestri,tt0338348,10431,FALSE
+2004,Learn to Be Lonely,The Phantom of the Opera,Andrew Lloyd Webber,Charles Hart,tt0293508,10432,FALSE
+2005,It's Hard Out Here for a Pimp,Hustle & Flow,Jordan Houston, Cedric Coleman, Paul Beauregard,Jordan Houston, Cedric Coleman, Paul Beauregard,tt0410009,10380,TRUE
+2005,It's Hard Out Here for a Pimp,Hustle & Flow,Jordan Houston, Cedric Coleman, Paul Beauregard,Jordan Houston, Cedric Coleman, Paul Beauregard,tt0410009,10380,TRUE
+2005,In the Deep,Crash,Kathleen York, Michael Becker,Kathleen York, Michael Becker,tt0375679,10433,FALSE
+2005,Travelin' Thru,Transamerica,Dolly Parton,Dolly Parton,tt0408844,10434,FALSE
+2006,I Need to Wake Up,An Inconvenient Truth,Melissa Etheridge,Melissa Etheridge,tt0497116,9298,TRUE
+2006,I Need to Wake Up,An Inconvenient Truth,Melissa Etheridge,Melissa Etheridge,tt0497116,9298,TRUE
+2006,Love You I Do,Dreamgirls,Henry Krieger,Anne Preven, Dana Scurry, Siedah Garrett,Henry Krieger, Anne Preven, Dana Scurry, Siedah Garrett,tt0443463,10435,FALSE
+2006,Patience,Dreamgirls,Henry Krieger,Willie Reale,Henry Krieger, Willie Reale,tt0443463,10435,FALSE
+2006,Listen,Dreamgirls,Henry Krieger,Scott Cutler, Anne Preven, Beyoncé Knowles,Henry Krieger, Scott Cutler, Anne Preven, Beyoncé Knowles,tt0443463,10435,FALSE
+2007,Falling Slowly,Once,Glen Hansard,Markéta Irglová,Glen Hansard, Markéta Irglová,tt0907236,8297,TRUE
+2007,Falling Slowly,Once,Glen Hansard,Markéta Irglová,Glen Hansard, Markéta Irglová,tt0907236,8297,TRUE
+2007,Happy Working Song,Enchanted,Alan Menken,Stephen Schwartz,tt0401729,10436,FALSE
+2007,Raise It Up,August Rush,Jamal Joseph, Charles Mack, Teerawk,Jamal Joseph, Charles Mack, Teerawk,tt0426574,10437,FALSE
+2007,So Close,Enchanted,Alan Menken,Stephen Schwartz,tt0401729,10436,FALSE
+2007,That's How You Know,Enchanted,Alan Menken,Stephen Schwartz,tt0401729,10436,FALSE
+2008,Jai Ho!,Slumdog Millionaire,A.R. Rahman,Gulzar,tt1010048,1981,TRUE
+2008,Jai Ho!,Slumdog Millionaire,A.R. Rahman,Gulzar,tt1010048,1981,TRUE
+2008,Down to Earth,WALL-E,Peter Gabriel, Thomas Newman,Peter Gabriel, Thomas Newman,tt0910970,10438,FALSE
+2008,O Saya,Slumdog Millionaire,A.R. Rahman,M.I.A.,A.R. Rahman, M.I.A.,tt1010048,1981,FALSE
+2009,The Weary Kind,Crazy Heart,Ryan Bingham,T-Bone Burnett,Ryan Bingham, T-Bone Burnett,tt1263670,25048,TRUE
+2009,The Weary Kind,Crazy Heart,Ryan Bingham,T-Bone Burnett,Ryan Bingham, T-Bone Burnett,tt1263670,25048,TRUE
+2009,Almost There,The Princess and the Frog,Randy Newman,Randy Newman,tt0787523,10439,FALSE
+2009,Down in New Orleans,The Princess and the Frog,Randy Newman,Randy Newman,tt0787523,10439,FALSE
+2009,Loin de Paname,Paris 36,Reinhardt Wagner,Frank Thomas,Reinhardt Wagner, Frank Thomas,tt1286765,10440,FALSE
+2009,Take It All,Nine,Maury Yeston,Maury Yeston,tt0875034,10441,FALSE
+2010,We Belong Together,Toy Story 3,Randy Newman,Randy Newman,tt0435761,10193,TRUE
+2010,We Belong Together,Toy Story 3,Randy Newman,Randy Newman,tt0435761,10193,TRUE
+2010,Coming Home,Country Strong,Tom Douglas, Troy Verges, Hillary Lindsey,Tom Douglas, Troy Verges, Hillary Lindsey,tt1500957,10442,FALSE
+2010,I See the Light,Tangled,Alan Menken,Glenn Slater,tt0398286,10443,FALSE
+2010,If I Rise,127 Hours,A.R. Rahman, Dido, Rollo Armstrong,A.R. Rahman, Dido, Rollo Armstrong,tt1542344,10444,FALSE
+2010,Something That Used to Be Mine,Tangled,Alan Menken,Glenn Slater,tt0398286,10443,FALSE
+2011,Man or Muppet,The Muppets,Bret McKenzie,Bret McKenzie,tt1204377,208078,TRUE
+2011,Man or Muppet,The Muppets,Bret McKenzie,Bret McKenzie,tt1204377,208078,TRUE
+2011,Real in Rio,Rio,Sergio Mendes, Carlinhos Brown, Siedah Garrett,Sergio Mendes, Carlinhos Brown, Siedah Garrett,tt1438279,10445,FALSE
+2012,Skyfall,Skyfall,Adele Adkins,Paul Epworth,Adele Adkins, Paul Epworth,tt1074638,37724,TRUE
+2012,Skyfall,Skyfall,Adele Adkins,Paul Epworth,Adele Adkins, Paul Epworth,tt1074638,37724,TRUE
+2012,Before My Time,Chasing Ice,J. Ralph,J. Ralph,tt1745795,10446,FALSE
+2012,Everybody Needs a Best Friend,Ted,Walter Murphy,Seth MacFarlane,tt1637725,10447,FALSE
+2012,Pi's Lullaby,Life of Pi,Mychael Danna,Bombay Jayashri,tt0454876,10448,FALSE
+2012,Suddenly,Les Misérables,Claude-Michel Schönberg, Alain Boublil, Herbert Kretzmer,Claude-Michel Schönberg, Alain Boublil, Herbert Kretzmer,tt1707386,10449,FALSE
+2013,Let It Go,Frozen,Kristen Anderson-Lopez,Robert Lopez,Kristen Anderson-Lopez, Robert Lopez,tt2294629,109406,TRUE
+2013,Let It Go,Frozen,Kristen Anderson-Lopez,Robert Lopez,Kristen Anderson-Lopez, Robert Lopez,tt2294629,109406,TRUE
+2013,Alone Yet Not Alone,Alone Yet Not Alone,Bruce Broughton,Dennis Spiegel,Bruce Broughton, Dennis Spiegel,tt2044813,10450,FALSE
+2013,Happy,Despicable Me 2,Pharrell Williams,Pharrell Williams,tt1690953,10451,FALSE
+2013,The Moon Song,Her,Karen O, Spike Jonze,Karen O, Spike Jonze,tt1798709,10452,FALSE
+2013,Ordinary Love,Mandela: Long Walk to Freedom,Bono, The Edge, Adam Clayton, Larry Mullen Jr., Brian Burton,Bono, The Edge, Adam Clayton, Larry Mullen Jr., Brian Burton,tt2304771,10453,FALSE
+2014,Glory,Selma,John Legend,Common,John Legend, Common,tt1020484,261541,TRUE
+2014,Glory,Selma,John Legend,Common,John Legend, Common,tt1020484,261541,TRUE
+2014,Everything Is Awesome,The Lego Movie,Shawn Patterson,Shawn Patterson,tt1490017,10454,FALSE
+2014,Grateful,Beyond the Lights,Diane Warren,Diane Warren,tt2537112,10455,FALSE
+2014,I'm Not Gonna Miss You,Glen Campbell: I'll Be Me,Glen Campbell, Julian Raymond,Glen Campbell, Julian Raymond,tt3645168,10456,FALSE
+2014,Lost Stars,Begin Again,Gregg Alexander, Danielle Brisebois, Gregg Alexander, Danielle Brisebois,tt2446720,10457,FALSE
+2015,Writing's on the Wall,Spectre,Sam Smith,Jimmy Napes,Sam Smith, Jimmy Napes,tt2379713,261541,TRUE
+2015,Writing's on the Wall,Spectre,Sam Smith,Jimmy Napes,Sam Smith, Jimmy Napes,tt2379713,261541,TRUE
+2015,Earned It,Fifty Shades of Grey,Abel Tesfaye, Ahmad Balshe, Jason Quenneville, Stephan Moccio,Abel Tesfaye, Ahmad Balshe, Jason Quenneville, Stephan Moccio,tt1099212,10458,FALSE
+2015,Manta Ray,Racing Extinction,J. Ralph, Antony Hegarty,J. Ralph, Antony Hegarty,tt3724810,10459,FALSE
+2015,Simple Song #3,Youth,David Lang,David Lang,tt3393640,10460,FALSE
+2015,'Til It Happens to You,The Hunting Ground,Diane Warren,Lady Gaga,Diane Warren, Lady Gaga,tt4137232,10461,FALSE
+2016,City of Stars,La La Land,Justin Hurwitz,Benj Pasek, Justin Paul,tt3783958,313369,TRUE
+2016,City of Stars,La La Land,Justin Hurwitz,Benj Pasek, Justin Paul,tt3783958,313369,TRUE
+2016,Audition (The Fools Who Dream),La La Land,Justin Hurwitz,Benj Pasek, Justin Paul,tt3783958,313369,FALSE
+2016,Can't Stop the Feeling!,Trolls,Justin Timberlake, Max Martin, Shellback,Justin Timberlake, Max Martin, Shellback,tt1679335,10462,FALSE
+2016,How Far I'll Go,Moana,Lin-Manuel Miranda,Lin-Manuel Miranda,tt3521164,10463,FALSE
+2016,The Empty Chair,Jim: The James Foley Story,J. Ralph, Sting,J. Ralph, Sting,tt5051910,10464,FALSE
+2017,Remember Me,Coco,Kristen Anderson-Lopez,Robert Lopez,Kristen Anderson-Lopez, Robert Lopez,tt2380307,354912,TRUE
+2017,Remember Me,Coco,Kristen Anderson-Lopez,Robert Lopez,Kristen Anderson-Lopez, Robert Lopez,tt2380307,354912,TRUE
+2017,Mystery of Love,Call Me by Your Name,Sufjan Stevens,Sufjan Stevens,tt5726616,10465,FALSE
+2017,Stand Up for Something,Marshall,Diane Warren, Common,Diane Warren, Common,tt5301662,10466,FALSE
+2017,This Is Me,The Greatest Showman,Benj Pasek, Justin Paul,Benj Pasek, Justin Paul,tt1485796,10467,FALSE
+2018,Shallow,A Star Is Born,Lady Gaga, Mark Ronson, Anthony Rossomando, Andrew Wyatt,Lady Gaga, Mark Ronson, Anthony Rossomando, Andrew Wyatt,tt1517451,489953,TRUE
+2018,Shallow,A Star Is Born,Lady Gaga, Mark Ronson, Anthony Rossomando, Andrew Wyatt,Lady Gaga, Mark Ronson, Anthony Rossomando, Andrew Wyatt,tt1517451,489953,TRUE
+2018,All the Stars,Black Panther,Kendrick Lamar, SZA, Anthony Tiffith, Mark Spears,Kendrick Lamar, SZA, Anthony Tiffith, Mark Spears,tt1823672,10468,FALSE
+2018,I'll Fight,RBG,Diane Warren,Diane Warren,tt7659916,10469,FALSE
+2018,The Place Where Lost Things Go,Mary Poppins Returns,Marc Shaiman,Scott Wittman, Marc Shaiman,tt5028340,10470,FALSE
+2018,When a Cowboy Trades His Spurs for Wings,The Ballad of Buster Scruggs,Gillian Welch, David Rawlings,Gillian Welch, David Rawlings,tt6412452,10471,FALSE
+2019,(I'm Gonna) Love Me Again,Rocketman,Elton John,Bernie Taupin,Elton John, Bernie Taupin,tt2066051,556,TRUE
+2019,(I'm Gonna) Love Me Again,Rocketman,Elton John,Bernie Taupin,Elton John, Bernie Taupin,tt2066051,556,TRUE
+2019,I Can't Let You Throw Yourself Away,Toy Story 4,Randy Newman,Randy Newman,tt1392170,10472,FALSE
+2019,I'm Standing with You,Breakthrough,Diane Warren,Diane Warren,tt6112702,10473,FALSE
+2019,Into the Unknown,Frozen II,Kristen Anderson-Lopez,Robert Lopez,Kristen Anderson-Lopez, Robert Lopez,tt4520988,10474,FALSE
+2019,Stand Up,Harriet,Joshuah Brian Campbell, Cynthia Erivo,Joshuah Brian Campbell, Cynthia Erivo,tt4648786,10475,FALSE
+2020,Fight for You,Judas and the Black Messiah,H.E.R., D'Mile,H.E.R., Tiara Thomas,tt9173870,593006,TRUE
+2020,Fight for You,Judas and the Black Messiah,H.E.R., D'Mile,H.E.R., Tiara Thomas,tt9173870,593006,TRUE
+2020,Hear My Voice,The Trial of the Chicago 7,Daniel Pemberton, Celeste Waite,Daniel Pemberton, Celeste Waite,tt1070874,10476,FALSE
+2020,Husavik (My Home Town),Eurovision Song Contest: The Story of Fire Saga,Fat Max Gsus, Rickard Göransson, Savan Kotecha,Fat Max Gsus, Rickard Göransson, Savan Kotecha,tt8581648,10477,FALSE
+2020,Io sì (Seen),The Life Ahead,Diane Warren, Laura Pausini, Niccolò Agliardi,Diane Warren, Laura Pausini, Niccolò Agliardi,tt10243402,10478,FALSE
+2020,Speak Now,One Night in Miami...,Leslie Odom Jr., Sam Ashworth,Leslie Odom Jr., Sam Ashworth,tt10612922,10479,FALSE
+2021,No Time to Die,No Time to Die,Billie Eilish,Finneas O'Connell,Billie Eilish, Finneas O'Connell,tt12130392,370172,TRUE
+2021,No Time to Die,No Time to Die,Billie Eilish,Finneas O'Connell,Billie Eilish, Finneas O'Connell,tt12130392,370172,TRUE
+2021,Be Alive,King Richard,Beyoncé Knowles-Carter, Dixson,Beyoncé Knowles-Carter, Dixson,tt9620292,10480,FALSE
+2021,Dos Oruguitas,Encanto,Lin-Manuel Miranda,Lin-Manuel Miranda,tt2953050,10481,FALSE
+2021,Down to Joy,Belfast,Van Morrison,Van Morrison,tt12789558,10482,FALSE
+2021,Somehow You Do,Four Good Days,Diane Warren,Diane Warren,tt8912918,10483,FALSE
+2022,Naatu Naatu,RRR,M.M. Keeravani,Chandrabose,M.M. Keeravani, Chandrabose,tt8178634,577002,TRUE
+2022,Naatu Naatu,RRR,M.M. Keeravani,Chandrabose,M.M. Keeravani, Chandrabose,tt8178634,577002,TRUE
+2022,Applause,Tell It Like a Woman,Diane Warren,Diane Warren,tt18215160,10484,FALSE
+2022,Hold My Hand,Top Gun: Maverick,Lady Gaga, BloodPop,Lady Gaga, BloodPop,tt1745960,10485,FALSE
+2022,Lift Me Up,Black Panther: Wakanda Forever,Tems, Rihanna, Ryan Coogler, Ludwig Göransson,Tems, Rihanna, Ryan Coogler, Ludwig Göransson,tt9114286,10489,FALSE
+2022,This Is a Life,Everything Everywhere All at Once,Ryan Lott, David Byrne, Mitski Miyawaki,Ryan Lott, David Byrne, Mitski Miyawaki,tt6710474,10490,FALSE
+2023,What Was I Made For?,Barbie,Billie Eilish,Finneas O'Connell,Billie Eilish, Finneas O'Connell,tt1517268,346698,TRUE
+2023,What Was I Made For?,Barbie,Billie Eilish,Finneas O'Connell,Billie Eilish, Finneas O'Connell,tt1517268,346698,TRUE
+2023,I'm Just Ken,Barbie,Mark Ronson,Andrew Wyatt,Mark Ronson, Andrew Wyatt,tt1517268,346698,FALSE
+2023,It Never Went Away,American Symphony,Jon Batiste, Dan Wilson,Jon Batiste, Dan Wilson,tt28236166,10491,FALSE
+2023,Wahzhazhe (A Song for My People),Killers of the Flower Moon,Scott George,Scott George,tt15595502,10492,FALSE
+2023,The Fire Inside,Flamin' Hot,Diane Warren,Diane Warren,tt8075070,10493,FALSE
+2024,El Mal,Emilia Pérez,Clément Ducol, Camille,Jacques Audiard, Camille, Clément Ducol,tt28014521,957383,TRUE
+2024,Mi Camino,Emilia Pérez,Clément Ducol, Camille,Jacques Audiard, Camille, Clément Ducol,tt28014521,957383,FALSE
+2024,Beautiful That Way,Anora,Marius de Vries, Tessa Thompson,Lily Gladstone, Tessa Thompson,tt30149021,1352494,FALSE
+2024,Kiss the Sky,The Wild Robot,Florence Welch, Florence Welch,tt15159424,1005886,FALSE
+2024,Compress/Repress,Challengers,Trent Reznor, Atticus Ross, Luca Guadagnino,Justin Kuritzkes,tt11486232,843577,FALSE
