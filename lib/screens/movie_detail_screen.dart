@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
+import '../services/omdb_service.dart';
 import '../widgets/poster_image_widget.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -80,7 +81,10 @@ class MovieDetailScreen extends StatelessWidget {
                         IconButton(
                           icon: const Icon(Icons.chevron_left, size: 40),
                           tooltip: 'Previous',
-                          onPressed: (allOscars != null && currentIndex != null && currentIndex! > 0)
+                          onPressed:
+                              (allOscars != null &&
+                                  currentIndex != null &&
+                                  currentIndex! > 0)
                               ? () {
                                   Navigator.pushReplacement(
                                     context,
@@ -98,7 +102,8 @@ class MovieDetailScreen extends StatelessWidget {
                         Expanded(
                           child: Center(
                             child: Hero(
-                              tag: 'poster_${oscar.film}_${oscar.yearFilm}_${oscar.name}_${oscar.hashCode}',
+                              tag:
+                                  'poster_${oscar.film}_${oscar.yearFilm}_${oscar.name}_${oscar.hashCode}',
                               child: Container(
                                 width: 200,
                                 height: 300,
@@ -114,7 +119,10 @@ class MovieDetailScreen extends StatelessWidget {
                         IconButton(
                           icon: const Icon(Icons.chevron_right, size: 40),
                           tooltip: 'Next',
-                          onPressed: (allOscars != null && currentIndex != null && currentIndex! < allOscars!.length - 1)
+                          onPressed:
+                              (allOscars != null &&
+                                  currentIndex != null &&
+                                  currentIndex! < allOscars!.length - 1)
                               ? () {
                                   Navigator.pushReplacement(
                                     context,
@@ -140,18 +148,62 @@ class MovieDetailScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     _buildDetailRow(context, 'Year', oscar.yearFilm.toString()),
                     _buildDetailRow(context, 'Category', oscar.category),
-                    _buildDetailRow(
-                      context,
-                      'Canon Category',
-                      oscar.canonCategory,
-                    ),
+                    if (oscar.category != oscar.canonCategory)
+                      _buildDetailRow(
+                        context,
+                        'Canon Category',
+                        oscar.canonCategory,
+                      ),
                     _buildDetailRow(context, 'Name', oscar.name),
                     _buildDetailRow(
                       context,
                       'Winner',
                       oscar.winner ? 'Yes' : 'No',
                     ),
-                    // ...existing code...
+
+                    FutureBuilder<int?>(
+                      future: oscar.filmId.isNotEmpty
+                          ? OmdbService.fetchRottenTomatoesScore(oscar.filmId)
+                          : null,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 120,
+                                  child: Text(
+                                    'Rotten Tomatoes:',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                CircularProgressIndicator(),
+                              ],
+                            ),
+                          );
+                        } else if (snapshot.hasData && snapshot.data != null) {
+                          final score = snapshot.data!;
+                          String emoji = score >= 60 ? '🍅' : '🤢';
+                          return _buildDetailRow(
+                            context,
+                            'Rotten Tomatoes',
+                            '$emoji $score%',
+                          );
+                        } else {
+                          return _buildDetailRow(
+                            context,
+                            'Rotten Tomatoes',
+                            '🟦 N/A',
+                          );
+                        }
+                      },
+                    ),
                     const SizedBox(height: 24),
                     Text(
                       'All Nominations for this Movie:',

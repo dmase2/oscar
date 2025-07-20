@@ -12,11 +12,18 @@ class OscarWinner {
   String canonCategory;
   String name;
   String film;
+  String filmId;
+  String nominee;
+  String nomineeId;
   bool winner;
+  String detail;
+  String note;
+  String citation;
 
   double? domesticBoxOffice;
   double? foreignBoxOffice;
   double? totalBoxOffice;
+  int? rottenTomatoesScore;
 
   OscarWinner({
     required this.yearFilm,
@@ -26,9 +33,16 @@ class OscarWinner {
     required this.canonCategory,
     required this.name,
     required this.film,
+    required this.filmId,
+    required this.nominee,
+    required this.nomineeId,
     required this.winner,
+    required this.detail,
+    required this.note,
+    required this.citation,
     this.domesticBoxOffice,
     this.foreignBoxOffice,
     this.totalBoxOffice,
+    this.rottenTomatoesScore,
   });
 }

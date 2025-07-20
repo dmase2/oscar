@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/oscar_providers.dart';
-import 'settings_screen.dart';
 import '../widgets/oscar_movie_grid.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -185,14 +185,14 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-final availableCategories = [
-  'ACTOR',
-  'ACTRESS',
-  'DIRECTOR',
-  'BEST PICTURE',
-  'CINEMATOGRAPHY',
-  'VISUAL EFFECTS',
-];
+// final availableCategories = [
+//   'ACTOR',
+//   'ACTRESS',
+//   'DIRECTOR',
+//   'BEST PICTURE',
+//   'CINEMATOGRAPHY',
+//   'VISUAL EFFECTS',
+// ];
 
 final selectedCategoriesProvider = StateProvider<List<String>>((ref) => []);
 

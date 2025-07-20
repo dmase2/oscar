@@ -30,4 +30,5 @@ flutter:
   assets:
     - assets/data/oscar_songs.csv
     - assets/data/oscar_winner.csv
+    - assets/data/oscar_nominee.csv
     

@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class TmdbSongService {
@@ -18,17 +19,34 @@ class TmdbSongService {
       if (data['results'] != null && data['results'].isNotEmpty) {
         final movieId = data['results'][0]['id'];
         // Now fetch movie details including soundtrack
-        final detailsUrl = 'https://api.themoviedb.org/3/movie/$movieId?api_key=$_apiKey&append_to_response=credits';
+        final detailsUrl =
+            'https://api.themoviedb.org/3/movie/$movieId?api_key=$_apiKey&append_to_response=credits';
         final detailsResponse = await http.get(Uri.parse(detailsUrl));
         if (detailsResponse.statusCode == 200) {
           final detailsData = json.decode(detailsResponse.body);
           // TMDb does not provide soundtrack directly, but you can parse credits for music department
           // This is a placeholder: you may need a third-party API for actual song names
-          if (detailsData['credits'] != null && detailsData['credits']['crew'] != null) {
+          if (detailsData['credits'] != null &&
+              detailsData['credits']['crew'] != null) {
             final crew = detailsData['credits']['crew'] as List<dynamic>;
+            // Try to get the song title from the movie details
+            String? songTitle;
+            if (detailsData['original_title'] != null) {
+              songTitle = detailsData['original_title'].toString();
+            }
             final songs = crew
-                .where((c) => c['department'] == 'Sound' || c['job'] == 'Original Music Composer')
-                .map((c) => c['name'].toString())
+                .where(
+                  (c) =>
+                      c['department'] == 'Sound' ||
+                      c['job'] == 'Original Music Composer',
+                )
+                .map((c) {
+                  if (songTitle != null && songTitle.isNotEmpty) {
+                    return '$songTitle - ${c['name']}';
+                  } else {
+                    return c['name'].toString();
+                  }
+                })
                 .toList();
             return songs;
           }

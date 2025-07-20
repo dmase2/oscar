@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+
 import '../models/oscar_winner.dart';
-import 'poster_image_widget.dart';
 import '../screens/movie_detail_screen.dart';
+import 'poster_image_widget.dart';
 
 class MovieCard extends StatelessWidget {
   final OscarWinner oscar;
   final List<OscarWinner>? allOscars;
   final int? currentIndex;
 
-  const MovieCard({super.key, required this.oscar, this.allOscars, this.currentIndex});
+  const MovieCard({
+    super.key,
+    required this.oscar,
+    this.allOscars,
+    this.currentIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +38,8 @@ class MovieCard extends StatelessWidget {
           children: [
             Expanded(
               child: Hero(
-                tag: 'poster_${oscar.film}_${oscar.yearFilm}_${oscar.name}_${oscar.hashCode}',
+                tag:
+                    'poster_${oscar.film}_${oscar.yearFilm}_${oscar.name}_${oscar.hashCode}',
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -61,9 +68,9 @@ class MovieCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${oscar.yearFilm}',
+                    '${oscar.yearFilm}  ${oscar.winner ? '🏆' : ''}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey[600],
+                      color: Colors.black,
                       fontSize: 10,
                     ),
                   ),

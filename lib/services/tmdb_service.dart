@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'omdb_service.dart';
 
 class TmdbService {
   static Future<int?> fetchTotalBoxOffice(String title, int year) async {
@@ -32,7 +33,7 @@ class TmdbService {
   static const String _baseUrl = 'https://api.themoviedb.org/3/search/movie';
   static const String _imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
-  static Future<String?> fetchPosterUrl(String title, int year) async {
+  static Future<String?> fetchPosterUrl(String title, int year, {String? imdbId}) async {
     final queryParameters = {
       'api_key': _apiKey,
       'query': title,
@@ -58,6 +59,15 @@ class TmdbService {
       }
     } else {
       print('TMDb ERROR: HTTP ${response.statusCode}');
+    }
+    // Try OMDb as fallback
+    if (imdbId != null && imdbId.isNotEmpty) {
+      print('Trying OMDb for poster...');
+      final omdbPoster = await OmdbService.fetchPosterUrl(imdbId);
+      if (omdbPoster != null) {
+        print('OMDb POSTER URL: $omdbPoster');
+        return omdbPoster;
+      }
     }
     return null;
   }

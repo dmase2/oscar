@@ -1,14 +1,18 @@
 import 'tmdb_service.dart';
 
 class PosterService {
-  static Future<String?> getPosterUrl(String movieTitle, int year) async {
-    // Try TMDb API first
-    final tmdbPoster = await TmdbService.fetchPosterUrl(movieTitle, year);
-    if (tmdbPoster != null) {
-      return tmdbPoster;
+  static Future<String?> getPosterUrl(
+    String movieTitle,
+    int year,
+    String imdbId,
+  ) async {
+    // Try TMDb API first, with OMDb fallback
+    final posterUrl = await TmdbService.fetchPosterUrl(movieTitle, year, imdbId: imdbId);
+    if (posterUrl != null) {
+      return posterUrl;
     }
-    // Fallback to placeholder
-    return _getPlaceholderPosterUrl(movieTitle);
+  // Fallback to local Oscar icon asset
+  return 'assets/images/oscar_icon.png';
   }
 
   static String _getPlaceholderPosterUrl(String movieTitle) {

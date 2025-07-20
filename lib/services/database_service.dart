@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 import '../models/oscar_winner.dart';
+import '../models/oscar_nominee.dart';
 import '../objectbox.g.dart';
 
 class DatabaseService {
@@ -11,6 +12,7 @@ class DatabaseService {
 
   late final Store store;
   late final Box<OscarWinner> oscarBox;
+  late final Box<OscarNominee> nomineeBox;
 
   DatabaseService._();
 
@@ -19,6 +21,19 @@ class DatabaseService {
     final databaseDirectory = Directory('${documentsDirectory.path}/objectbox');
     store = await openStore(directory: databaseDirectory.path);
     oscarBox = store.box<OscarWinner>();
+    nomineeBox = store.box<OscarNominee>();
+  }
+
+  Future<void> insertOscarNominee(OscarNominee nominee) async {
+    nomineeBox.put(nominee);
+  }
+
+  Future<void> insertOscarNominees(List<OscarNominee> nominees) async {
+    nomineeBox.putMany(nominees);
+  }
+
+  List<OscarNominee> getAllOscarNominees() {
+    return nomineeBox.getAll();
   }
 
   Future<void> insertOscarWinner(OscarWinner winner) async {
