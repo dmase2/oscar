@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oscars/widgets/omdb_info_box.dart';
 
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
 import '../services/omdb_service.dart';
 import '../widgets/poster_image_widget.dart';
+import '../services/database_service.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final OscarWinner oscar;
@@ -139,7 +141,7 @@ class MovieDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+
                     Text(
                       oscar.film,
                       style: Theme.of(context).textTheme.headlineSmall
@@ -155,6 +157,43 @@ class MovieDetailScreen extends StatelessWidget {
                         oscar.canonCategory,
                       ),
                     _buildDetailRow(context, 'Name', oscar.name),
+                    GestureDetector(
+                      onTap: () async {
+                        if (oscar.nomineeId.isEmpty) return;
+                        final dbService = DatabaseService.instance;
+                        final movies = dbService
+                            .getAllOscarWinners()
+                            .where((w) => w.nomineeId == oscar.nomineeId)
+                            .toList();
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text('Movies for ${oscar.nominee}'),
+                            content: SizedBox(
+                              width: 300,
+                              height: 400,
+                              child: ListView.builder(
+                                itemCount: movies.length,
+                                itemBuilder: (context, idx) {
+                                  final m = movies[idx];
+                                  return ListTile(
+                                    title: Text(m.film),
+                                    subtitle: Text('${m.yearFilm} - ${m.category}'),
+                                  );
+                                },
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Close'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: _buildDetailRow(context, 'Nominee', oscar.nominee),
+                    ),
                     _buildDetailRow(
                       context,
                       'Winner',
@@ -204,7 +243,9 @@ class MovieDetailScreen extends StatelessWidget {
                         }
                       },
                     ),
+                    OmdbInfoBox(oscar: oscar),
                     const SizedBox(height: 24),
+
                     Text(
                       'All Nominations for this Movie:',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(

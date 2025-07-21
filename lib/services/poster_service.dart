@@ -7,12 +7,16 @@ class PosterService {
     String imdbId,
   ) async {
     // Try TMDb API first, with OMDb fallback
-    final posterUrl = await TmdbService.fetchPosterUrl(movieTitle, year, imdbId: imdbId);
+    final posterUrl = await TmdbService.fetchPosterUrl(
+      movieTitle,
+      year,
+      imdbId: imdbId,
+    );
     if (posterUrl != null) {
       return posterUrl;
     }
-  // Fallback to local Oscar icon asset
-  return 'assets/images/oscar_icon.png';
+    // Fallback to local Oscar icon asset
+    return 'assets/images/image_not_found.jpeg';
   }
 
   static String _getPlaceholderPosterUrl(String movieTitle) {

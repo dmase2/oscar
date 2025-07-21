@@ -35,41 +35,6 @@ class _PosterImageWidgetState extends State<PosterImageWidget> {
 
   bool _isValidMovieTitle(String film) {
     if (film.trim().isEmpty) return false;
-    final lower = film.trim().toLowerCase();
-    final studios = [
-      'fox',
-      'paramount',
-      'warner bros.',
-      'metro-goldwyn-mayer',
-      'universal',
-      'columbia',
-      'rko',
-      'the caddo company',
-      'the jazz singer',
-      'chang',
-      'the crowd',
-      'the racket',
-      'wings',
-      'sunrise',
-      '7th heaven',
-      'the dove',
-      'tempest',
-      'sadie thompson',
-      'street angel',
-      'the last command',
-      'the way of all flesh',
-      'the patent leather kid',
-      'the noose',
-      'glorious betsy',
-      'underworld',
-      'the devil dancer',
-      'the magic flame',
-      'the private life of helen of troy',
-      'speedy',
-      'two arabian knights',
-      'sorrell and son',
-    ];
-    if (studios.contains(lower)) return false;
     return RegExp(r'[a-zA-Z]').hasMatch(film);
   }
 
@@ -86,12 +51,7 @@ class _PosterImageWidgetState extends State<PosterImageWidget> {
     final film = widget.oscar.film;
     final year = widget.oscar.yearFilm;
     final imdbId = widget.oscar.filmId;
-    String? posterUrl;
-    if (_isValidMovieTitle(film)) {
-      posterUrl = await PosterService.getPosterUrl(film, year, imdbId);
-    } else {
-      posterUrl = await PosterService.getPosterUrl('placeholder', 0, imdbId);
-    }
+    String? posterUrl = await PosterService.getPosterUrl(film, year, imdbId);
     _posterCache[cacheKey] = posterUrl;
     if (mounted) {
       setState(() {
@@ -106,17 +66,37 @@ class _PosterImageWidgetState extends State<PosterImageWidget> {
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }
-    if (_posterUrl != null) {
-      return CachedNetworkImage(
-        imageUrl: _posterUrl!,
-        fit: BoxFit.cover,
-        placeholder: (context, url) =>
-            const Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => const Center(
-          child: Icon(Icons.movie, size: 48, color: Colors.grey),
-        ),
+    Widget noPosterWidget(String assetPath) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Image.asset(
+              assetPath,
+              fit: BoxFit.contain,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'No poster found',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
+        ],
       );
     }
-    return const Center(child: Icon(Icons.movie, size: 48, color: Colors.grey));
+    if (_posterUrl != null) {
+      if (_posterUrl!.startsWith('assets/')) {
+        return noPosterWidget(_posterUrl!);
+      } else {
+        return CachedNetworkImage(
+          imageUrl: _posterUrl!,
+          fit: BoxFit.cover,
+          placeholder: (context, url) =>
+              const Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) => noPosterWidget('assets/images/image_not_found.jpeg'),
+        );
+      }
+    }
+    return noPosterWidget('assets/images/image_not_found.jpeg');
   }
 }

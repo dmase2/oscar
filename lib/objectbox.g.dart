@@ -14,7 +14,6 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'models/oscar_nominee.dart';
 import 'models/oscar_winner.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -144,106 +143,6 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
-  obx_int.ModelEntity(
-    id: const obx_int.IdUid(2, 2459203016213673531),
-    name: 'OscarNominee',
-    lastPropertyId: const obx_int.IdUid(15, 8925436586396597208),
-    flags: 0,
-    properties: <obx_int.ModelProperty>[
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 5560002609233068199),
-        name: 'id',
-        type: 6,
-        flags: 1,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 2535108734931614094),
-        name: 'ceremony',
-        type: 6,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 1848024226415554590),
-        name: 'year',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 2610054348068455737),
-        name: 'className',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 5276951054295564528),
-        name: 'canonicalCategory',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 6476668758659571600),
-        name: 'category',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 742653199524908846),
-        name: 'film',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 4309456094107321767),
-        name: 'filmId',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(9, 118226070513743172),
-        name: 'name',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(10, 942789089363596214),
-        name: 'nominees',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(11, 5965706941566128832),
-        name: 'nomineeIds',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(12, 7892643709656395772),
-        name: 'winner',
-        type: 1,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(13, 1021907084338186177),
-        name: 'detail',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(14, 2174972745671302170),
-        name: 'note',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(15, 8925436586396597208),
-        name: 'citation',
-        type: 9,
-        flags: 0,
-      ),
-    ],
-    relations: <obx_int.ModelRelation>[],
-    backlinks: <obx_int.ModelBacklink>[],
-  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -288,7 +187,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     lastIndexId: const obx_int.IdUid(0, 0),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [],
+    retiredEntityUids: const [2459203016213673531],
     retiredIndexUids: const [],
     retiredPropertyUids: const [
       2361008182485471480,
@@ -297,6 +196,21 @@ obx_int.ModelDefinition getObjectBoxModel() {
       762299298102777391,
       5497574396884656749,
       4225466359670389323,
+      5560002609233068199,
+      2535108734931614094,
+      1848024226415554590,
+      2610054348068455737,
+      5276951054295564528,
+      6476668758659571600,
+      742653199524908846,
+      4309456094107321767,
+      118226070513743172,
+      942789089363596214,
+      5965706941566128832,
+      7892643709656395772,
+      1021907084338186177,
+      2174972745671302170,
+      8925436586396597208,
     ],
     retiredRelationUids: const [],
     modelVersion: 5,
@@ -439,119 +353,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
-    OscarNominee: obx_int.EntityDefinition<OscarNominee>(
-      model: _entities[1],
-      toOneRelations: (OscarNominee object) => [],
-      toManyRelations: (OscarNominee object) => {},
-      getId: (OscarNominee object) => object.id,
-      setId: (OscarNominee object, int id) {
-        object.id = id;
-      },
-      objectToFB: (OscarNominee object, fb.Builder fbb) {
-        final yearOffset = fbb.writeString(object.year);
-        final classNameOffset = fbb.writeString(object.className);
-        final canonicalCategoryOffset = fbb.writeString(
-          object.canonicalCategory,
-        );
-        final categoryOffset = fbb.writeString(object.category);
-        final filmOffset = fbb.writeString(object.film);
-        final filmIdOffset = fbb.writeString(object.filmId);
-        final nameOffset = fbb.writeString(object.name);
-        final nomineesOffset = fbb.writeString(object.nominees);
-        final nomineeIdsOffset = fbb.writeString(object.nomineeIds);
-        final detailOffset = fbb.writeString(object.detail);
-        final noteOffset = fbb.writeString(object.note);
-        final citationOffset = fbb.writeString(object.citation);
-        fbb.startTable(16);
-        fbb.addInt64(0, object.id);
-        fbb.addInt64(1, object.ceremony);
-        fbb.addOffset(2, yearOffset);
-        fbb.addOffset(3, classNameOffset);
-        fbb.addOffset(4, canonicalCategoryOffset);
-        fbb.addOffset(5, categoryOffset);
-        fbb.addOffset(6, filmOffset);
-        fbb.addOffset(7, filmIdOffset);
-        fbb.addOffset(8, nameOffset);
-        fbb.addOffset(9, nomineesOffset);
-        fbb.addOffset(10, nomineeIdsOffset);
-        fbb.addBool(11, object.winner);
-        fbb.addOffset(12, detailOffset);
-        fbb.addOffset(13, noteOffset);
-        fbb.addOffset(14, citationOffset);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final ceremonyParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          6,
-          0,
-        );
-        final yearParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
-        final classNameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 10, '');
-        final canonicalCategoryParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 12, '');
-        final categoryParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 14, '');
-        final filmParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 16, '');
-        final filmIdParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 18, '');
-        final nameParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 20, '');
-        final nomineesParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 22, '');
-        final nomineeIdsParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 24, '');
-        final winnerParam = const fb.BoolReader().vTableGet(
-          buffer,
-          rootOffset,
-          26,
-          false,
-        );
-        final detailParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 28, '');
-        final noteParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 30, '');
-        final citationParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 32, '');
-        final object = OscarNominee(
-          ceremony: ceremonyParam,
-          year: yearParam,
-          className: classNameParam,
-          canonicalCategory: canonicalCategoryParam,
-          category: categoryParam,
-          film: filmParam,
-          filmId: filmIdParam,
-          name: nameParam,
-          nominees: nomineesParam,
-          nomineeIds: nomineeIdsParam,
-          winner: winnerParam,
-          detail: detailParam,
-          note: noteParam,
-          citation: citationParam,
-        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-
-        return object;
-      },
-    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -652,83 +453,5 @@ class OscarWinner_ {
   /// See [OscarWinner.citation].
   static final citation = obx.QueryStringProperty<OscarWinner>(
     _entities[0].properties[18],
-  );
-}
-
-/// [OscarNominee] entity fields to define ObjectBox queries.
-class OscarNominee_ {
-  /// See [OscarNominee.id].
-  static final id = obx.QueryIntegerProperty<OscarNominee>(
-    _entities[1].properties[0],
-  );
-
-  /// See [OscarNominee.ceremony].
-  static final ceremony = obx.QueryIntegerProperty<OscarNominee>(
-    _entities[1].properties[1],
-  );
-
-  /// See [OscarNominee.year].
-  static final year = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[2],
-  );
-
-  /// See [OscarNominee.className].
-  static final className = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[3],
-  );
-
-  /// See [OscarNominee.canonicalCategory].
-  static final canonicalCategory = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[4],
-  );
-
-  /// See [OscarNominee.category].
-  static final category = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[5],
-  );
-
-  /// See [OscarNominee.film].
-  static final film = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[6],
-  );
-
-  /// See [OscarNominee.filmId].
-  static final filmId = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[7],
-  );
-
-  /// See [OscarNominee.name].
-  static final name = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[8],
-  );
-
-  /// See [OscarNominee.nominees].
-  static final nominees = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[9],
-  );
-
-  /// See [OscarNominee.nomineeIds].
-  static final nomineeIds = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[10],
-  );
-
-  /// See [OscarNominee.winner].
-  static final winner = obx.QueryBooleanProperty<OscarNominee>(
-    _entities[1].properties[11],
-  );
-
-  /// See [OscarNominee.detail].
-  static final detail = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[12],
-  );
-
-  /// See [OscarNominee.note].
-  static final note = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[13],
-  );
-
-  /// See [OscarNominee.citation].
-  static final citation = obx.QueryStringProperty<OscarNominee>(
-    _entities[1].properties[14],
   );
 }

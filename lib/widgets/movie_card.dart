@@ -40,15 +40,17 @@ class MovieCard extends StatelessWidget {
               child: Hero(
                 tag:
                     'poster_${oscar.film}_${oscar.yearFilm}_${oscar.name}_${oscar.hashCode}',
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(4),
-                    ),
-                    color: Colors.grey[200],
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(4),
                   ),
-                  child: PosterImageWidget(oscar: oscar),
+                  child: Container(
+                    width: double.infinity,
+                    color: Colors.grey[200],
+                    child: SizedBox.expand(
+                      child: PosterImageWidget(oscar: oscar),
+                    ),
+                  ),
                 ),
               ),
             ),
