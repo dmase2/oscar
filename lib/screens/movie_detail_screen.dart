@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oscars/widgets/omdb_info_box.dart';
+import 'package:oscars/widgets/omdb_info_box_widget.dart';
+import 'package:oscars/widgets/oscar_detail_widget.dart';
 
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
-import '../services/omdb_service.dart';
 import '../widgets/poster_image_widget.dart';
-import '../services/database_service.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final OscarWinner oscar;
@@ -142,107 +141,8 @@ class MovieDetailScreen extends StatelessWidget {
                       ],
                     ),
 
-                    Text(
-                      oscar.film,
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(fontWeight: FontWeight.bold, fontSize: 22),
-                    ),
-                    const SizedBox(height: 16),
-                    _buildDetailRow(context, 'Year', oscar.yearFilm.toString()),
-                    _buildDetailRow(context, 'Category', oscar.category),
-                    if (oscar.category != oscar.canonCategory)
-                      _buildDetailRow(
-                        context,
-                        'Canon Category',
-                        oscar.canonCategory,
-                      ),
-                    _buildDetailRow(context, 'Name', oscar.name),
-                    GestureDetector(
-                      onTap: () async {
-                        if (oscar.nomineeId.isEmpty) return;
-                        final dbService = DatabaseService.instance;
-                        final movies = dbService
-                            .getAllOscarWinners()
-                            .where((w) => w.nomineeId == oscar.nomineeId)
-                            .toList();
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text('Movies for ${oscar.nominee}'),
-                            content: SizedBox(
-                              width: 300,
-                              height: 400,
-                              child: ListView.builder(
-                                itemCount: movies.length,
-                                itemBuilder: (context, idx) {
-                                  final m = movies[idx];
-                                  return ListTile(
-                                    title: Text(m.film),
-                                    subtitle: Text('${m.yearFilm} - ${m.category}'),
-                                  );
-                                },
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text('Close'),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      child: _buildDetailRow(context, 'Nominee', oscar.nominee),
-                    ),
-                    _buildDetailRow(
-                      context,
-                      'Winner',
-                      oscar.winner ? 'Yes' : 'No',
-                    ),
+                    OscarDetailSection(oscar: oscar),
 
-                    FutureBuilder<int?>(
-                      future: oscar.filmId.isNotEmpty
-                          ? OmdbService.fetchRottenTomatoesScore(oscar.filmId)
-                          : null,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 120,
-                                  child: Text(
-                                    'Rotten Tomatoes:',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                CircularProgressIndicator(),
-                              ],
-                            ),
-                          );
-                        } else if (snapshot.hasData && snapshot.data != null) {
-                          final score = snapshot.data!;
-                          String emoji = score >= 60 ? '🍅' : '🤢';
-                          return _buildDetailRow(
-                            context,
-                            'Rotten Tomatoes',
-                            '$emoji $score%',
-                          );
-                        } else {
-                          return _buildDetailRow(
-                            context,
-                            'Rotten Tomatoes',
-                            '🟦 N/A',
-                          );
-                        }
-                      },
-                    ),
                     OmdbInfoBox(oscar: oscar),
                     const SizedBox(height: 24),
 
@@ -312,36 +212,6 @@ class MovieDetailScreen extends StatelessWidget {
             // Navigation buttons are now next to the poster
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildDetailRow(BuildContext context, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 120,
-            child: Text(
-              '$label:',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-                fontSize: 16,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(fontSize: 16),
-            ),
-          ),
-        ],
       ),
     );
   }

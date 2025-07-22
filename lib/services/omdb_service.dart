@@ -5,14 +5,18 @@ import 'package:http/http.dart' as http;
 class OmdbService {
   /// Fetches poster URL for a movie using its IMDb ID.
   static Future<String?> fetchPosterUrl(String imdbId) async {
-    final uri = Uri.parse(_baseUrl).replace(queryParameters: {'apikey': _apiKey, 'i': imdbId});
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final posterUrl = data['Poster'];
-      if (posterUrl != null && posterUrl != 'N/A') {
-        return posterUrl as String;
+    try {
+      final uri = Uri.parse(_baseUrl).replace(queryParameters: {'apikey': _apiKey, 'i': imdbId});
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final posterUrl = data['Poster'];
+        if (posterUrl != null && posterUrl != 'N/A') {
+          return posterUrl as String;
+        }
       }
+    } catch (e) {
+      print('OMDb HTTP Exception: $e');
     }
     return null;
   }

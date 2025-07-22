@@ -40,33 +40,41 @@ class TmdbService {
       'year': year.toString(),
     };
     final uri = Uri.parse(_baseUrl).replace(queryParameters: queryParameters);
-    print('TMDb REQUEST: $uri');
-    final response = await http.get(uri);
-    print('TMDb RESPONSE (${response.statusCode}): ${response.body}');
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (data['results'] != null && data['results'].isNotEmpty) {
-        final posterPath = data['results'][0]['poster_path'];
-        if (posterPath != null) {
-          final posterUrl = '$_imageBaseUrl$posterPath';
-          print('TMDb POSTER URL: $posterUrl');
-          return posterUrl;
+    try {
+      print('TMDb REQUEST: $uri');
+      final response = await http.get(uri);
+      print('TMDb RESPONSE (${response.statusCode}): ${response.body}');
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['results'] != null && data['results'].isNotEmpty) {
+          final posterPath = data['results'][0]['poster_path'];
+          if (posterPath != null) {
+            final posterUrl = '$_imageBaseUrl$posterPath';
+            print('TMDb POSTER URL: $posterUrl');
+            return posterUrl;
+          } else {
+            print('TMDb NO POSTER PATH for "$title" ($year)');
+          }
         } else {
-          print('TMDb NO POSTER PATH for "$title" ($year)');
+          print('TMDb NO RESULTS for "$title" ($year)');
         }
       } else {
-        print('TMDb NO RESULTS for "$title" ($year)');
+        print('TMDb ERROR: HTTP ${response.statusCode}');
       }
-    } else {
-      print('TMDb ERROR: HTTP ${response.statusCode}');
+    } catch (e) {
+      print('TMDb HTTP Exception: $e');
     }
     // Try OMDb as fallback
     if (imdbId != null && imdbId.isNotEmpty) {
-      print('Trying OMDb for poster...');
-      final omdbPoster = await OmdbService.fetchPosterUrl(imdbId);
-      if (omdbPoster != null) {
-        print('OMDb POSTER URL: $omdbPoster');
-        return omdbPoster;
+      try {
+        print('Trying OMDb for poster...');
+        final omdbPoster = await OmdbService.fetchPosterUrl(imdbId);
+        if (omdbPoster != null) {
+          print('OMDb POSTER URL: $omdbPoster');
+          return omdbPoster;
+        }
+      } catch (e) {
+        print('OMDb HTTP Exception: $e');
       }
     }
     return null;

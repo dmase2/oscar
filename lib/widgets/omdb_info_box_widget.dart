@@ -31,7 +31,7 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Additional information',
+                  'Movie Details',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Icon(expanded ? Icons.expand_less : Icons.expand_more),

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oscars/services/oscar_winner_from_nominee_csv_service.dart';
 
 import '../models/oscar_winner.dart';
-import '../services/csv_data_service.dart';
 import '../services/database_service.dart';
 
 final databaseServiceProvider = Provider<DatabaseService>((ref) {
@@ -11,7 +11,8 @@ final databaseServiceProvider = Provider<DatabaseService>((ref) {
 final oscarDataProvider = FutureProvider<List<OscarWinner>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
   if (dbService.isEmpty) {
-    final oscarWinners = await CsvDataService.loadOscarData();
+    final oscarWinners =
+        await OscarWinnerFromNomineeCsvService.loadOscarWinnersFromNomineeCsv();
     // Optionally fetch poster URLs if needed, using film and yearFilm
     // for (final winner in oscarWinners) {
     //   winner.posterUrl = await PosterService.getPosterUrl(winner.film, winner.yearFilm);
@@ -31,15 +32,17 @@ final oscarsByDecadeProvider = FutureProvider.family<List<OscarWinner>, int>((
 });
 
 final availableDecadesProvider = FutureProvider<List<int>>((ref) async {
-  // Load directly from CSV to ensure all decades are included
-  final oscarWinners = await CsvDataService.loadOscarData();
+  // Use ObjectBox DB to get all available decades
+  final dbService = ref.read(databaseServiceProvider);
+  await ref.read(oscarDataProvider.future); // Ensure DB is populated
+  final oscarWinners = dbService.getAllOscarWinners();
   final decades = <int>{};
   for (final oscar in oscarWinners) {
     final decade = (oscar.yearFilm ~/ 10) * 10;
     decades.add(decade);
   }
   final sortedDecades = decades.toList()..sort();
-  print('DEBUG: Available decades: $sortedDecades');
+  print('DEBUG: Available decades (from DB): $sortedDecades');
   return sortedDecades;
 });
 

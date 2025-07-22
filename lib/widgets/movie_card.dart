@@ -77,7 +77,11 @@ class MovieCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    oscar.name,
+                    (oscar.category.trim().toLowerCase() ==
+                                'music (original song)' &&
+                            oscar.detail.isNotEmpty)
+                        ? '${oscar.detail} - ${oscar.name}'
+                        : oscar.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.grey[600],
                       fontSize: 10,
