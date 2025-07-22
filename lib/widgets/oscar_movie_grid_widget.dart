@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../models/oscar_winner.dart';
-import 'movie_card.dart';
+import 'movie_card_widget.dart';
 
 class OscarMovieGrid extends StatelessWidget {
   final List<OscarWinner> oscars;
@@ -20,11 +21,7 @@ class OscarMovieGrid extends StatelessWidget {
       itemCount: oscars.length,
       itemBuilder: (context, index) {
         final oscar = oscars[index];
-        return MovieCard(
-          oscar: oscar,
-          allOscars: oscars,
-          currentIndex: index,
-        );
+        return MovieCard(oscar: oscar, allOscars: oscars, currentIndex: index);
       },
     );
   }

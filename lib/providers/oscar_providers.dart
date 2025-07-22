@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oscars/services/oscar_winner_from_nominee_csv_service.dart';
+import 'package:oscars/services/build_oscar_winner.dart';
 
 import '../models/oscar_winner.dart';
 import '../services/database_service.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/oscar_providers.dart';
-import '../widgets/oscar_movie_grid.dart';
+import '../widgets/oscar_movie_grid_widget.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
