@@ -19,6 +19,7 @@ class OscarWinner {
   String detail;
   String note;
   String citation;
+  String? className;
 
   double? domesticBoxOffice;
   double? foreignBoxOffice;
@@ -44,5 +45,6 @@ class OscarWinner {
     this.foreignBoxOffice,
     this.totalBoxOffice,
     this.rottenTomatoesScore,
+    this.className,
   });
 }

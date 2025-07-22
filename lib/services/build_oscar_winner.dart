@@ -91,11 +91,15 @@ class OscarWinnerFromNomineeCsvService {
           foreignBoxOffice: 0.0,
           totalBoxOffice: 0.0,
           rottenTomatoesScore: 0,
+          className: map['class'] ?? '',
         );
         winners.add(winner);
         // Debug print for Best Actor in 2020s
-        if (winner.canonCategory.toUpperCase().contains('ACTOR') && winner.yearFilm >= 2020) {
-          print('[DEBUG] 2020s ACTOR: year=${winner.yearFilm}, canonCategory=${winner.canonCategory}, name=${winner.name}, film=${winner.film}');
+        if (winner.canonCategory.toUpperCase().contains('ACTOR') &&
+            winner.yearFilm >= 2020) {
+          print(
+            '[DEBUG] 2020s ACTOR: year=${winner.yearFilm}, canonCategory=${winner.canonCategory}, name=${winner.name}, film=${winner.film}',
+          );
         }
         print(
           'Added row $i: '

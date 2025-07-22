@@ -5,6 +5,7 @@ import 'package:oscars/services/build_oscar_winner.dart';
 
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
+import '../widgets/oscars_app_drawer_widget.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -35,28 +36,7 @@ class SettingsScreen extends ConsumerWidget {
         title: const Text('Settings'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              title: const Text('Home'),
-              leading: const Icon(Icons.home),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, '/');
-              },
-            ),
-            ListTile(
-              title: const Text('Settings'),
-              leading: const Icon(Icons.settings),
-              selected: true,
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const OscarsAppDrawer(selected: 'settings'),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(

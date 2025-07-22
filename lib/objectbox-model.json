@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:8232101523916932536",
-      "lastPropertyId": "25:7123548951000554098",
+      "lastPropertyId": "26:7681367909226594154",
       "name": "OscarWinner",
       "properties": [
         {
@@ -102,6 +102,11 @@
         {
           "id": "25:7123548951000554098",
           "name": "citation",
+          "type": 9
+        },
+        {
+          "id": "26:7681367909226594154",
+          "name": "className",
           "type": 9
         }
       ],

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/oscar_providers.dart';
 import '../widgets/oscar_movie_grid_widget.dart';
-import 'settings_screen.dart';
+import '../widgets/oscars_app_drawer_widget.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -12,8 +12,14 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDecade = ref.watch(selectedDecadeProvider);
     final availableDecadesAsync = ref.watch(availableDecadesProvider);
-    final oscarsByDecadeAsync = ref.watch(
-      oscarsByDecadeProvider(selectedDecade),
+    final selectedYear = ref.watch(selectedYearProvider);
+    // Get all years for the selected decade
+    final availableYearsAsync = ref.watch(availableYearsProvider);
+    final oscarsByDecadeAndYearAsync = ref.watch(
+      oscarsByDecadeAndYearProvider({
+        'decade': selectedDecade,
+        'year': selectedYear,
+      }),
     );
     final selectedCategory = ref.watch(_selectedCategoryProvider);
     final showOnlyWinners = ref.watch(_showOnlyWinnersProvider);
@@ -24,12 +30,14 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         toolbarHeight: 60, // Reset to default or smaller height
         actions: [
+          // Decade dropdown
           availableDecadesAsync.when(
             data: (decades) {
-              final sortedDecades = [...decades]..sort();
+              final sortedDecades = [...decades]..sort((a, b) => b.compareTo(a));
               return PopupMenuButton<int>(
                 onSelected: (decade) {
                   ref.read(selectedDecadeProvider.notifier).state = decade;
+                  ref.read(selectedYearProvider.notifier).state = null; // Reset year when decade changes
                 },
                 itemBuilder: (context) => sortedDecades
                     .map(
@@ -64,25 +72,45 @@ class HomeScreen extends ConsumerWidget {
             loading: () => const CircularProgressIndicator(),
             error: (error, stack) => const Icon(Icons.error),
           ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            tooltip: 'Settings',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+          // Year dropdown (only years in selected decade)
+          availableYearsAsync.when(
+            data: (years) {
+              final yearsInDecade = years.where((y) => y >= selectedDecade && y < selectedDecade + 10).toList();
+              yearsInDecade.sort((a, b) => b.compareTo(a));
+              return DropdownButton<int?>(
+                value: selectedYear,
+                hint: const Text('All Years'),
+                items: [
+                  const DropdownMenuItem<int?>(
+                    value: null,
+                    child: Text('All Years'),
+                  ),
+                  ...yearsInDecade.map((y) => DropdownMenuItem<int?>(
+                        value: y,
+                        child: Text(y.toString()),
+                      )),
+                ],
+                onChanged: (value) {
+                  ref.read(selectedYearProvider.notifier).state = value;
+                },
+                underline: Container(),
+                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                dropdownColor: Colors.white,
               );
             },
+            loading: () => const SizedBox.shrink(),
+            error: (error, stack) => const SizedBox.shrink(),
           ),
         ],
       ),
+      drawer: const OscarsAppDrawer(selected: 'home'),
       body: Column(
         children: [
-          oscarsByDecadeAsync.when(
+          // Category and winner filter row (same as before, but use oscarsByDecadeAndYearAsync)
+          oscarsByDecadeAndYearAsync.when(
             data: (oscars) {
               final canonCategories =
                   oscars.map((o) => o.canonCategory).toSet().toList()..sort();
-              // If the selected category is not in the new list, reset it
               if (selectedCategory != null &&
                   !canonCategories.contains(selectedCategory)) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -142,7 +170,7 @@ class HomeScreen extends ConsumerWidget {
             error: (error, stack) => const SizedBox.shrink(),
           ),
           Expanded(
-            child: oscarsByDecadeAsync.when(
+            child: oscarsByDecadeAndYearAsync.when(
               data: (oscars) {
                 final filtered = oscars.where((oscar) {
                   if (selectedCategory == null) {
@@ -155,7 +183,7 @@ class HomeScreen extends ConsumerWidget {
                 return filtered.isEmpty
                     ? const Center(
                         child: Text(
-                          'No nominees found for this category and decade',
+                          'No nominees found for this category and filter',
                         ),
                       )
                     : OscarMovieGrid(oscars: filtered);
@@ -171,7 +199,10 @@ class HomeScreen extends ConsumerWidget {
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () =>
-                          ref.refresh(oscarsByDecadeProvider(selectedDecade)),
+                          ref.refresh(oscarsByDecadeAndYearProvider({
+                            'decade': selectedDecade,
+                            'year': selectedYear,
+                          })),
                       child: const Text('Retry'),
                     ),
                   ],

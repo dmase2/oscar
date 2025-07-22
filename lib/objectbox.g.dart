@@ -22,7 +22,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(1, 8232101523916932536),
     name: 'OscarWinner',
-    lastPropertyId: const obx_int.IdUid(25, 7123548951000554098),
+    lastPropertyId: const obx_int.IdUid(26, 7681367909226594154),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -139,6 +139,12 @@ final _entities = <obx_int.ModelEntity>[
         type: 9,
         flags: 0,
       ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(26, 7681367909226594154),
+        name: 'className',
+        type: 9,
+        flags: 0,
+      ),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
@@ -238,7 +244,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final detailOffset = fbb.writeString(object.detail);
         final noteOffset = fbb.writeString(object.note);
         final citationOffset = fbb.writeString(object.citation);
-        fbb.startTable(26);
+        final classNameOffset = object.className == null
+            ? null
+            : fbb.writeString(object.className!);
+        fbb.startTable(27);
         fbb.addInt64(0, object.id);
         fbb.addOffset(3, categoryOffset);
         fbb.addBool(4, object.winner);
@@ -258,6 +267,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(22, detailOffset);
         fbb.addOffset(23, noteOffset);
         fbb.addOffset(24, citationOffset);
+        fbb.addOffset(25, classNameOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -329,6 +339,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         );
         final rottenTomatoesScoreParam = const fb.Int64Reader()
             .vTableGetNullable(buffer, rootOffset, 38);
+        final classNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 54);
         final object = OscarWinner(
           yearFilm: yearFilmParam,
           yearCeremony: yearCeremonyParam,
@@ -348,6 +361,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           foreignBoxOffice: foreignBoxOfficeParam,
           totalBoxOffice: totalBoxOfficeParam,
           rottenTomatoesScore: rottenTomatoesScoreParam,
+          className: classNameParam,
         )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
         return object;
@@ -453,5 +467,10 @@ class OscarWinner_ {
   /// See [OscarWinner.citation].
   static final citation = obx.QueryStringProperty<OscarWinner>(
     _entities[0].properties[18],
+  );
+
+  /// See [OscarWinner.className].
+  static final className = obx.QueryStringProperty<OscarWinner>(
+    _entities[0].properties[19],
   );
 }

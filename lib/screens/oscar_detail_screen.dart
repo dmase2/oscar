@@ -5,6 +5,7 @@ import 'package:oscars/widgets/oscar_detail_widget.dart';
 
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
+import '../widgets/oscars_app_drawer_widget.dart';
 import '../widgets/poster_image_widget.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -32,6 +33,7 @@ class MovieDetailScreen extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
+      drawer: const OscarsAppDrawer(),
       body: GestureDetector(
         onHorizontalDragEnd: (details) {
           if (allOscars != null && currentIndex != null) {
