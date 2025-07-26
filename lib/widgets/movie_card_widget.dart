@@ -97,8 +97,21 @@ class _MovieCardState extends State<MovieCard> {
     final oscar = widget.oscar;
     final allOscars = widget.allOscars;
     final currentIndex = widget.currentIndex;
+    final isWinner = oscar.winner == true;
     return Card(
-      elevation: 4,
+      elevation: isWinner ? 10 : 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+        side: isWinner
+            ? const BorderSide(
+                color: Color.fromARGB(255, 190, 140, 2),
+                width: 3,
+              ) // Gold
+            : BorderSide.none,
+      ),
+      shadowColor: isWinner
+          ? const Color.fromARGB(255, 198, 162, 4)
+          : Colors.black,
       child: InkWell(
         onTap: () {
           Navigator.push(
