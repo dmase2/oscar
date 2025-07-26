@@ -10,6 +10,11 @@ class OscarMovieGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use InheritedWidget or pass filterKey from parent for more complex cases
+    // For now, just use a hash of the oscars list and index for uniqueness
+    final filterKey = oscars.isNotEmpty
+        ? '${oscars.first.canonCategory}_${oscars.first.yearFilm}_${oscars.length}'
+        : '';
     return GridView.builder(
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -21,7 +26,12 @@ class OscarMovieGrid extends StatelessWidget {
       itemCount: oscars.length,
       itemBuilder: (context, index) {
         final oscar = oscars[index];
-        return MovieCard(oscar: oscar, allOscars: oscars, currentIndex: index);
+        return MovieCard(
+          oscar: oscar,
+          allOscars: oscars,
+          currentIndex: index,
+          filterKey: filterKey,
+        );
       },
     );
   }

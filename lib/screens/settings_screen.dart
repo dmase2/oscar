@@ -42,6 +42,7 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Learn Mode switch moved to drawer
             ElevatedButton(
               onPressed: () => _clearDatabase(context, ref),
               child: const Text('Clear ObjectBox Database'),

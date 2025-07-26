@@ -1,23 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/oscar_winner.dart';
+import '../providers/oscar_providers.dart';
 import '../screens/oscar_detail_screen.dart';
 import 'poster_image_widget.dart';
 
-class MovieCard extends StatelessWidget {
+class MovieCard extends StatefulWidget {
   final OscarWinner oscar;
   final List<OscarWinner>? allOscars;
   final int? currentIndex;
+  final Object? filterKey;
 
   const MovieCard({
     super.key,
     required this.oscar,
     this.allOscars,
     this.currentIndex,
+    this.filterKey,
   });
 
   @override
+  State<MovieCard> createState() => _MovieCardState();
+}
+
+class _MovieCardState extends State<MovieCard> {
+  bool _revealed = false;
+  Object? _lastFilterKey;
+
+  @override
   Widget build(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, _) {
+        final learnMode = ref.watch(learnModeProvider);
+        // Reset shade if filterKey changes and learnMode is true
+        if (learnMode) {
+          if (_lastFilterKey != widget.filterKey) {
+            _revealed = false;
+            _lastFilterKey = widget.filterKey;
+          }
+        }
+        if (learnMode && !_revealed) {
+          return Stack(
+            children: [
+              Opacity(opacity: 0.2, child: _buildCard(context)),
+              Positioned.fill(
+                child: Material(
+                  color: Colors.black.withOpacity(0.5),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _revealed = true;
+                      });
+                    },
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            '${widget.oscar.yearFilm}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            widget.oscar.film.substring(0, 1),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 32,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Tap to Reveal',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return _buildCard(context);
+        }
+      },
+    );
+  }
+
+  Widget _buildCard(BuildContext context) {
+    final oscar = widget.oscar;
+    final allOscars = widget.allOscars;
+    final currentIndex = widget.currentIndex;
     return Card(
       elevation: 4,
       child: InkWell(
@@ -44,11 +123,17 @@ class MovieCard extends StatelessWidget {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(4),
                   ),
-                  child: Container(
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    child: SizedBox.expand(
-                      child: PosterImageWidget(oscar: oscar),
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Tooltip(
+                      message: 'Click for Details',
+                      child: Container(
+                        width: double.infinity,
+                        color: Colors.grey[200],
+                        child: SizedBox.expand(
+                          child: PosterImageWidget(oscar: oscar),
+                        ),
+                      ),
                     ),
                   ),
                 ),

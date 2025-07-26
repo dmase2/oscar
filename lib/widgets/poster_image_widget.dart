@@ -67,33 +67,42 @@ class _PosterImageWidgetState extends State<PosterImageWidget> {
       return const Center(child: CircularProgressIndicator());
     }
     Widget noPosterWidget(String assetPath) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Image.asset(
-              assetPath,
-              fit: BoxFit.contain,
-            ),
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Tooltip(
+          message: 'Click for Details',
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(child: Image.asset(assetPath, fit: BoxFit.contain)),
+              const SizedBox(height: 8),
+              Text(
+                'No poster found',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            'No poster found',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
-        ],
+        ),
       );
     }
+
     if (_posterUrl != null) {
       if (_posterUrl!.startsWith('assets/')) {
         return noPosterWidget(_posterUrl!);
       } else {
-        return CachedNetworkImage(
-          imageUrl: _posterUrl!,
-          fit: BoxFit.cover,
-          placeholder: (context, url) =>
-              const Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => noPosterWidget('assets/images/image_not_found.jpeg'),
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Tooltip(
+            message: 'Click for Details',
+            child: CachedNetworkImage(
+              imageUrl: _posterUrl!,
+              fit: BoxFit.cover,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) =>
+                  noPosterWidget('assets/images/image_not_found.jpeg'),
+            ),
+          ),
         );
       }
     }

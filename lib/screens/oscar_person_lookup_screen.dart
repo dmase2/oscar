@@ -4,6 +4,7 @@ import 'package:oscars/models/oscar_winner.dart';
 import 'package:oscars/services/database_service.dart';
 
 import '../widgets/oscars_app_drawer_widget.dart';
+import '../widgets/summary_chip_widget.dart';
 
 class OscarPersonLookupScreen extends StatefulWidget {
   const OscarPersonLookupScreen({super.key});
@@ -103,8 +104,10 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
 
             if (_selectedPerson != null) ...[
               Text(
-                'Nominations & Wins for ${_selectedPerson?.nominee ?? ''}',
-                style: Theme.of(context).textTheme.titleMedium,
+                _selectedPerson?.nominee ?? '',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
 
@@ -117,36 +120,27 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
                       .where((n) => n.className?.toLowerCase() != 'special')
                       .toList();
                   final winCount = regularNoms.where((n) => n.winner).length;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  return Row(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Nominations: ${regularNoms.length}',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(width: 24),
-                          Text(
-                            'Wins: $winCount',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          if (specialAwards.isNotEmpty) ...[
-                            const SizedBox(width: 24),
-                            Text(
-                              'Special Awards: ${specialAwards.length}',
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.deepPurple,
-                                  ),
-                            ),
-                          ],
-                        ],
+                      SummaryChip(
+                        label: 'Nominations',
+                        count: regularNoms.length,
+                        color: Colors.blue,
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(width: 12),
+                      SummaryChip(
+                        label: 'Wins',
+                        count: winCount,
+                        color: Colors.amber,
+                      ),
+                      if (specialAwards.isNotEmpty) ...[
+                        const SizedBox(width: 12),
+                        SummaryChip(
+                          label: 'Special Awards',
+                          count: specialAwards.length,
+                          color: Colors.green,
+                        ),
+                      ],
                     ],
                   );
                 },

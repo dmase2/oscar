@@ -7,6 +7,7 @@ import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
 import '../widgets/oscars_app_drawer_widget.dart';
 import '../widgets/poster_image_widget.dart';
+import '../widgets/summary_chip_widget.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final OscarWinner oscar;
@@ -114,7 +115,11 @@ class MovieDetailScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                   color: Colors.grey[200],
                                 ),
-                                child: PosterImageWidget(oscar: oscar),
+                                child: GestureDetector(
+                                  child: PosterImageWidget(oscar: oscar),
+                                  onTap: () =>
+                                      showOmdbInfoDialog(context, oscar),
+                                ),
                               ),
                             ),
                           ),
@@ -145,9 +150,6 @@ class MovieDetailScreen extends StatelessWidget {
 
                     OscarDetailSection(oscar: oscar),
 
-                    OmdbInfoBox(oscar: oscar),
-                    const SizedBox(height: 24),
-
                     Text(
                       'All Nominations for this Movie:',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -155,6 +157,63 @@ class MovieDetailScreen extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
+                    // --- SUMMARY SECTION ---
+                    Consumer(
+                      builder: (context, ref, _) {
+                        final allOscarsAsync = ref.watch(oscarDataProvider);
+                        return allOscarsAsync.when(
+                          data: (allOscarsData) {
+                            final nominations = allOscarsData
+                                .where(
+                                  (o) =>
+                                      o.film.trim().toLowerCase() ==
+                                      oscar.film.trim().toLowerCase(),
+                                )
+                                .toList();
+                            final wins = nominations
+                                .where((n) => n.winner)
+                                .length;
+                            final specialAwards = nominations
+                                .where(
+                                  (n) =>
+                                      n.className?.toLowerCase() == 'special',
+                                )
+                                .length;
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12.0,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SummaryChip(
+                                    label: 'Nominations',
+                                    count: nominations.length,
+                                    color: Colors.blue,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  SummaryChip(
+                                    label: 'Wins',
+                                    count: wins,
+                                    color: Colors.amber,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  SummaryChip(
+                                    label: 'Special Awards',
+                                    count: specialAwards,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          loading: () => const SizedBox(height: 40),
+                          error: (error, stack) => const SizedBox(height: 40),
+                        );
+                      },
+                    ),
+
+                    // --- END SUMMARY SECTION ---
                     Consumer(
                       builder: (context, ref, _) {
                         final allOscarsAsync = ref.watch(oscarDataProvider);
