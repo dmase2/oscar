@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 import '../models/oscar_winner.dart';
+import '../models/poster_cache_entry.dart';
 import '../objectbox.g.dart';
 
 class DatabaseService {
@@ -11,14 +12,21 @@ class DatabaseService {
 
   late final Store store;
   late final Box<OscarWinner> oscarBox;
+  late final Box<PosterCacheEntry> posterCacheBox;
 
   DatabaseService._();
 
   Future<void> initialize() async {
     final documentsDirectory = await getApplicationDocumentsDirectory();
     final databaseDirectory = Directory('${documentsDirectory.path}/objectbox');
-    store = await openStore(directory: databaseDirectory.path);
+    // Fix: Pass macosApplicationGroup for macOS sandboxed apps
+    store = await openStore(
+      directory: databaseDirectory.path,
+      macosApplicationGroup:
+          'com.example.oscars', // <= Set your app group here, must match entitlements
+    );
     oscarBox = store.box<OscarWinner>();
+    posterCacheBox = store.box<PosterCacheEntry>();
   }
 
   Future<void> insertOscarWinner(OscarWinner winner) async {

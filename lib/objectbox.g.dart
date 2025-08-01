@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/oscar_winner.dart';
+import 'models/poster_cache_entry.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -149,6 +150,40 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(3, 3569360787595156578),
+    name: 'PosterCacheEntry',
+    lastPropertyId: const obx_int.IdUid(4, 4766363140225024030),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 5617119166846504504),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 3885365119186629078),
+        name: 'cacheKey',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 3925845484080257619),
+        name: 'posterUrl',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 4766363140225024030),
+        name: 'updatedAt',
+        type: 10,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -189,7 +224,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(2, 2459203016213673531),
+    lastEntityId: const obx_int.IdUid(3, 3569360787595156578),
     lastIndexId: const obx_int.IdUid(0, 0),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -367,6 +402,48 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    PosterCacheEntry: obx_int.EntityDefinition<PosterCacheEntry>(
+      model: _entities[1],
+      toOneRelations: (PosterCacheEntry object) => [],
+      toManyRelations: (PosterCacheEntry object) => {},
+      getId: (PosterCacheEntry object) => object.id,
+      setId: (PosterCacheEntry object, int id) {
+        object.id = id;
+      },
+      objectToFB: (PosterCacheEntry object, fb.Builder fbb) {
+        final cacheKeyOffset = fbb.writeString(object.cacheKey);
+        final posterUrlOffset = object.posterUrl == null
+            ? null
+            : fbb.writeString(object.posterUrl!);
+        fbb.startTable(5);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, cacheKeyOffset);
+        fbb.addOffset(2, posterUrlOffset);
+        fbb.addInt64(3, object.updatedAt.millisecondsSinceEpoch);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final cacheKeyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final posterUrlParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0),
+        );
+        final object = PosterCacheEntry(
+          cacheKey: cacheKeyParam,
+          posterUrl: posterUrlParam,
+          updatedAt: updatedAtParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -472,5 +549,28 @@ class OscarWinner_ {
   /// See [OscarWinner.className].
   static final className = obx.QueryStringProperty<OscarWinner>(
     _entities[0].properties[19],
+  );
+}
+
+/// [PosterCacheEntry] entity fields to define ObjectBox queries.
+class PosterCacheEntry_ {
+  /// See [PosterCacheEntry.id].
+  static final id = obx.QueryIntegerProperty<PosterCacheEntry>(
+    _entities[1].properties[0],
+  );
+
+  /// See [PosterCacheEntry.cacheKey].
+  static final cacheKey = obx.QueryStringProperty<PosterCacheEntry>(
+    _entities[1].properties[1],
+  );
+
+  /// See [PosterCacheEntry.posterUrl].
+  static final posterUrl = obx.QueryStringProperty<PosterCacheEntry>(
+    _entities[1].properties[2],
+  );
+
+  /// See [PosterCacheEntry.updatedAt].
+  static final updatedAt = obx.QueryDateProperty<PosterCacheEntry>(
+    _entities[1].properties[3],
   );
 }

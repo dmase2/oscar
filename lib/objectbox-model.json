@@ -111,9 +111,38 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "3:3569360787595156578",
+      "lastPropertyId": "4:4766363140225024030",
+      "name": "PosterCacheEntry",
+      "properties": [
+        {
+          "id": "1:5617119166846504504",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3885365119186629078",
+          "name": "cacheKey",
+          "type": 9
+        },
+        {
+          "id": "3:3925845484080257619",
+          "name": "posterUrl",
+          "type": 9
+        },
+        {
+          "id": "4:4766363140225024030",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:2459203016213673531",
+  "lastEntityId": "3:3569360787595156578",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
