@@ -29,7 +29,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/data/oscar_songs.csv
-    - assets/data/oscar_winner99.csv
     - assets/data/oscar_nominee.csv
     - assets/images/image_not_found.jpeg

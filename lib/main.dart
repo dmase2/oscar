@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'screens/oscars_home_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/statistics_screen.dart';
 import 'services/database_service.dart';
 
 void main() async {
@@ -26,6 +27,7 @@ class MainApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomeScreen(),
         '/settings': (context) => const SettingsScreen(),
+        '/statistics': (context) => const StatisticsScreen(),
       },
     );
   }

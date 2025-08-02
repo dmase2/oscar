@@ -40,6 +40,15 @@ class OscarsAppDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  title: const Text('Statistics'),
+                  leading: const Icon(Icons.bar_chart),
+                  selected: selected == 'statistics',
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, '/statistics');
+                  },
+                ),
+                ListTile(
                   title: const Text('Settings'),
                   leading: const Icon(Icons.settings),
                   selected: selected == 'settings',
