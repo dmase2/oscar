@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
+import '../providers/shade_opacity_provider.dart';
 import '../screens/oscar_detail_screen.dart';
 import 'poster_image_widget.dart';
 
@@ -33,6 +34,7 @@ class _MovieCardState extends State<MovieCard> {
     return Consumer(
       builder: (context, ref, _) {
         final learnMode = ref.watch(learnModeProvider);
+        final shadeOpacity = ref.watch(shadeOpacityProvider);
         // Reset shade if filterKey changes and learnMode is true
         if (learnMode) {
           if (_lastFilterKey != widget.filterKey) {
@@ -46,7 +48,7 @@ class _MovieCardState extends State<MovieCard> {
               Opacity(opacity: 0.2, child: _buildCard(context)),
               Positioned.fill(
                 child: Material(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(shadeOpacity),
                   child: InkWell(
                     onTap: () {
                       setState(() {
@@ -69,15 +71,11 @@ class _MovieCardState extends State<MovieCard> {
                             widget.oscar.film.substring(0, 1),
                             style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 32,
+                              fontSize: 48,
                             ),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 8),
-                          const Text(
-                            'Tap to Reveal',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
                         ],
                       ),
                     ),

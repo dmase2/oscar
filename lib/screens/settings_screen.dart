@@ -5,6 +5,7 @@ import 'package:oscars/services/build_oscar_winner.dart';
 
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
+import '../providers/shade_opacity_provider.dart';
 import '../widgets/oscars_app_drawer_widget.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -39,10 +40,38 @@ class SettingsScreen extends ConsumerWidget {
       drawer: const OscarsAppDrawer(selected: 'settings'),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
           children: [
-            // Learn Mode switch moved to drawer
+            // Persistent slider for shade opacity in learning mode
+            const Text(
+              'Learning Mode Shade Opacity',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Consumer(
+              builder: (context, ref, _) {
+                final opacity = ref.watch(shadeOpacityProvider);
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Slider(
+                      value: opacity,
+                      min: 0.1,
+                      max: 1.0,
+                      divisions: 18,
+                      label: opacity.toStringAsFixed(2),
+                      onChanged: (value) {
+                        ref
+                            .read(shadeOpacityProvider.notifier)
+                            .setOpacity(value);
+                      },
+                    ),
+                    Text('Current: ${(opacity * 100).toStringAsFixed(0)}%'),
+                  ],
+                );
+              },
+            ),
+            const Divider(height: 32),
             ElevatedButton(
               onPressed: () => _clearDatabase(context, ref),
               child: const Text('Clear ObjectBox Database'),
@@ -56,12 +85,7 @@ class SettingsScreen extends ConsumerWidget {
             ElevatedButton(
               onPressed: () {
                 final dbService = ref.read(databaseServiceProvider);
-                final records = dbService.getAllOscarWinners();
-                for (final record in records) {
-                  debugPrint(
-                    'OscarWinner: ${record.yearFilm}, ${record.yearCeremony}, ${record.ceremony}, ${record.category}, ${record.canonCategory}, ${record.name}, ${record.film}, ${record.filmId}, ${record.nominee}, ${record.nomineeId}, ${record.winner}, ${record.detail}, ${record.note}, ${record.citation}',
-                  );
-                }
+                dbService.getAllOscarWinners();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Printed ObjectBox records to console.'),
