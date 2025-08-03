@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oscars/models/oscar_winner.dart';
-import 'package:oscars/services/database_service.dart';
+import 'package:oscars/services/omdb_service.dart';
+import 'package:oscars/widgets/nominee_nominations_dialog.dart';
 
 class OscarDetailSection extends StatefulWidget {
   final OscarWinner oscar;
@@ -11,27 +12,6 @@ class OscarDetailSection extends StatefulWidget {
 }
 
 class _OscarDetailSectionState extends State<OscarDetailSection> {
-  void _onNomineeButtonPressed(
-    BuildContext context,
-    String nomineeName,
-    String nomineeId,
-  ) {
-    // Example: show a dialog or perform any action with nomineeName and nomineeId
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Nominee Info'),
-        content: Text('Name: $nomineeName\nID: $nomineeId'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
-  }
-
   bool _expanded = true;
 
   @override
@@ -174,50 +154,50 @@ class _OscarDetailSectionState extends State<OscarDetailSection> {
                     'Winner',
                     widget.oscar.winner ? 'Yes' : 'No',
                   ),
-                  // FutureBuilder<int?>(
-                  //   future: widget.oscar.filmId.isNotEmpty
-                  //       ? OmdbService.fetchRottenTomatoesScore(
-                  //           widget.oscar.filmId,
-                  //         )
-                  //       : null,
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.connectionState == ConnectionState.waiting) {
-                  //       return const Padding(
-                  //         padding: EdgeInsets.symmetric(vertical: 8.0),
-                  //         child: Row(
-                  //           children: [
-                  //             SizedBox(
-                  //               width: 120,
-                  //               child: Text(
-                  //                 'Rotten Tomatoes:',
-                  //                 style: TextStyle(
-                  //                   fontWeight: FontWeight.bold,
-                  //                   color: Colors.grey,
-                  //                   fontSize: 16,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             CircularProgressIndicator(),
-                  //           ],
-                  //         ),
-                  //       );
-                  //     } else if (snapshot.hasData && snapshot.data != null) {
-                  //       final score = snapshot.data!;
-                  //       String emoji = score >= 60 ? '🍅' : '🤢';
-                  //       return _buildDetailRow(
-                  //         context,
-                  //         'Rotten Tomatoes',
-                  //         '$emoji $score%',
-                  //       );
-                  //     } else {
-                  //       return _buildDetailRow(
-                  //         context,
-                  //         'Rotten Tomatoes',
-                  //         '🟦 N/A',
-                  //       );
-                  //     }
-                  //   },
-                  // ),
+                  FutureBuilder<int?>(
+                    future: widget.oscar.filmId.isNotEmpty
+                        ? OmdbService.fetchRottenTomatoesScore(
+                            widget.oscar.filmId,
+                          )
+                        : null,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 120,
+                                child: Text(
+                                  'Rotten Tomatoes:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              CircularProgressIndicator(),
+                            ],
+                          ),
+                        );
+                      } else if (snapshot.hasData && snapshot.data != null) {
+                        final score = snapshot.data!;
+                        String emoji = score >= 60 ? '🍅' : '🤢';
+                        return _buildDetailRow(
+                          context,
+                          'Rotten Tomatoes',
+                          '$emoji $score%',
+                        );
+                      } else {
+                        return _buildDetailRow(
+                          context,
+                          'Rotten Tomatoes',
+                          '🟦 N/A',
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
@@ -235,43 +215,12 @@ class _OscarDetailSectionState extends State<OscarDetailSection> {
     BuildContext context,
     String nominee,
     String nomineeId,
-  ) async {
+  ) {
     if (widget.oscar.nomineeId.isEmpty) return;
-    final dbService = DatabaseService.instance;
-    final movies = dbService
-        .getAllOscarWinners()
-        .where((w) => w.nomineeId == nomineeId)
-        .toList();
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Nominations for $nominee'),
-        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-        scrollable: true,
-        shadowColor: Theme.of(context).colorScheme.surface,
-        content: SizedBox(
-          width: 300,
-          height: 400,
-          child: ListView.builder(
-            itemCount: movies.length,
-            itemBuilder: (context, idx) {
-              final m = movies[idx];
-              return ListTile(
-                title: Text(m.film),
-                subtitle: Text(
-                  '${m.yearFilm} - ${m.category} ${m.winner ? '🏆' : ''}',
-                ),
-              );
-            },
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
+      builder: (context) =>
+          NomineeNominationsDialog(nominee: nominee, nomineeId: nomineeId),
     );
   }
 
