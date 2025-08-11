@@ -184,22 +184,24 @@ class MovieDetailScreen extends StatelessWidget {
                                 vertical: 12.0,
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+
                                 children: [
                                   SummaryChip(
                                     label: 'Nominations',
                                     count: nominations.length,
                                     color: Colors.blue,
                                   ),
-                                  const SizedBox(width: 12),
+
                                   SummaryChip(
                                     label: 'Wins',
                                     count: wins,
                                     color: Colors.amber,
                                   ),
-                                  const SizedBox(width: 12),
+
                                   SummaryChip(
-                                    label: 'Special Awards',
+                                    label: 'Special',
                                     count: specialAwards,
                                     color: Colors.green,
                                   ),

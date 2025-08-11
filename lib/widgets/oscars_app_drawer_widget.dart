@@ -49,6 +49,15 @@ class OscarsAppDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  title: const Text('Actor Revenue Lookup'),
+                  leading: const Icon(Icons.attach_money),
+                  selected: selected == 'actor_revenue',
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, '/actor_revenue');
+                  },
+                ),
+                ListTile(
                   title: const Text('Settings'),
                   leading: const Icon(Icons.settings),
                   selected: selected == 'settings',
