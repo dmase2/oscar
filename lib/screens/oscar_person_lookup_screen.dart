@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:oscars/models/nominee.dart';
 import 'package:oscars/models/oscar_winner.dart';
 import 'package:oscars/services/database_service.dart';
 import 'package:oscars/services/nominee_nominations_service.dart';
@@ -16,7 +17,7 @@ class OscarPersonLookupScreen extends StatefulWidget {
 }
 
 class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
-  OscarWinner? _selectedPerson;
+  Nominee? _selectedPerson;
   List<OscarWinner> _nominations = [];
   List<OscarWinner> _specialAwards = [];
   int _nominationsCount = 0;
@@ -30,41 +31,32 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
     super.dispose();
   }
 
-  void _clearSelection() {
-    setState(() {
-      _selectedPerson = null;
-      _nominations = [];
-      _controller.clear();
-    });
-  }
-
-  Future<List<OscarWinner>> _searchPeople(String pattern) async {
+  Future<List<Nominee>> _searchPeople(String pattern) async {
     final db = DatabaseService.instance;
-    final all = db.getAllOscarWinners();
+    final all = db.getAllNominees();
     final lower = pattern.toLowerCase();
-    // Use a set to avoid duplicate names
-    final seen = <String>{};
     final filtered = all
-        .where(
-          (w) => w.nominee.toLowerCase().contains(lower) && seen.add(w.nominee),
-        )
+        .where((nominee) => nominee.name.toLowerCase().contains(lower))
         .toList();
-    filtered.sort((a, b) => a.nominee.compareTo(b.nominee));
+    filtered.sort((a, b) => a.name.compareTo(b.name));
     return filtered;
   }
 
-  void _onPersonSelected(OscarWinner person) {
+  void _onPersonSelected(Nominee person) {
     final db = DatabaseService.instance;
     final allWinners = db.getAllOscarWinners();
+
+    // Get all nominations for this person's nominee ID
+    final allNoms = allWinners.where((w) {
+      final winnerIds = w.nomineeId.split('|').map((n) => n.trim()).toSet();
+      return winnerIds.contains(person.nomineeId);
+    }).toList();
+
+    // Calculate stats for this nominee ID
     final stats = NomineeNominationsService.getNomineeNominations(
       allWinners,
       person.nomineeId,
     );
-
-    // Get all nominations for this person
-    final allNoms = allWinners
-        .where((w) => w.nomineeId == person.nomineeId)
-        .toList();
 
     // Deduplicate special awards by (category, yearFilm)
     final specialAwardsMap = <String, OscarWinner>{};
@@ -98,7 +90,7 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TypeAheadField<OscarWinner>(
+            TypeAheadField<Nominee>(
               suggestionsCallback: _searchPeople,
               builder: (context, controller, focusNode) {
                 return TextField(
@@ -122,8 +114,8 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
                   ),
                 );
               },
-              itemBuilder: (context, OscarWinner suggestion) {
-                return ListTile(title: Text(suggestion.nominee));
+              itemBuilder: (context, Nominee suggestion) {
+                return ListTile(title: Text(suggestion.name));
               },
               onSelected: _onPersonSelected,
               emptyBuilder: (context) =>
@@ -133,7 +125,7 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
 
             if (_selectedPerson != null) ...[
               Text(
-                _selectedPerson?.nominee ?? '',
+                _selectedPerson?.name ?? '',
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -141,6 +133,8 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
               const SizedBox(height: 8),
 
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
                 children: [
                   SummaryChip(
                     label: 'Nominations',
@@ -156,7 +150,7 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
                   if (_specialAwardsCount > 0) ...[
                     const SizedBox(width: 12),
                     SummaryChip(
-                      label: 'Special Awards',
+                      label: 'Special',
                       count: _specialAwardsCount,
                       color: Colors.green,
                     ),

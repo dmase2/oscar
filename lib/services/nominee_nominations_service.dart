@@ -1,8 +1,10 @@
+import '../models/nominee.dart';
 import '../models/oscar_winner.dart';
+import '../services/database_service.dart';
 
 /// Service to generate deduplicated nomination statistics for a nominee.
 class NomineeNominationsService {
-  /// Returns nomination statistics: (nominations, wins, specialAwards)
+  /// Returns nomination statistics from ObjectBox nominee table
   /// - nominations: count of unique (category, yearFilm) pairs (excluding special awards)
   /// - wins: count of unique (category, yearFilm) pairs where winner == true (excluding special awards)
   /// - specialAwards: count of unique special awards
@@ -11,7 +13,10 @@ class NomineeNominationsService {
     String nomineeId,
   ) {
     final allMovies = allWinners
-        .where((w) => w.nomineeId == nomineeId)
+        .where(
+          (w) =>
+              w.nomineeId.split('|').map((n) => n.trim()).contains(nomineeId),
+        )
         .toList();
 
     // Separate regular nominations from special awards using className field
@@ -44,5 +49,23 @@ class NomineeNominationsService {
       wins: winPairs.length,
       specialAwards: specialAwardsSet.length,
     );
+  }
+
+  /// Get all nominees from ObjectBox
+  static List<Nominee> getAllNominees() {
+    final db = DatabaseService.instance;
+    return db.getAllNominees();
+  }
+
+  /// Get nominee by ID from ObjectBox
+  static Nominee? getNomineeById(String nomineeId) {
+    final db = DatabaseService.instance;
+    return db.getNomineeById(nomineeId);
+  }
+
+  /// Get nominees by name from ObjectBox
+  static List<Nominee> getNomineesByName(String name) {
+    final db = DatabaseService.instance;
+    return db.getNomineesByName(name);
   }
 }

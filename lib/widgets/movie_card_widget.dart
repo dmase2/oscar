@@ -5,7 +5,8 @@ import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
 import '../providers/shade_opacity_provider.dart';
 import '../screens/oscar_detail_screen.dart';
-import 'poster_image_widget.dart';
+import '../utils/oscar_utils.dart';
+import '../widgets/poster_image_widget.dart';
 
 class MovieCard extends StatefulWidget {
   final OscarWinner oscar;
@@ -156,7 +157,7 @@ class _MovieCardState extends State<MovieCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    oscar.film,
+                    OscarUtils.getCardTitle(oscar),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
@@ -173,9 +174,7 @@ class _MovieCardState extends State<MovieCard> {
                     ),
                   ),
                   Text(
-                    (oscar.category.trim().toLowerCase() ==
-                                'music (original song)' &&
-                            oscar.detail.isNotEmpty)
+                    OscarUtils.shouldShowSongDetail(oscar)
                         ? '${oscar.detail} - ${oscar.name}'
                         : oscar.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(

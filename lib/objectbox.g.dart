@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'models/nominee.dart';
 import 'models/oscar_winner.dart';
 import 'models/poster_cache_entry.dart';
 
@@ -184,6 +185,70 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(4, 7411007953425967343),
+    name: 'Nominee',
+    lastPropertyId: const obx_int.IdUid(9, 4895001071167542416),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 5121588377548802382),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 4258892742737488566),
+        name: 'name',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 4290303350180675469),
+        name: 'nomineeId',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1235360578896007977),
+        name: 'filmIdsString',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 5203786058368757469),
+        name: 'filmIds',
+        type: 30,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 3907356513409817501),
+        name: 'createdAt',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 4559384731869902356),
+        name: 'updatedAt',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 3585171398846558490),
+        name: 'createdBy',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 4895001071167542416),
+        name: 'updatedBy',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -224,7 +289,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(3, 3569360787595156578),
+    lastEntityId: const obx_int.IdUid(4, 7411007953425967343),
     lastIndexId: const obx_int.IdUid(0, 0),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -444,6 +509,93 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    Nominee: obx_int.EntityDefinition<Nominee>(
+      model: _entities[2],
+      toOneRelations: (Nominee object) => [],
+      toManyRelations: (Nominee object) => {},
+      getId: (Nominee object) => object.id,
+      setId: (Nominee object, int id) {
+        object.id = id;
+      },
+      objectToFB: (Nominee object, fb.Builder fbb) {
+        final nameOffset = fbb.writeString(object.name);
+        final nomineeIdOffset = fbb.writeString(object.nomineeId);
+        final filmIdsStringOffset = fbb.writeString(object.filmIdsString);
+        final filmIdsOffset = fbb.writeList(
+          object.filmIds.map(fbb.writeString).toList(growable: false),
+        );
+        final createdByOffset = object.createdBy == null
+            ? null
+            : fbb.writeString(object.createdBy!);
+        final updatedByOffset = object.updatedBy == null
+            ? null
+            : fbb.writeString(object.updatedBy!);
+        fbb.startTable(10);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, nameOffset);
+        fbb.addOffset(2, nomineeIdOffset);
+        fbb.addOffset(3, filmIdsStringOffset);
+        fbb.addOffset(4, filmIdsOffset);
+        fbb.addInt64(5, object.createdAt?.millisecondsSinceEpoch);
+        fbb.addInt64(6, object.updatedAt?.millisecondsSinceEpoch);
+        fbb.addOffset(7, createdByOffset);
+        fbb.addOffset(8, updatedByOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final createdAtValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          14,
+        );
+        final updatedAtValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          16,
+        );
+        final nameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final nomineeIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final filmIdsParam = const fb.ListReader<String>(
+          fb.StringReader(asciiOptimization: true),
+          lazy: false,
+        ).vTableGet(buffer, rootOffset, 12, []);
+        final createdAtParam = createdAtValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(createdAtValue);
+        final updatedAtParam = updatedAtValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(updatedAtValue);
+        final createdByParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
+        final updatedByParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
+        final object =
+            Nominee(
+                name: nameParam,
+                nomineeId: nomineeIdParam,
+                filmIds: filmIdsParam,
+                createdAt: createdAtParam,
+                updatedAt: updatedAtParam,
+                createdBy: createdByParam,
+                updatedBy: updatedByParam,
+              )
+              ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+              ..filmIdsString = const fb.StringReader(
+                asciiOptimization: true,
+              ).vTableGet(buffer, rootOffset, 10, '');
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -572,5 +724,53 @@ class PosterCacheEntry_ {
   /// See [PosterCacheEntry.updatedAt].
   static final updatedAt = obx.QueryDateProperty<PosterCacheEntry>(
     _entities[1].properties[3],
+  );
+}
+
+/// [Nominee] entity fields to define ObjectBox queries.
+class Nominee_ {
+  /// See [Nominee.id].
+  static final id = obx.QueryIntegerProperty<Nominee>(
+    _entities[2].properties[0],
+  );
+
+  /// See [Nominee.name].
+  static final name = obx.QueryStringProperty<Nominee>(
+    _entities[2].properties[1],
+  );
+
+  /// See [Nominee.nomineeId].
+  static final nomineeId = obx.QueryStringProperty<Nominee>(
+    _entities[2].properties[2],
+  );
+
+  /// See [Nominee.filmIdsString].
+  static final filmIdsString = obx.QueryStringProperty<Nominee>(
+    _entities[2].properties[3],
+  );
+
+  /// See [Nominee.filmIds].
+  static final filmIds = obx.QueryStringVectorProperty<Nominee>(
+    _entities[2].properties[4],
+  );
+
+  /// See [Nominee.createdAt].
+  static final createdAt = obx.QueryDateProperty<Nominee>(
+    _entities[2].properties[5],
+  );
+
+  /// See [Nominee.updatedAt].
+  static final updatedAt = obx.QueryDateProperty<Nominee>(
+    _entities[2].properties[6],
+  );
+
+  /// See [Nominee.createdBy].
+  static final createdBy = obx.QueryStringProperty<Nominee>(
+    _entities[2].properties[7],
+  );
+
+  /// See [Nominee.updatedBy].
+  static final updatedBy = obx.QueryStringProperty<Nominee>(
+    _entities[2].properties[8],
   );
 }

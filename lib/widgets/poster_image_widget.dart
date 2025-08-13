@@ -33,11 +33,6 @@ class _PosterImageWidgetState extends State<PosterImageWidget> {
     }
   }
 
-  bool _isValidMovieTitle(String film) {
-    if (film.trim().isEmpty) return false;
-    return RegExp(r'[a-zA-Z]').hasMatch(film);
-  }
-
   Future<void> _fetchPoster() async {
     final cacheKey = '${widget.oscar.film}_${widget.oscar.yearFilm}';
     if (_posterCache.containsKey(cacheKey)) {
@@ -81,6 +76,20 @@ class _PosterImageWidgetState extends State<PosterImageWidget> {
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ],
+          ),
+        ),
+      );
+    }
+
+    // Show honorary_oscar.png for special awards
+    if (widget.oscar.className?.toLowerCase() == 'special') {
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Tooltip(
+          message: 'Click for Details',
+          child: Image.asset(
+            'assets/images/honorary_oscar.png',
+            fit: BoxFit.contain,
           ),
         ),
       );

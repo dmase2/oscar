@@ -150,124 +150,128 @@ class MovieDetailScreen extends StatelessWidget {
 
                     OscarDetailSection(oscar: oscar),
 
-                    Text(
-                      'All Nominations for this Movie:',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                    if (oscar.className?.toLowerCase() != 'special') ...[
+                      Text(
+                        'All Nominations for this Movie:',
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                       ),
-                    ),
-                    // --- SUMMARY SECTION ---
-                    Consumer(
-                      builder: (context, ref, _) {
-                        final allOscarsAsync = ref.watch(oscarDataProvider);
-                        return allOscarsAsync.when(
-                          data: (allOscarsData) {
-                            final nominations = allOscarsData
-                                .where(
-                                  (o) =>
-                                      o.film.trim().toLowerCase() ==
-                                      oscar.film.trim().toLowerCase(),
-                                )
-                                .toList();
-                            final wins = nominations
-                                .where((n) => n.winner)
-                                .length;
-                            final specialAwards = nominations
-                                .where(
-                                  (n) =>
-                                      n.className?.toLowerCase() == 'special',
-                                )
-                                .length;
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 12.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                      // --- SUMMARY SECTION ---
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final allOscarsAsync = ref.watch(oscarDataProvider);
+                          return allOscarsAsync.when(
+                            data: (allOscarsData) {
+                              final nominations = allOscarsData
+                                  .where(
+                                    (o) =>
+                                        o.film.trim().toLowerCase() ==
+                                        oscar.film.trim().toLowerCase(),
+                                  )
+                                  .toList();
+                              final wins = nominations
+                                  .where((n) => n.winner)
+                                  .length;
+                              final specialAwards = nominations
+                                  .where(
+                                    (n) =>
+                                        n.className?.toLowerCase() == 'special',
+                                  )
+                                  .length;
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
 
-                                children: [
-                                  SummaryChip(
-                                    label: 'Nominations',
-                                    count: nominations.length,
-                                    color: Colors.blue,
-                                  ),
+                                  children: [
+                                    SummaryChip(
+                                      label: 'Nominations',
+                                      count: nominations.length,
+                                      color: Colors.blue,
+                                    ),
 
-                                  SummaryChip(
-                                    label: 'Wins',
-                                    count: wins,
-                                    color: Colors.amber,
-                                  ),
+                                    SummaryChip(
+                                      label: 'Wins',
+                                      count: wins,
+                                      color: Colors.amber,
+                                    ),
 
-                                  SummaryChip(
-                                    label: 'Special',
-                                    count: specialAwards,
-                                    color: Colors.green,
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          loading: () => const SizedBox(height: 40),
-                          error: (error, stack) => const SizedBox(height: 40),
-                        );
-                      },
-                    ),
+                                    SummaryChip(
+                                      label: 'Special',
+                                      count: specialAwards,
+                                      color: Colors.green,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            loading: () => const SizedBox(height: 40),
+                            error: (error, stack) => const SizedBox(height: 40),
+                          );
+                        },
+                      ),
 
-                    // --- END SUMMARY SECTION ---
-                    Consumer(
-                      builder: (context, ref, _) {
-                        final allOscarsAsync = ref.watch(oscarDataProvider);
-                        return allOscarsAsync.when(
-                          data: (allOscarsData) {
-                            final nominations = allOscarsData
-                                .where(
-                                  (o) =>
-                                      o.film.trim().toLowerCase() ==
-                                      oscar.film.trim().toLowerCase(),
-                                )
-                                .toList();
-                            return ListView.separated(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: nominations.length,
-                              separatorBuilder: (_, __) => const Divider(),
-                              itemBuilder: (context, index) {
-                                final nomination = nominations[index];
-                                final isOriginalSong = nomination.canonCategory
-                                    .toUpperCase()
-                                    .contains('ORIGINAL SONG');
-                                return ListTile(
-                                  title: isOriginalSong
-                                      ? Text(
-                                          '${nomination.category}: ${nomination.name}',
-                                        )
-                                      : Text(nomination.category),
-                                  subtitle: isOriginalSong
-                                      ? null
-                                      : Text(nomination.name),
-                                  trailing: nomination.winner
-                                      ? const Icon(
-                                          Icons.emoji_events,
-                                          color: Colors.amber,
-                                        )
-                                      : null,
-                                );
-                              },
-                            );
-                          },
-                          loading: () => const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Center(child: CircularProgressIndicator()),
-                          ),
-                          error: (error, stack) => const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Text('No nominations found.'),
-                          ),
-                        );
-                      },
-                    ),
+                      // --- END SUMMARY SECTION ---
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final allOscarsAsync = ref.watch(oscarDataProvider);
+                          return allOscarsAsync.when(
+                            data: (allOscarsData) {
+                              final nominations = allOscarsData
+                                  .where(
+                                    (o) =>
+                                        o.film.trim().toLowerCase() ==
+                                        oscar.film.trim().toLowerCase(),
+                                  )
+                                  .toList();
+                              return ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: nominations.length,
+                                separatorBuilder: (_, __) => const Divider(),
+                                itemBuilder: (context, index) {
+                                  final nomination = nominations[index];
+                                  final isOriginalSong = nomination
+                                      .canonCategory
+                                      .toUpperCase()
+                                      .contains('ORIGINAL SONG');
+                                  return ListTile(
+                                    title: isOriginalSong
+                                        ? Text(
+                                            '${nomination.category}: ${nomination.name}',
+                                          )
+                                        : Text(nomination.category),
+                                    subtitle: isOriginalSong
+                                        ? null
+                                        : Text(nomination.name),
+                                    trailing: nomination.winner
+                                        ? const Icon(
+                                            Icons.emoji_events,
+                                            color: Colors.amber,
+                                          )
+                                        : null,
+                                  );
+                                },
+                              );
+                            },
+                            loading: () => const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Center(child: CircularProgressIndicator()),
+                            ),
+                            error: (error, stack) => const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text('No nominations found.'),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ],
                 ),
               ),

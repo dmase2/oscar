@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 
+import '../models/nominee.dart';
 import '../models/oscar_winner.dart';
 import '../models/poster_cache_entry.dart';
 import '../objectbox.g.dart';
@@ -13,6 +14,7 @@ class DatabaseService {
   late final Store store;
   late final Box<OscarWinner> oscarBox;
   late final Box<PosterCacheEntry> posterCacheBox;
+  late final Box<Nominee> nomineeBox;
 
   DatabaseService._();
 
@@ -27,6 +29,7 @@ class DatabaseService {
     );
     oscarBox = store.box<OscarWinner>();
     posterCacheBox = store.box<PosterCacheEntry>();
+    nomineeBox = store.box<Nominee>();
   }
 
   Future<void> insertOscarWinner(OscarWinner winner) async {
@@ -66,4 +69,38 @@ class DatabaseService {
   }
 
   bool get isEmpty => oscarBox.isEmpty();
+
+  // Nominee methods
+  Future<void> insertNominee(Nominee nominee) async {
+    nomineeBox.put(nominee);
+  }
+
+  Future<void> insertNominees(List<Nominee> nominees) async {
+    nomineeBox.putMany(nominees);
+  }
+
+  List<Nominee> getAllNominees() {
+    return nomineeBox.getAll();
+  }
+
+  Nominee? getNomineeById(String nomineeId) {
+    final query = nomineeBox
+        .query(Nominee_.nomineeId.equals(nomineeId))
+        .build();
+    final result = query.findFirst();
+    query.close();
+    return result;
+  }
+
+  List<Nominee> getNomineesByName(String name) {
+    final query = nomineeBox.query(Nominee_.name.contains(name)).build();
+    final results = query.find();
+    query.close();
+    return results;
+  }
+
+  // Clear nominees table for testing
+  Future<void> clearNominees() async {
+    nomineeBox.removeAll();
+  }
 }

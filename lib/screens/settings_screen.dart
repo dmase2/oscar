@@ -1,8 +1,12 @@
+import 'dart:io' show Platform, exit;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oscars/services/build_oscar_winner.dart';
 
+import '../design_system/design_system.dart';
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
 import '../providers/shade_opacity_provider.dart';
@@ -30,6 +34,68 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
+  Future<void> _exitApplication(BuildContext context) async {
+    // Show confirmation dialog
+    final bool? shouldExit = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Exit Application'),
+          content: const Text('Are you sure you want to exit the application?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Exit'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldExit == true) {
+      if (!kIsWeb) {
+        // For mobile and desktop platforms
+        if (Platform.isIOS) {
+          // iOS doesn't allow programmatic app termination
+          // Show a message explaining this limitation
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'iOS does not allow apps to exit programmatically. Please use the home button or app switcher.',
+                ),
+                duration: Duration(seconds: 4),
+              ),
+            );
+          }
+        } else if (Platform.isAndroid) {
+          // Android - use SystemNavigator.pop()
+          SystemNavigator.pop();
+        } else if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+          // Desktop platforms - exit the application
+          exit(0);
+        } else {
+          // Fallback for other platforms
+          SystemNavigator.pop();
+        }
+      } else {
+        // Web platform - just close the tab/window (limited by browser)
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Please close the browser tab to exit.'),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -43,11 +109,11 @@ class SettingsScreen extends ConsumerWidget {
         child: ListView(
           children: [
             // Persistent slider for shade opacity in learning mode
-            const Text(
+            Text(
               'Learning Mode Shade Opacity',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const SizedBox(height: 8),
+            OscarSpacing.space2,
             Consumer(
               builder: (context, ref, _) {
                 final opacity = ref.watch(shadeOpacityProvider);
@@ -72,17 +138,32 @@ class SettingsScreen extends ConsumerWidget {
               },
             ),
             const Divider(height: 32),
-            ElevatedButton(
+            // Design System Demo Link
+            OscarButton(
+              text: 'Design System Demo',
+              onPressed: () {
+                Navigator.pushNamed(context, '/design_system');
+              },
+              variant: OscarButtonVariant.secondary,
+              isFullWidth: true,
+            ),
+            OscarSpacing.space4,
+            OscarButton(
+              text: 'Clear ObjectBox Database',
               onPressed: () => _clearDatabase(context, ref),
-              child: const Text('Clear ObjectBox Database'),
+              variant: OscarButtonVariant.secondary,
+              isFullWidth: true,
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
+            OscarSpacing.space4,
+            OscarButton(
+              text: 'Reload Database from CSV',
               onPressed: () => _reloadDatabase(context, ref),
-              child: const Text('Reload Database from CSV'),
+              variant: OscarButtonVariant.primary,
+              isFullWidth: true,
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
+            OscarSpacing.space4,
+            OscarButton(
+              text: 'Print ObjectBox Database',
               onPressed: () {
                 final dbService = ref.read(databaseServiceProvider);
                 dbService.getAllOscarWinners();
@@ -92,14 +173,15 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 );
               },
-              child: const Text('Print ObjectBox Database'),
+              variant: OscarButtonVariant.secondary,
+              isFullWidth: true,
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                SystemNavigator.pop();
-              },
-              child: const Text('Exit Application'),
+            OscarSpacing.space4,
+            OscarButton(
+              text: 'Exit Application',
+              onPressed: () => _exitApplication(context),
+              variant: OscarButtonVariant.filled,
+              isFullWidth: true,
             ),
           ],
         ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:oscars/models/oscar_winner.dart';
 import 'package:oscars/services/omdb_service_extra.dart';
 
+import '../design_system/design_system.dart';
+
 // Popup dialog version
 Future<void> showOmdbInfoDialog(BuildContext context, OscarWinner oscar) async {
   return showDialog(
@@ -18,19 +20,23 @@ class OmdbInfoDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: MediaQuery.of(context).size.height * 0.8,
+        padding: OscarSpacing.paddingMd,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
-            SingleChildScrollView(child: OmdbInfoBox(oscar: oscar)),
-            const SizedBox(height: 16),
+            Expanded(
+              child: SingleChildScrollView(child: OmdbInfoBox(oscar: oscar)),
+            ),
+            OscarSpacing.space4,
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
+                OscarButton(
+                  text: 'Close',
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Close'),
+                  variant: OscarButtonVariant.secondary,
                 ),
               ],
             ),
@@ -71,63 +77,85 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
         }
         if (snapshot.hasData && snapshot.data != null) {
           final info = snapshot.data!;
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 12,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
+          return OscarCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                Wrap(
+                  spacing: 4,
+                  runSpacing: 4,
                   children: [
                     if (info.rated != null && info.rated!.isNotEmpty)
-                      Chip(label: Text('Rated: ${info.rated!}')),
+                      OscarChip(
+                        label: 'Rated: ${info.rated!}',
+                        backgroundColor: Colors.orange.shade100,
+                        size: OscarChipSize.small,
+                      ),
                     if (info.runtime != null && info.runtime!.isNotEmpty)
-                      Chip(label: Text(info.runtime!)),
+                      OscarChip(
+                        label: info.runtime!,
+                        backgroundColor: Colors.blue.shade100,
+                        size: OscarChipSize.small,
+                      ),
                     if (info.genre != null && info.genre!.isNotEmpty)
-                      Chip(label: Text(info.genre!.split(',').first)),
+                      OscarChip(
+                        label: info.genre!.split(',').first,
+                        backgroundColor: Colors.purple.shade100,
+                        size: OscarChipSize.small,
+                      ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 if (info.released != null && info.released!.isNotEmpty)
                   Text(
                     'Released: ${info.released!}',
-                    style: const TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 if (info.language != null && info.language!.isNotEmpty)
                   Text(
                     'Language: ${info.language!}',
-                    style: const TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 if (info.country != null && info.country!.isNotEmpty)
                   Text(
                     'Country: ${info.country!}',
-                    style: const TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 if (info.writer != null && info.writer!.isNotEmpty)
                   Text(
                     'Writer: ${info.writer!}',
-                    style: const TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 if (info.plot != null && info.plot!.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      info.plot!,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.black87,
+                    padding: OscarSpacing.paddingXs,
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.grey.shade200),
+                      ),
+                      child: Text(
+                        info.plot!,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontStyle: FontStyle.normal,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          height: 1.4,
+                        ),
                       ),
                     ),
                   ),
@@ -135,65 +163,103 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
                 if (info.director != null && info.director!.isNotEmpty)
                   Text(
                     'Director: ${info.director!}',
-                    style: const TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 16,
+                    ),
                   ),
                 if (info.actors != null && info.actors!.isNotEmpty)
                   Text(
                     'Actors: ${info.actors!}',
-                    style: const TextStyle(color: Colors.black54),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 if (info.awards != null && info.awards!.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      'Awards: ${info.awards!}',
-                      style: const TextStyle(color: Colors.deepPurple),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple.shade50,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: Colors.deepPurple.shade200),
+                      ),
+                      child: Text(
+                        'Awards: ${info.awards!}',
+                        style: TextStyle(
+                          color: Colors.deepPurple.shade700,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
-                Row(
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 8,
                   children: [
                     if (info.imdbRating != null && info.imdbRating!.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: Chip(
-                          avatar: const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                            size: 18,
-                          ),
-                          label: Text('IMDb: ${info.imdbRating!}'),
+                      OscarChip(
+                        label: 'IMDb: ${info.imdbRating!}',
+                        backgroundColor: Colors.amber.shade100,
+                        size: OscarChipSize.small,
+                        avatar: Icon(
+                          Icons.star,
+                          color: Colors.orange.shade800,
+                          size: 16,
                         ),
                       ),
                     if (info.metascore != null && info.metascore!.isNotEmpty)
-                      Chip(
-                        avatar: const Icon(
+                      OscarChip(
+                        label: 'Metascore: ${info.metascore!}',
+                        backgroundColor: Colors.green.shade100,
+                        size: OscarChipSize.small,
+                        avatar: Icon(
                           Icons.score,
-                          color: Colors.green,
-                          size: 18,
+                          color: Colors.green.shade800,
+                          size: 16,
                         ),
-                        label: Text('Metascore: ${info.metascore!}'),
                       ),
                   ],
                 ),
                 if (info.imdbVotes != null && info.imdbVotes!.isNotEmpty)
                   Text(
                     'IMDb Votes: ${info.imdbVotes!}',
-                    style: const TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 if (info.boxOffice != null && info.boxOffice!.isNotEmpty)
                   Text(
                     'Box Office: ${info.boxOffice!}',
-                    style: const TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                      color: Colors.green.shade700,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
                   ),
                 if (info.production != null && info.production!.isNotEmpty)
                   Text(
                     'Production: ${info.production!}',
-                    style: const TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 if (info.website != null && info.website!.isNotEmpty)
                   Text(
                     'Website: ${info.website!}',
-                    style: const TextStyle(color: Colors.blue),
+                    style: TextStyle(
+                      color: Colors.blue.shade700,
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
               ],
             ),

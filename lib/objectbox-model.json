@@ -140,9 +140,63 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:7411007953425967343",
+      "lastPropertyId": "9:4895001071167542416",
+      "name": "Nominee",
+      "properties": [
+        {
+          "id": "1:5121588377548802382",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4258892742737488566",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4290303350180675469",
+          "name": "nomineeId",
+          "type": 9
+        },
+        {
+          "id": "4:1235360578896007977",
+          "name": "filmIdsString",
+          "type": 9
+        },
+        {
+          "id": "5:5203786058368757469",
+          "name": "filmIds",
+          "type": 30
+        },
+        {
+          "id": "6:3907356513409817501",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "7:4559384731869902356",
+          "name": "updatedAt",
+          "type": 10
+        },
+        {
+          "id": "8:3585171398846558490",
+          "name": "createdBy",
+          "type": 9
+        },
+        {
+          "id": "9:4895001071167542416",
+          "name": "updatedBy",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:3569360787595156578",
+  "lastEntityId": "4:7411007953425967343",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oscars/services/build_oscar_winner.dart';
 
 import '../models/oscar_winner.dart';
 import '../services/database_service.dart';
@@ -12,12 +11,7 @@ final databaseServiceProvider = Provider<DatabaseService>((ref) {
 
 final oscarDataProvider = FutureProvider<List<OscarWinner>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
-  if (dbService.isEmpty) {
-    final oscarWinners =
-        await OscarWinnerFromNomineeCsvService.loadOscarWinnersFromNomineeCsv();
-    await dbService.insertOscarWinners(oscarWinners);
-  }
-  // Always return a copy to avoid accidental mutation
+  // Only return current database contents, do not auto-repopulate from CSV
   return List<OscarWinner>.from(dbService.getAllOscarWinners());
 });
 

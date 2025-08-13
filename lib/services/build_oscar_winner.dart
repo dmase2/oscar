@@ -1,7 +1,9 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../models/nominee.dart';
 import '../models/oscar_winner.dart';
+import 'database_service.dart';
 
 class OscarWinnerFromNomineeCsvService {
   static Future<List<OscarWinner>> loadOscarWinnersFromNomineeCsv({
@@ -25,6 +27,8 @@ class OscarWinnerFromNomineeCsvService {
         .map((h) => h.toString().trim().toLowerCase())
         .toList();
     final List<OscarWinner> winners = [];
+    final List<Nominee> nomineesList = [];
+    final Map<String, Nominee> nomineeMap = {};
     int skippedEmptyOrShort = 0;
     int skippedMissingFields = 0;
     int skippedParsingErrors = 0;
@@ -94,6 +98,35 @@ class OscarWinnerFromNomineeCsvService {
           className: map['class'] ?? '',
         );
         winners.add(winner);
+
+        // Build nominees from nominee and nomineeId fields
+        final nomineeNames = (map['nominees'] ?? '')
+            .split('|')
+            .map((n) => n.trim())
+            .where((n) => n.isNotEmpty)
+            .toList();
+        final nomineeIds = (map['nomineeids'] ?? '')
+            .split('|')
+            .map((n) => n.trim())
+            .where((n) => n.isNotEmpty)
+            .toList();
+        for (int j = 0; j < nomineeNames.length && j < nomineeIds.length; j++) {
+          final name = nomineeNames[j];
+          final id = nomineeIds[j];
+          if (name.isNotEmpty && id.isNotEmpty) {
+            final key = '$name|$id';
+            if (!nomineeMap.containsKey(key)) {
+              final nominee = Nominee(name: name, nomineeId: id, filmIds: []);
+              nomineeMap[key] = nominee;
+              print(
+                '[DEBUG] added nominee: $name (ID: $id) at ${nominee.createdAt}',
+              );
+            }
+            nomineeMap[key]!.filmIds.add(winner.filmId);
+            nomineeMap[key]!.updateAuditTrail();
+          }
+        }
+
         // Debug print for Best Actor in 2020s
         if (winner.canonCategory.toUpperCase().contains('ACTOR') &&
             winner.yearFilm >= 2020) {
@@ -110,6 +143,17 @@ class OscarWinnerFromNomineeCsvService {
         print('Skipped row $i: Exception $e');
         continue;
       }
+    }
+
+    nomineesList.addAll(nomineeMap.values);
+    print('Total unique nominees loaded: ${nomineesList.length}');
+
+    // Save nominees to ObjectBox database
+    try {
+      await DatabaseService.instance.insertNominees(nomineesList);
+      print('Successfully saved ${nomineesList.length} nominees to database');
+    } catch (e) {
+      print('Error saving nominees to database: $e');
     }
 
     print('Total rows in CSV: ${rows.length}');
