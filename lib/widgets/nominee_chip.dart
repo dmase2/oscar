@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oscars/design_system/tokens.dart';
 
 class NomineeChip extends StatelessWidget {
   final Map<String, String> nominee;
@@ -41,7 +42,10 @@ class NomineeChip extends StatelessWidget {
               onPressed: () => onPressed(name, id),
               child: const Text(
                 'Nominations',
-                style: TextStyle(color: Colors.amber, fontSize: 12),
+                style: TextStyle(
+                  color: OscarDesignTokens.oscarGoldDark,
+                  fontSize: 12,
+                ),
               ),
             ),
           ],

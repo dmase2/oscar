@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oscars/design_system/design_system.dart';
 import 'package:oscars/widgets/omdb_info_box_widget.dart';
 import 'package:oscars/widgets/oscar_detail_widget.dart';
 
@@ -169,7 +170,8 @@ class MovieDetailScreen extends StatelessWidget {
                                   .where(
                                     (o) =>
                                         o.film.trim().toLowerCase() ==
-                                        oscar.film.trim().toLowerCase(),
+                                            oscar.film.trim().toLowerCase() &&
+                                        o.filmId == oscar.filmId,
                                   )
                                   .toList();
                               final wins = nominations
@@ -193,19 +195,19 @@ class MovieDetailScreen extends StatelessWidget {
                                     SummaryChip(
                                       label: 'Nominations',
                                       count: nominations.length,
-                                      color: Colors.blue,
+                                      color: OscarDesignTokens.info,
                                     ),
 
                                     SummaryChip(
                                       label: 'Wins',
                                       count: wins,
-                                      color: Colors.amber,
+                                      color: OscarDesignTokens.oscarGoldDark,
                                     ),
 
                                     SummaryChip(
                                       label: 'Special',
                                       count: specialAwards,
-                                      color: Colors.green,
+                                      color: OscarDesignTokens.special,
                                     ),
                                   ],
                                 ),
@@ -227,7 +229,8 @@ class MovieDetailScreen extends StatelessWidget {
                                   .where(
                                     (o) =>
                                         o.film.trim().toLowerCase() ==
-                                        oscar.film.trim().toLowerCase(),
+                                            oscar.film.trim().toLowerCase() &&
+                                        o.filmId == oscar.filmId,
                                   )
                                   .toList();
                               return ListView.separated(

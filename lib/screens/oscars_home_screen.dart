@@ -14,6 +14,24 @@ final _selectedYearProvider = StateProvider<int?>((ref) => null);
 // Define a constant for the sentinel value for "All Years"
 const int kAllYears = -1;
 
+// Priority categories that should be bolded
+const Set<String> _priorityCategories = {
+  'ACTOR IN A LEADING ROLE',
+  'ACTRESS IN A LEADING ROLE',
+  'ACTOR IN A SUPPORTING ROLE',
+  'ACTRESS IN A SUPPORTING ROLE',
+  'BEST PICTURE',
+  'CINEMATOGRAPHY',
+  'DIRECTING',
+  'WRITING (Original Screenplay)',
+  'WRITING (Adapted Screenplay)',
+};
+
+// Helper function to check if a category is priority
+bool _isPriorityCategory(String category) {
+  return _priorityCategories.contains(category);
+}
+
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -118,7 +136,7 @@ class HomeScreen extends ConsumerWidget {
                           ? const Icon(
                               Icons.check,
                               color: Colors.amber,
-                              size: 18,
+                              size: 16,
                             )
                           : null,
                     ),
@@ -128,6 +146,7 @@ class HomeScreen extends ConsumerWidget {
                   ...availableYears.map(
                     (year) => PopupMenuItem<int>(
                       value: year,
+                      height: 14,
                       child: ListTile(
                         dense: true,
                         contentPadding: EdgeInsets.zero,
@@ -137,13 +156,14 @@ class HomeScreen extends ConsumerWidget {
                             fontWeight: year == selectedYear
                                 ? FontWeight.bold
                                 : FontWeight.normal,
+                            fontSize: 14.0,
                           ),
                         ),
                         trailing: year == selectedYear
                             ? const Icon(
                                 Icons.check,
                                 color: Colors.amber,
-                                size: 18,
+                                size: 16,
                               )
                             : null,
                       ),
@@ -151,7 +171,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ],
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -178,33 +198,90 @@ class HomeScreen extends ConsumerWidget {
           // Category and winner filter row (use oscarsByDecadeAsync)
           oscarsByDecadeAsync.when(
             data: (oscars) {
-              final canonCategories =
-                  oscars.map((o) => o.canonCategory).toSet().toList()..sort();
+              final canonCategories = oscars
+                  .map((o) => o.canonCategory)
+                  .toSet()
+                  .toList();
+
+              // Sort with priority categories first, then others alphabetically
+              canonCategories.sort((a, b) {
+                final aPriority = _isPriorityCategory(a);
+                final bPriority = _isPriorityCategory(b);
+
+                if (aPriority && !bPriority) {
+                  return -1; // a comes before b
+                } else if (!aPriority && bPriority) {
+                  return 1; // b comes before a
+                } else {
+                  return a.compareTo(
+                    b,
+                  ); // alphabetical within same priority level
+                }
+              });
+
+              // Debug: Print first few categories to see actual names
+              debugPrint(
+                'Sample categories: ${canonCategories.take(10).toList()}',
+              );
+
               return Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
-                      vertical: 8,
+                      vertical: 12,
                     ),
                     child: Row(
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: DropdownButton<String>(
-                            value: canonCategories.contains(selectedCategory)
+                            value: selectedCategory == '__ACTING__'
+                                ? '__ACTING__'
+                                : canonCategories.contains(selectedCategory)
                                 ? selectedCategory
                                 : null,
-                            hint: const Text('Filter by category'),
+                            hint: const Text(
+                              'Filter by category',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black87,
+                            ),
                             isExpanded: true,
+                            itemHeight: 48,
+                            isDense: false,
                             items: [
                               const DropdownMenuItem<String>(
                                 value: null,
-                                child: Text('All Categories'),
+                                child: Text(
+                                  'All Categories',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              const DropdownMenuItem<String>(
+                                value: '__ACTING__',
+                                child: Text(
+                                  'All Acting Categories',
+                                  style: TextStyle(fontSize: 16),
+                                ),
                               ),
                               ...canonCategories.map(
                                 (cat) => DropdownMenuItem<String>(
                                   value: cat,
-                                  child: Text(cat),
+                                  child: Text(
+                                    cat,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: _isPriorityCategory(cat)
+                                          ? FontWeight.w700
+                                          : FontWeight.w400,
+                                      color: _isPriorityCategory(cat)
+                                          ? Colors.black87
+                                          : Colors.black54,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -248,6 +325,11 @@ class HomeScreen extends ConsumerWidget {
                       selectedYear == null || oscar.yearFilm == selectedYear;
                   if (selectedCategory == null) {
                     return yearMatch &&
+                        (showOnlyWinners ? oscar.winner == true : true);
+                  } else if (selectedCategory == '__ACTING__') {
+                    // Special filter for all acting nominations using className
+                    return yearMatch &&
+                        oscar.className?.toLowerCase() == 'acting' &&
                         (showOnlyWinners ? oscar.winner == true : true);
                   } else {
                     return yearMatch &&
@@ -298,6 +380,17 @@ class HomeScreen extends ConsumerWidget {
 //   'VISUAL EFFECTS',
 // ];
 
+final priorityCategories = [
+  'ACTOR IN A LEADING ROLE',
+  'ACTOR IN A SUPPORTING ROLE',
+  'ACTRESS IN A LEADING ROLE',
+  'ACTRESS IN A SUPPORTING ROLE',
+  'DIRECTOR',
+  'BEST PICTURE',
+  'CINEMATOGRAPHY',
+  'WRITING (Adapted Screenplay)',
+  'WRITING (Original Screenplay)',
+];
 final selectedCategoriesProvider = StateProvider<List<String>>((ref) => []);
 
 final _selectedCategoryProvider = StateProvider<String?>((ref) => null);

@@ -12,7 +12,7 @@ Consumer(
     return allOscarsAsync.when(
       data: (allOscarsData) {
         final nominations = allOscarsData
-            .where((o) => o.film.trim().toLowerCase() == oscar.film.trim().toLowerCase())
+            .where((o) => o.film.trim().toLowerCase() == oscar.film.trim().toLowerCase() && o.filmId == oscar.filmId)
             .toList();
         // ... rest of the logic
       },

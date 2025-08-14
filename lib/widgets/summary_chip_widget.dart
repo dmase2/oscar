@@ -12,7 +12,7 @@ class SummaryChip extends StatelessWidget {
     required this.count,
     required this.color,
     this.elevation = 2.0,
-    this.shadowColor,
+    this.shadowColor = const Color(0xFF000000),
     super.key,
   });
 
@@ -22,7 +22,11 @@ class SummaryChip extends StatelessWidget {
       elevation: elevation,
       shadowColor: shadowColor ?? color.withOpacity(0.3),
       borderRadius: BorderRadius.circular(16),
+      color: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
+      type: MaterialType.card,
       child: Chip(
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         label: Text('$count: $label'),
         labelStyle: TextStyle(color: color, fontWeight: FontWeight.bold),
         backgroundColor: color.withOpacity(0.1),

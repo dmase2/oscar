@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:oscars/design_system/tokens.dart';
 import 'package:oscars/models/nominee.dart';
 import 'package:oscars/models/oscar_winner.dart';
 import 'package:oscars/services/database_service.dart';
@@ -139,22 +140,21 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
                   SummaryChip(
                     label: 'Nominations',
                     count: _nominationsCount,
-                    color: Colors.blue,
+                    color: OscarDesignTokens.info,
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   SummaryChip(
                     label: 'Wins',
                     count: _winsCount,
-                    color: Colors.amber,
+                    color: OscarDesignTokens.oscarGoldDark,
                   ),
-                  if (_specialAwardsCount > 0) ...[
-                    const SizedBox(width: 12),
-                    SummaryChip(
-                      label: 'Special',
-                      count: _specialAwardsCount,
-                      color: Colors.green,
-                    ),
-                  ],
+
+                  const SizedBox(width: 8),
+                  SummaryChip(
+                    label: 'Special',
+                    count: _specialAwardsCount,
+                    color: OscarDesignTokens.special,
+                  ),
                 ],
               ),
 

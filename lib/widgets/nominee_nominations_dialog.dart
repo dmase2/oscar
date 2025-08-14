@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oscars/design_system/components/oscar_button.dart';
+import 'package:oscars/design_system/tokens.dart';
 import 'package:oscars/services/database_service.dart';
 import 'package:oscars/services/nominee_nominations_service.dart';
 import 'package:oscars/widgets/summary_chip_widget.dart';
@@ -76,11 +77,15 @@ class _NomineeNominationsDialogState extends State<NomineeNominationsDialog> {
                   count: nominations,
                   color: Colors.blue,
                 ),
-                SummaryChip(label: 'Wins', count: wins, color: Colors.amber),
+                SummaryChip(
+                  label: 'Wins',
+                  count: wins,
+                  color: OscarDesignTokens.oscarGoldDark,
+                ),
                 SummaryChip(
                   label: 'Special',
                   count: specialAwards,
-                  color: Colors.green,
+                  color: OscarDesignTokens.special,
                 ),
               ],
             ),
