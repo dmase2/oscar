@@ -49,7 +49,9 @@ class _MovieCardState extends State<MovieCard> {
               Opacity(opacity: 0.2, child: _buildCard(context)),
               Positioned.fill(
                 child: Material(
-                  color: Colors.black.withOpacity(shadeOpacity),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.surface.withOpacity(shadeOpacity),
                   child: InkWell(
                     onTap: () {
                       setState(() {
@@ -62,16 +64,16 @@ class _MovieCardState extends State<MovieCard> {
                         children: <Widget>[
                           Text(
                             '${widget.oscar.yearFilm}',
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface,
                               fontSize: 24,
                             ),
                           ),
                           const SizedBox(height: 16),
                           Text(
                             widget.oscar.film.substring(0, 1),
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface,
                               fontSize: 48,
                             ),
                             textAlign: TextAlign.center,
@@ -110,7 +112,7 @@ class _MovieCardState extends State<MovieCard> {
       ),
       shadowColor: isWinner
           ? const Color.fromARGB(255, 198, 162, 4)
-          : Colors.black,
+          : Theme.of(context).colorScheme.shadow,
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -141,7 +143,9 @@ class _MovieCardState extends State<MovieCard> {
                       message: 'Click for Details',
                       child: Container(
                         width: double.infinity,
-                        color: Colors.grey[200],
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.surfaceContainerHighest,
                         child: SizedBox.expand(
                           child: PosterImageWidget(oscar: oscar),
                         ),
@@ -169,7 +173,7 @@ class _MovieCardState extends State<MovieCard> {
                   Text(
                     '${oscar.yearFilm}  ${oscar.winner ? '🏆' : ''}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 10,
                     ),
                   ),
@@ -178,7 +182,9 @@ class _MovieCardState extends State<MovieCard> {
                         ? '${oscar.detail} - ${oscar.name}'
                         : oscar.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey[600],
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.6),
                       fontSize: 10,
                     ),
                     maxLines: 1,

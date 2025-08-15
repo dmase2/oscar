@@ -88,19 +88,28 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
                     if (info.rated != null && info.rated!.isNotEmpty)
                       OscarChip(
                         label: 'Rated: ${info.rated!}',
-                        backgroundColor: Colors.orange.shade100,
+                        backgroundColor:
+                            Theme.of(context).brightness == Brightness.light
+                            ? Colors.orange.shade100
+                            : Colors.orange.shade900,
                         size: OscarChipSize.small,
                       ),
                     if (info.runtime != null && info.runtime!.isNotEmpty)
                       OscarChip(
                         label: info.runtime!,
-                        backgroundColor: Colors.blue.shade100,
+                        backgroundColor:
+                            Theme.of(context).brightness == Brightness.light
+                            ? Colors.blue.shade100
+                            : Colors.blue.shade900,
                         size: OscarChipSize.small,
                       ),
                     if (info.genre != null && info.genre!.isNotEmpty)
                       OscarChip(
                         label: info.genre!.split(',').first,
-                        backgroundColor: Colors.purple.shade100,
+                        backgroundColor:
+                            Theme.of(context).brightness == Brightness.light
+                            ? Colors.purple.shade100
+                            : Colors.purple.shade900,
                         size: OscarChipSize.small,
                       ),
                   ],
@@ -144,9 +153,13 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.grey.shade200),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
                       ),
                       child: Text(
                         info.plot!,
@@ -186,14 +199,24 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.deepPurple.shade50,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.deepPurple.shade50
+                            : Colors.deepPurple.shade900,
                         borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: Colors.deepPurple.shade200),
+                        border: Border.all(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                              ? Colors.deepPurple.shade200
+                              : Colors.deepPurple.shade700,
+                        ),
                       ),
                       child: Text(
                         'Awards: ${info.awards!}',
                         style: TextStyle(
-                          color: Colors.deepPurple.shade700,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                              ? Colors.deepPurple.shade700
+                              : Colors.deepPurple.shade400,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -206,22 +229,34 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
                     if (info.imdbRating != null && info.imdbRating!.isNotEmpty)
                       OscarChip(
                         label: 'IMDb: ${info.imdbRating!}',
-                        backgroundColor: Colors.amber.shade100,
+                        backgroundColor:
+                            Theme.of(context).brightness == Brightness.light
+                            ? Colors.amber.shade100
+                            : Colors.amber.shade900,
                         size: OscarChipSize.small,
                         avatar: Icon(
                           Icons.star,
-                          color: Colors.orange.shade800,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                              ? Colors.orange.shade800
+                              : Colors.orange.shade400,
                           size: 16,
                         ),
                       ),
                     if (info.metascore != null && info.metascore!.isNotEmpty)
                       OscarChip(
                         label: 'Metascore: ${info.metascore!}',
-                        backgroundColor: Colors.green.shade100,
+                        backgroundColor:
+                            Theme.of(context).brightness == Brightness.light
+                            ? Colors.green.shade100
+                            : Colors.green.shade900,
                         size: OscarChipSize.small,
                         avatar: Icon(
                           Icons.score,
-                          color: Colors.green.shade800,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                              ? Colors.green.shade800
+                              : Colors.green.shade400,
                           size: 16,
                         ),
                       ),
@@ -239,7 +274,9 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
                   Text(
                     'Box Office: ${info.boxOffice!}',
                     style: TextStyle(
-                      color: Colors.green.shade700,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.green.shade700
+                          : Colors.green.shade400,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
                     ),
@@ -256,7 +293,9 @@ class _OmdbInfoBoxState extends State<OmdbInfoBox> {
                   Text(
                     'Website: ${info.website!}',
                     style: TextStyle(
-                      color: Colors.blue.shade700,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.blue.shade700
+                          : Colors.blue.shade400,
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.underline,
                     ),

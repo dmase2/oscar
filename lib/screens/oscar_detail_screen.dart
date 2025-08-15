@@ -114,7 +114,9 @@ class MovieDetailScreen extends StatelessWidget {
                                 height: 300,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  color: Colors.grey[200],
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.surfaceContainerHighest,
                                 ),
                                 child: GestureDetector(
                                   child: PosterImageWidget(oscar: oscar),
@@ -254,9 +256,11 @@ class MovieDetailScreen extends StatelessWidget {
                                         ? null
                                         : Text(nomination.name),
                                     trailing: nomination.winner
-                                        ? const Icon(
+                                        ? Icon(
                                             Icons.emoji_events,
-                                            color: Colors.amber,
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primary,
                                           )
                                         : null,
                                   );

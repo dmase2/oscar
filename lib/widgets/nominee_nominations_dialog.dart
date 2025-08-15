@@ -8,11 +8,13 @@ import 'package:oscars/widgets/summary_chip_widget.dart';
 class NomineeNominationsDialog extends StatefulWidget {
   final String nominee;
   final String nomineeId;
+  final String? categoryFilter; // Add category filter
 
   const NomineeNominationsDialog({
     super.key,
     required this.nominee,
     required this.nomineeId,
+    this.categoryFilter, // Optional category filter
   });
 
   @override
@@ -53,7 +55,44 @@ class _NomineeNominationsDialogState extends State<NomineeNominationsDialog> {
               .map((n) => n.trim())
               .contains(widget.nomineeId),
         )
+        .where((w) {
+          if (widget.categoryFilter == null) return true;
+          if (widget.categoryFilter == 'ALL_ACTING') {
+            // Special case: filter to acting categories only
+            return w.className?.toLowerCase() == 'acting';
+          }
+          return w.canonCategory == widget.categoryFilter;
+        })
         .toList();
+
+    // Calculate stats for the filtered movies
+    int displayNominations, displayWins, displaySpecialAwards;
+    if (widget.categoryFilter != null) {
+      // For specific category, count filtered movies
+      final regularNominations = movies
+          .where((m) => m.className?.toLowerCase() != 'special')
+          .toList();
+      final specialAwardsList = movies
+          .where((m) => m.className?.toLowerCase() == 'special')
+          .toList();
+
+      final nominationPairs = <String>{};
+      final winPairs = <String>{};
+      for (final movie in regularNominations) {
+        final key = '${movie.canonCategory}|${movie.yearFilm}|${movie.filmId}';
+        nominationPairs.add(key);
+        if (movie.winner) winPairs.add(key);
+      }
+
+      displayNominations = nominationPairs.length;
+      displayWins = winPairs.length;
+      displaySpecialAwards = specialAwardsList.length;
+    } else {
+      // Show overall stats for all categories
+      displayNominations = nominations;
+      displayWins = wins;
+      displaySpecialAwards = specialAwards;
+    }
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
@@ -63,28 +102,34 @@ class _NomineeNominationsDialogState extends State<NomineeNominationsDialog> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Nominations for ${widget.nominee}',
-              style: Theme.of(context).textTheme.titleMedium,
+            Center(
+              child: Text(
+                widget.categoryFilter != null
+                    ? widget.categoryFilter == 'ALL_ACTING'
+                          ? 'Acting Nominations for ${widget.nominee}'
+                          : '${widget.categoryFilter} Nominations for ${widget.nominee}'
+                    : 'All Nominations for ${widget.nominee}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
             const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+
               children: [
                 SummaryChip(
                   label: 'Noms',
-                  count: nominations,
-                  color: Colors.blue,
+                  count: displayNominations,
+                  color: OscarDesignTokens.info,
                 ),
                 SummaryChip(
                   label: 'Wins',
-                  count: wins,
+                  count: displayWins,
                   color: OscarDesignTokens.oscarGoldDark,
                 ),
                 SummaryChip(
                   label: 'Special',
-                  count: specialAwards,
+                  count: displaySpecialAwards,
                   color: OscarDesignTokens.special,
                 ),
               ],

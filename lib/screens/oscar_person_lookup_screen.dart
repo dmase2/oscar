@@ -187,7 +187,10 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
                             '${n.film.isNotEmpty ? n.film : n.category} (${n.yearFilm})',
                           ),
                           subtitle: Text(n.category),
-                          trailing: const Icon(Icons.star, color: Colors.green),
+                          trailing: Icon(
+                            Icons.star,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       ),
                     ],

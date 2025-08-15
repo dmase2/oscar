@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/oscar_providers.dart';
+import '../widgets/category_dropdown_widget.dart';
 import '../widgets/oscar_movie_grid_widget.dart';
 import '../widgets/oscars_app_drawer_widget.dart';
 
@@ -13,24 +14,6 @@ final _selectedYearProvider = StateProvider<int?>((ref) => null);
 
 // Define a constant for the sentinel value for "All Years"
 const int kAllYears = -1;
-
-// Priority categories that should be bolded
-const Set<String> _priorityCategories = {
-  'ACTOR IN A LEADING ROLE',
-  'ACTRESS IN A LEADING ROLE',
-  'ACTOR IN A SUPPORTING ROLE',
-  'ACTRESS IN A SUPPORTING ROLE',
-  'BEST PICTURE',
-  'CINEMATOGRAPHY',
-  'DIRECTING',
-  'WRITING (Original Screenplay)',
-  'WRITING (Adapted Screenplay)',
-};
-
-// Helper function to check if a category is priority
-bool _isPriorityCategory(String category) {
-  return _priorityCategories.contains(category);
-}
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -133,9 +116,9 @@ class HomeScreen extends ConsumerWidget {
                         ),
                       ),
                       trailing: selectedYear == null
-                          ? const Icon(
+                          ? Icon(
                               Icons.check,
-                              color: Colors.amber,
+                              color: Theme.of(context).colorScheme.primary,
                               size: 16,
                             )
                           : null,
@@ -160,9 +143,9 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ),
                         trailing: year == selectedYear
-                            ? const Icon(
+                            ? Icon(
                                 Icons.check,
-                                color: Colors.amber,
+                                color: Theme.of(context).colorScheme.primary,
                                 size: 16,
                               )
                             : null,
@@ -203,22 +186,6 @@ class HomeScreen extends ConsumerWidget {
                   .toSet()
                   .toList();
 
-              // Sort with priority categories first, then others alphabetically
-              canonCategories.sort((a, b) {
-                final aPriority = _isPriorityCategory(a);
-                final bPriority = _isPriorityCategory(b);
-
-                if (aPriority && !bPriority) {
-                  return -1; // a comes before b
-                } else if (!aPriority && bPriority) {
-                  return 1; // b comes before a
-                } else {
-                  return a.compareTo(
-                    b,
-                  ); // alphabetical within same priority level
-                }
-              });
-
               // Debug: Print first few categories to see actual names
               debugPrint(
                 'Sample categories: ${canonCategories.take(10).toList()}',
@@ -235,62 +202,22 @@ class HomeScreen extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: DropdownButton<String>(
-                            value: selectedCategory == '__ACTING__'
+                          child: CategoryDropdownWidget(
+                            selectedCategory: selectedCategory == '__ACTING__'
                                 ? '__ACTING__'
                                 : canonCategories.contains(selectedCategory)
                                 ? selectedCategory
                                 : null,
-                            hint: const Text(
-                              'Filter by category',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black87,
-                            ),
-                            isExpanded: true,
-                            itemHeight: 48,
-                            isDense: false,
-                            items: [
-                              const DropdownMenuItem<String>(
-                                value: null,
-                                child: Text(
-                                  'All Categories',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ),
-                              const DropdownMenuItem<String>(
-                                value: '__ACTING__',
-                                child: Text(
-                                  'All Acting Categories',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ),
-                              ...canonCategories.map(
-                                (cat) => DropdownMenuItem<String>(
-                                  value: cat,
-                                  child: Text(
-                                    cat,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: _isPriorityCategory(cat)
-                                          ? FontWeight.w700
-                                          : FontWeight.w400,
-                                      color: _isPriorityCategory(cat)
-                                          ? Colors.black87
-                                          : Colors.black54,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            categoryList: canonCategories,
                             onChanged: (value) {
                               ref
                                       .read(_selectedCategoryProvider.notifier)
                                       .state =
                                   value;
                             },
+                            hintText: 'Filter by category',
+                            showAllOscars: false,
+                            actingCategoriesValue: '__ACTING__',
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -350,7 +277,11 @@ class HomeScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.error, size: 64, color: Colors.red),
+                    Icon(
+                      Icons.error,
+                      size: 64,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                     const SizedBox(height: 16),
                     Text('Error loading Oscar data: $error'),
                     const SizedBox(height: 16),

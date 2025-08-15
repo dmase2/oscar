@@ -164,7 +164,10 @@ class _NomineeLookupScreenState extends State<NomineeLookupScreen> {
                           '${nom.category}${nom.winner ? " - WINNER" : ""}',
                         ),
                         trailing: nom.winner
-                            ? const Icon(Icons.stars, color: Colors.amber)
+                            ? Icon(
+                                Icons.stars,
+                                color: Theme.of(context).colorScheme.primary,
+                              )
                             : null,
                       ),
                     );

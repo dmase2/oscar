@@ -29,7 +29,7 @@ class NomineesSection extends StatelessWidget {
               'Nominee(s):',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.grey[600],
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                 fontSize: 16,
               ),
             ),

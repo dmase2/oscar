@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/oscar_winner.dart';
 import '../services/database_service.dart';
+import '../widgets/category_dropdown_widget.dart';
 import '../widgets/nominee_nominations_dialog.dart';
 import '../widgets/oscars_app_drawer_widget.dart';
 
@@ -25,7 +26,6 @@ _StatisticsResult _computeStatistics({
   required String? selectedCategory,
   required Map<String, List<OscarWinner>> byNomineeId,
   required Map<String, Map<String, List<OscarWinner>>> byCategoryAndNominee,
-  required List<String> actingCategories,
 }) {
   final nomineeCounts = <String, Map<String, int>>{};
   final winnerCounts = <String, Map<String, int>>{};
@@ -41,7 +41,8 @@ _StatisticsResult _computeStatistics({
       final overallWinPairs = <String>{};
       for (final movie in nomineeMovies) {
         if ((movie.className?.toLowerCase() ?? '') == 'special') continue;
-        final key = '${movie.canonCategory}|${movie.yearFilm}';
+        // Use filmId for proper movie distinction
+        final key = '${movie.canonCategory}|${movie.yearFilm}|${movie.filmId}';
         overallNomPairs.add(key);
         if (movie.winner) overallWinPairs.add(key);
       }
@@ -57,7 +58,9 @@ _StatisticsResult _computeStatistics({
           final catWinPairs = <String>{};
           for (final movie in categoryMovies) {
             if ((movie.className?.toLowerCase() ?? '') == 'special') continue;
-            final key = '${movie.canonCategory}|${movie.yearFilm}';
+            // Use filmId for proper movie distinction
+            final key =
+                '${movie.canonCategory}|${movie.yearFilm}|${movie.filmId}';
             catNomPairs.add(key);
             if (movie.winner) catWinPairs.add(key);
           }
@@ -69,22 +72,24 @@ _StatisticsResult _computeStatistics({
       }
     }
   } else if (selectedCategory == 'ALL_ACTING') {
-    final actingByNominee = <String, List<OscarWinner>>{};
-    for (final cat in actingCategories) {
-      final nomineeMap = byCategoryAndNominee[cat] ?? {};
-      for (final entry in nomineeMap.entries) {
-        actingByNominee.putIfAbsent(entry.key, () => []).addAll(entry.value);
-      }
-    }
-    for (final nomineeId in actingByNominee.keys) {
-      final nomineeMovies = actingByNominee[nomineeId]!;
-      final nomineeName = nomineeMovies.first.nominee;
+    // Use className filtering for consistency with home screen
+    for (final nomineeId in byNomineeId.keys) {
+      final nomineeMovies = byNomineeId[nomineeId]!;
+      final actingMovies = nomineeMovies
+          .where((m) => m.className?.toLowerCase() == 'acting')
+          .toList();
+
+      if (actingMovies.isEmpty) continue;
+
+      final nomineeName = actingMovies.first.nominee;
       if (nomineeName.trim().isEmpty) continue;
+
       final nominationPairs = <String>{};
       final winPairs = <String>{};
-      for (final movie in nomineeMovies) {
+      for (final movie in actingMovies) {
         if ((movie.className?.toLowerCase() ?? '') == 'special') continue;
-        final key = '${movie.canonCategory}|${movie.yearFilm}';
+        // Use filmId for proper movie distinction
+        final key = '${movie.canonCategory}|${movie.yearFilm}|${movie.filmId}';
         nominationPairs.add(key);
         if (movie.winner) winPairs.add(key);
       }
@@ -103,7 +108,8 @@ _StatisticsResult _computeStatistics({
       final winPairs = <String>{};
       for (final movie in nomineeMovies) {
         if ((movie.className?.toLowerCase() ?? '') == 'special') continue;
-        final key = '${movie.canonCategory}|${movie.yearFilm}';
+        // Use filmId for proper movie distinction
+        final key = '${movie.canonCategory}|${movie.yearFilm}|${movie.filmId}';
         nominationPairs.add(key);
         if (movie.winner) winPairs.add(key);
       }
@@ -148,18 +154,7 @@ class StatisticsScreen extends ConsumerWidget {
           .add(winner);
     }
 
-    // Acting categories for group filter
-    const actingCategories = [
-      'ACTOR IN A LEADING ROLE',
-      'ACTRESS IN A LEADING ROLE',
-      'ACTOR IN A SUPPORTING ROLE',
-      'ACTRESS IN A SUPPORTING ROLE',
-      'BEST ACTOR',
-      'BEST ACTRESS',
-      'BEST SUPPORTING ACTOR',
-      'BEST SUPPORTING ACTRESS',
-    ];
-    final categoryList = byCategory.keys.toList()..sort();
+    final categoryList = byCategory.keys.toList();
     final selectedCategory = ref.watch(_selectedCategoryProvider);
 
     // Compute statistics for the current filter
@@ -167,7 +162,6 @@ class StatisticsScreen extends ConsumerWidget {
       selectedCategory: selectedCategory,
       byNomineeId: byNomineeId,
       byCategoryAndNominee: byCategoryAndNominee,
-      actingCategories: actingCategories,
     );
     final nomineeCounts = stats.nomineeCounts;
     final winnerCounts = stats.winnerCounts;
@@ -184,34 +178,13 @@ class StatisticsScreen extends ConsumerWidget {
       backgroundColor: theme.colorScheme.surface,
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: DropdownButton<String?>(
-              value: selectedCategory,
-              hint: const Text('Filter by category'),
-              isExpanded: true,
-              items: [
-                const DropdownMenuItem<String?>(
-                  value: null,
-                  child: Text('All Categories'),
-                ),
-                const DropdownMenuItem<String?>(
-                  value: 'ALL_OSCARS',
-                  child: Text('All Oscars'),
-                ),
-                const DropdownMenuItem<String?>(
-                  value: 'ALL_ACTING',
-                  child: Text('All Acting'),
-                ),
-                ...categoryList.map(
-                  (cat) =>
-                      DropdownMenuItem<String?>(value: cat, child: Text(cat)),
-                ),
-              ],
-              onChanged: (value) {
-                ref.read(_selectedCategoryProvider.notifier).state = value;
-              },
-            ),
+          CategoryDropdownWidget(
+            selectedCategory: selectedCategory,
+            categoryList: categoryList,
+            onChanged: (value) {
+              ref.read(_selectedCategoryProvider.notifier).state = value;
+            },
+            hintText: 'Filter by category',
           ),
           Expanded(
             child: ListView(
@@ -225,6 +198,7 @@ class StatisticsScreen extends ConsumerWidget {
                     overallNominations,
                     allWinners,
                     'nominations',
+                    categoryFilter: null, // All categories, no filter
                   ),
                   const SizedBox(height: 24),
                   _buildTopSection(
@@ -234,6 +208,7 @@ class StatisticsScreen extends ConsumerWidget {
                     overallWins,
                     allWinners,
                     'wins',
+                    categoryFilter: null, // All categories, no filter
                   ),
                 ] else if (selectedCategory == 'ALL_ACTING') ...[
                   _buildTopSection(
@@ -243,6 +218,7 @@ class StatisticsScreen extends ConsumerWidget {
                     nomineeCounts['ALL_ACTING'] ?? {},
                     allWinners,
                     'nominations',
+                    categoryFilter: 'ALL_ACTING', // Special acting filter
                   ),
                   const SizedBox(height: 24),
                   _buildTopSection(
@@ -252,6 +228,7 @@ class StatisticsScreen extends ConsumerWidget {
                     winnerCounts['ALL_ACTING'] ?? {},
                     allWinners,
                     'wins',
+                    categoryFilter: 'ALL_ACTING', // Special acting filter
                   ),
                 ] else ...[
                   Text(
@@ -281,6 +258,7 @@ class StatisticsScreen extends ConsumerWidget {
                       overallNominations,
                       allWinners,
                       'nominations',
+                      categoryFilter: null, // Overall stats, no filter
                     ),
                     const SizedBox(height: 24),
                     _buildTopSection(
@@ -290,6 +268,7 @@ class StatisticsScreen extends ConsumerWidget {
                       overallWins,
                       allWinners,
                       'wins',
+                      categoryFilter: null, // Overall stats, no filter
                     ),
                   ],
                 ],
@@ -343,6 +322,7 @@ class StatisticsScreen extends ConsumerWidget {
             'nominations',
             allWinners,
             true,
+            category, // Pass the specific category
           ),
         ),
         Padding(
@@ -364,6 +344,7 @@ class StatisticsScreen extends ConsumerWidget {
             'wins',
             allWinners,
             true,
+            category, // Pass the specific category
           ),
         ),
       ],
@@ -379,6 +360,7 @@ class StatisticsScreen extends ConsumerWidget {
     String type,
     List<OscarWinner> allWinners,
     bool isClickable,
+    String? categoryFilter, // Add category filter parameter
   ) {
     final widget = Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -422,6 +404,7 @@ class StatisticsScreen extends ConsumerWidget {
             builder: (context) => NomineeNominationsDialog(
               nominee: nomineeName,
               nomineeId: nomineeId,
+              categoryFilter: categoryFilter,
             ),
           );
         }
@@ -450,8 +433,9 @@ class StatisticsScreen extends ConsumerWidget {
     String title,
     Map<String, int> data,
     List<OscarWinner> allWinners,
-    String type,
-  ) {
+    String type, {
+    String? categoryFilter, // Add optional named category filter
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -471,6 +455,7 @@ class StatisticsScreen extends ConsumerWidget {
             type,
             allWinners,
             true,
+            categoryFilter, // Pass the category filter
           ),
         ),
       ],

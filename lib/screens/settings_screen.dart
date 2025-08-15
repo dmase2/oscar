@@ -19,7 +19,15 @@ class SettingsScreen extends ConsumerWidget {
     final dbService = ref.read(databaseServiceProvider);
     dbService.oscarBox.removeAll();
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('ObjectBox database cleared.')),
+      SnackBar(
+        content: Text(
+          'ObjectBox database cleared.',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onInverseSurface,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+      ),
     );
   }
 
@@ -30,7 +38,15 @@ class SettingsScreen extends ConsumerWidget {
         await OscarWinnerFromNomineeCsvService.loadOscarWinnersFromNomineeCsv();
     await dbService.insertOscarWinners(winners);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Reloaded ${winners.length} records from CSV.')),
+      SnackBar(
+        content: Text(
+          'Reloaded ${winners.length} records from CSV.',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onInverseSurface,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+      ),
     );
   }
 
@@ -64,11 +80,15 @@ class SettingsScreen extends ConsumerWidget {
           // Show a message explaining this limitation
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
+              SnackBar(
                 content: Text(
                   'iOS does not allow apps to exit programmatically. Please use the home button or app switcher.',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onInverseSurface,
+                  ),
                 ),
-                duration: Duration(seconds: 4),
+                backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+                duration: const Duration(seconds: 4),
               ),
             );
           }
@@ -86,9 +106,15 @@ class SettingsScreen extends ConsumerWidget {
         // Web platform - just close the tab/window (limited by browser)
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Please close the browser tab to exit.'),
-              duration: Duration(seconds: 3),
+            SnackBar(
+              content: Text(
+                'Please close the browser tab to exit.',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onInverseSurface,
+                ),
+              ),
+              backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+              duration: const Duration(seconds: 3),
             ),
           );
         }
@@ -168,8 +194,14 @@ class SettingsScreen extends ConsumerWidget {
                 final dbService = ref.read(databaseServiceProvider);
                 dbService.getAllOscarWinners();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Printed ObjectBox records to console.'),
+                  SnackBar(
+                    content: Text(
+                      'Printed ObjectBox records to console.',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onInverseSurface,
+                      ),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.inverseSurface,
                   ),
                 );
               },

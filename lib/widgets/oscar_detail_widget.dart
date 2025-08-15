@@ -104,7 +104,7 @@ class _OscarDetailSectionState extends State<OscarDetailSection> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Padding(
+                          return Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
                             child: Row(
                               children: [
@@ -114,7 +114,9 @@ class _OscarDetailSectionState extends State<OscarDetailSection> {
                                     'Rotten Tomatoes:',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.grey,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface.withOpacity(0.6),
                                       fontSize: 16,
                                     ),
                                   ),
@@ -176,9 +178,9 @@ class _OscarDetailSectionState extends State<OscarDetailSection> {
             width: 120,
             child: Text(
               '$label:',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                 fontSize: 16,
               ),
             ),

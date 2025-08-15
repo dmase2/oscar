@@ -73,7 +73,12 @@ class _PosterImageWidgetState extends State<PosterImageWidget> {
               const SizedBox(height: 8),
               Text(
                 'No poster found',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.6),
+                ),
               ),
             ],
           ),
