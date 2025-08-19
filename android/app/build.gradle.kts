@@ -24,10 +24,11 @@ android {
         applicationId = "com.example.oscars"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 21
-        targetSdk = 33
+    minSdk = flutter.minSdkVersion
+    targetSdk = 33
         versionCode = 1
         versionName = "1.0"
+    // (ndk abiFilters were removed here to avoid conflicts with splits; keep splits as the canonical place)
     }
 
     buildTypes {
@@ -38,13 +39,13 @@ android {
         }
     }
 
-    // Exclude deprecated x86 architectures  
+    // Enable ABI splits and make sure the included ABIs match the NDK abiFilters above.
     splits {
         abi {
             isEnable = true
             reset()
-            include("armeabi-v7a", "arm64-v8a")
-            isUniversalApk = false
+            include("armeabi-v7a", "arm64-v8a", "x86_64")
+            isUniversalApk = true
         }
     }
 }
@@ -52,6 +53,8 @@ android {
 flutter {
     source = "../.."
 }
+
+// Removed temporary diagnostic logging (broke Kotlin DSL compilation).
 
 dependencies {
     implementation("com.google.android.material:material:1.11.0")

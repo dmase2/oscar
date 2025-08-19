@@ -264,13 +264,51 @@ class HomeScreen extends ConsumerWidget {
                         (showOnlyWinners ? oscar.winner == true : true);
                   }
                 }).toList();
-                return filtered.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'No nominees found for this category, year, and decade',
+                
+                if (filtered.isEmpty) {
+                  // Check if the database is completely empty
+                  final dbService = ref.read(databaseServiceProvider);
+                  final isDatabaseEmpty = dbService.isEmpty;
+                  
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          isDatabaseEmpty ? Icons.inbox : Icons.filter_alt_off,
+                          size: 64,
+                          color: Theme.of(context).colorScheme.outline,
                         ),
-                      )
-                    : OscarMovieGrid(oscars: filtered);
+                        const SizedBox(height: 16),
+                        Text(
+                          isDatabaseEmpty 
+                            ? 'No Oscar data loaded'
+                            : 'No nominees found for this category, year, and decade',
+                          style: Theme.of(context).textTheme.titleMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                        if (isDatabaseEmpty) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            'Go to Settings to load Oscar data from CSV',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 16),
+                          ElevatedButton.icon(
+                            onPressed: () => Navigator.pushNamed(context, '/settings'),
+                            icon: const Icon(Icons.settings),
+                            label: const Text('Go to Settings'),
+                          ),
+                        ],
+                      ],
+                    ),
+                  );
+                }
+                
+                return OscarMovieGrid(oscars: filtered);
               },
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Center(

@@ -18,6 +18,10 @@ class SettingsScreen extends ConsumerWidget {
   Future<void> _clearDatabase(BuildContext context, WidgetRef ref) async {
     final dbService = ref.read(databaseServiceProvider);
     dbService.oscarBox.removeAll();
+    
+    // Trigger provider refresh using the helper
+    ref.read(refreshOscarDataProvider)();
+    
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -37,6 +41,10 @@ class SettingsScreen extends ConsumerWidget {
     final List<OscarWinner> winners =
         await OscarWinnerFromNomineeCsvService.loadOscarWinnersFromNomineeCsv();
     await dbService.insertOscarWinners(winners);
+    
+    // Trigger provider refresh using the helper
+    ref.read(refreshOscarDataProvider)();
+    
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
