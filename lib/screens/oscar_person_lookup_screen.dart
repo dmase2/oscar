@@ -10,7 +10,8 @@ import '../widgets/oscars_app_drawer_widget.dart';
 import '../widgets/summary_chip_widget.dart';
 
 class OscarPersonLookupScreen extends StatefulWidget {
-  const OscarPersonLookupScreen({super.key});
+  final String? initialNomineeId;
+  const OscarPersonLookupScreen({super.key, this.initialNomineeId});
 
   @override
   State<OscarPersonLookupScreen> createState() =>
@@ -27,6 +28,17 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
   final TextEditingController _controller = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    // Auto-load person if initial nominee ID is provided
+    if (widget.initialNomineeId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _loadPersonByNomineeId(widget.initialNomineeId!);
+      });
+    }
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -41,6 +53,15 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
         .toList();
     filtered.sort((a, b) => a.name.compareTo(b.name));
     return filtered;
+  }
+
+  void _loadPersonByNomineeId(String nomineeId) {
+    final db = DatabaseService.instance;
+    final person = db.getNomineeById(nomineeId);
+    if (person != null) {
+      _onPersonSelected(person);
+      _controller.text = person.name;
+    }
   }
 
   void _onPersonSelected(Nominee person) {
@@ -165,13 +186,103 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
                     if (_nominations.isNotEmpty) ...[
                       const Text(
                         'Nominations:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
+                      const SizedBox(height: 8),
+                      // Compact nominations list
                       ..._nominations.map(
-                        (n) => ListTile(
-                          title: Text('${n.film} (${n.yearFilm})'),
-                          subtitle: Text(n.category),
-                          trailing: n.winner ? const Text('🏆') : null,
+                        (n) => Container(
+                          margin: const EdgeInsets.symmetric(vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: n.winner
+                                ? Theme.of(context).colorScheme.primaryContainer
+                                      .withOpacity(0.3)
+                                : Theme.of(
+                                    context,
+                                  ).colorScheme.surfaceContainerHighest,
+                            borderRadius: BorderRadius.circular(6),
+                            border: n.winner
+                                ? Border.all(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary.withOpacity(0.5),
+                                  )
+                                : null,
+                          ),
+                          child: Row(
+                            children: [
+                              // Year badge
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.outline.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  '${n.yearFilm}',
+                                  style: Theme.of(context).textTheme.labelSmall
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10,
+                                      ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              // Film and category
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      n.film,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                          ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      n.category,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withOpacity(0.7),
+                                            fontSize: 11,
+                                          ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Winner indicator
+                              if (n.winner)
+                                const Text(
+                                  '🏆',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -179,17 +290,98 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
                       const SizedBox(height: 16),
                       const Text(
                         'Special Awards:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
+                      const SizedBox(height: 8),
+                      // Compact special awards list
                       ..._specialAwards.map(
-                        (n) => ListTile(
-                          title: Text(
-                            '${n.film.isNotEmpty ? n.film : n.category} (${n.yearFilm})',
+                        (n) => Container(
+                          margin: const EdgeInsets.symmetric(vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
                           ),
-                          subtitle: Text(n.category),
-                          trailing: Icon(
-                            Icons.star,
-                            color: Theme.of(context).colorScheme.primary,
+                          decoration: BoxDecoration(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.tertiaryContainer.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.tertiary.withOpacity(0.5),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              // Year badge
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.tertiary.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  '${n.yearFilm}',
+                                  style: Theme.of(context).textTheme.labelSmall
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10,
+                                      ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              // Film and category
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      n.film.isNotEmpty ? n.film : n.category,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                          ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    if (n.film.isNotEmpty)
+                                      Text(
+                                        n.category,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface
+                                                  .withOpacity(0.7),
+                                              fontSize: 11,
+                                            ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              // Special award indicator
+                              Icon(
+                                Icons.star,
+                                color: Theme.of(context).colorScheme.tertiary,
+                                size: 16,
+                              ),
+                            ],
                           ),
                         ),
                       ),
