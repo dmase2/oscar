@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/oscar_providers.dart';
+import '../screens/movie_lookup_screen.dart';
 import '../screens/oscar_person_lookup_screen.dart';
 
 class OscarsAppDrawer extends StatelessWidget {
@@ -35,6 +36,20 @@ class OscarsAppDrawer extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => const OscarPersonLookupScreen(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  title: const Text('Movie Lookup'),
+                  leading: Icon(Icons.movie),
+                  selected: selected == 'movie_lookup',
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MovieLookupScreen(),
                       ),
                     );
                   },

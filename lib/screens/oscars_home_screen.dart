@@ -196,7 +196,7 @@ class HomeScreen extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
-                      vertical: 12,
+                      vertical: 4,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -264,12 +264,12 @@ class HomeScreen extends ConsumerWidget {
                         (showOnlyWinners ? oscar.winner == true : true);
                   }
                 }).toList();
-                
+
                 if (filtered.isEmpty) {
                   // Check if the database is completely empty
                   final dbService = ref.read(databaseServiceProvider);
                   final isDatabaseEmpty = dbService.isEmpty;
-                  
+
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -281,9 +281,9 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          isDatabaseEmpty 
-                            ? 'No Oscar data loaded'
-                            : 'No nominees found for this category, year, and decade',
+                          isDatabaseEmpty
+                              ? 'No Oscar data loaded'
+                              : 'No nominees found for this category, year, and decade',
                           style: Theme.of(context).textTheme.titleMedium,
                           textAlign: TextAlign.center,
                         ),
@@ -291,14 +291,16 @@ class HomeScreen extends ConsumerWidget {
                           const SizedBox(height: 8),
                           Text(
                             'Go to Settings to load Oscar data from CSV',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 16),
                           ElevatedButton.icon(
-                            onPressed: () => Navigator.pushNamed(context, '/settings'),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/settings'),
                             icon: const Icon(Icons.settings),
                             label: const Text('Go to Settings'),
                           ),
@@ -307,7 +309,7 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   );
                 }
-                
+
                 return OscarMovieGrid(oscars: filtered);
               },
               loading: () => const Center(child: CircularProgressIndicator()),

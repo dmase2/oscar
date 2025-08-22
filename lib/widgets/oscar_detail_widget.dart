@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:oscars/models/oscar_winner.dart';
 import 'package:oscars/services/omdb_service.dart';
 import 'package:oscars/utils/nominee_parser.dart';
 import 'package:oscars/utils/oscar_utils.dart';
-import 'package:oscars/widgets/nominee_nominations_dialog.dart';
 import 'package:oscars/widgets/nominees_section.dart';
+
+import '../providers/boxoffice_providers.dart';
+import '../screens/oscar_person_lookup_screen.dart';
 
 class OscarDetailSection extends StatefulWidget {
   final OscarWinner oscar;
@@ -24,6 +28,9 @@ class _OscarDetailSectionState extends State<OscarDetailSection> {
       widget.oscar.nominee,
       widget.oscar.nomineeId,
     );
+
+    // Currency formatter
+    final moneyFormat = NumberFormat.simpleCurrency(decimalDigits: 0);
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -142,6 +149,62 @@ class _OscarDetailSectionState extends State<OscarDetailSection> {
                         }
                       },
                     ),
+                  // Box Office info from BoxOfficeEntry store
+                  Consumer(
+                    builder: (context, ref, _) {
+                      return ref
+                          .watch(allBoxOfficeEntriesProvider)
+                          .when(
+                            data: (entries) {
+                              // Extract numeric IMDb ID
+                              final idStr = widget.oscar.filmId.replaceAll(
+                                RegExp(r'[^0-9]'),
+                                '',
+                              );
+                              final imdbId = int.tryParse(idStr);
+                              if (imdbId == null) {
+                                return const SizedBox.shrink();
+                              }
+                              // Filter matching entries
+                              final matches = entries
+                                  .where((e) => e.id == imdbId)
+                                  .toList();
+                              if (matches.isEmpty) {
+                                return const SizedBox.shrink();
+                              }
+                              // If multiple entries exist (e.g., limited vs full release), pick the one with highest worldwide gross
+                              final match = matches.reduce(
+                                (current, next) =>
+                                    next.worldwide > current.worldwide
+                                    ? next
+                                    : current,
+                              );
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildDetailRow(
+                                    context,
+                                    'Domestic',
+                                    moneyFormat.format(match.domestic),
+                                  ),
+                                  _buildDetailRow(
+                                    context,
+                                    'International',
+                                    moneyFormat.format(match.international),
+                                  ),
+                                  _buildDetailRow(
+                                    context,
+                                    'Worldwide',
+                                    moneyFormat.format(match.worldwide),
+                                  ),
+                                ],
+                              );
+                            },
+                            loading: () => const SizedBox.shrink(),
+                            error: (_, __) => const SizedBox.shrink(),
+                          );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -160,17 +223,20 @@ class _OscarDetailSectionState extends State<OscarDetailSection> {
     String nominee,
     String nomineeId,
   ) {
-    if (widget.oscar.nomineeId.isEmpty) return;
-    showDialog(
-      context: context,
-      builder: (context) =>
-          NomineeNominationsDialog(nominee: nominee, nomineeId: nomineeId),
+    if (nomineeId.isEmpty) return;
+
+    // Navigate to the Oscar Person Lookup Screen with the nominee ID
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) =>
+            OscarPersonLookupScreen(initialNomineeId: nomineeId),
+      ),
     );
   }
 
   Widget _buildDetailRow(BuildContext context, String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

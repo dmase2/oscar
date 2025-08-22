@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class OmdbExtraInfo {
@@ -88,12 +89,14 @@ class OmdbExtraInfo {
 }
 
 class OmdbServiceExtra {
-  static Future<OmdbExtraInfo?> fetchExtraInfoByTitle(String title, int year) async {
-    final uri = Uri.parse(_baseUrl).replace(queryParameters: {
-      'apikey': _apiKey,
-      't': title,
-      'y': year.toString(),
-    });
+  static Future<OmdbExtraInfo?> fetchExtraInfoByTitle(
+    String title,
+    int year,
+  ) async {
+    // Only include the year parameter when a valid year (>0) is provided.
+    final qp = <String, String>{'apikey': _apiKey, 't': title};
+    if (year > 0) qp['y'] = year.toString();
+    final uri = Uri.parse(_baseUrl).replace(queryParameters: qp);
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -101,11 +104,14 @@ class OmdbServiceExtra {
     }
     return null;
   }
+
   static const String _apiKey = 'b925d287';
   static const String _baseUrl = 'http://www.omdbapi.com/';
 
   static Future<OmdbExtraInfo?> fetchExtraInfo(String imdbId) async {
-    final uri = Uri.parse(_baseUrl).replace(queryParameters: {'apikey': _apiKey, 'i': imdbId});
+    final uri = Uri.parse(
+      _baseUrl,
+    ).replace(queryParameters: {'apikey': _apiKey, 'i': imdbId});
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

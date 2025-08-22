@@ -71,10 +71,34 @@ class _MovieCardState extends State<MovieCard> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            widget.oscar.film.substring(0, 1),
+                            // Show uppercase acronym (max 4 letters) based on category
+                            () {
+                              final cat = widget.oscar.category.toLowerCase();
+                              // Use nominee name for all acting (actor/actress) and directing categories
+                              final isPersonAcronym =
+                                  cat.contains('actor') ||
+                                  cat.contains('actress') ||
+                                  // Include both director and directing categories
+                                  cat.contains('director') ||
+                                  cat.contains('directing');
+                              final source = isPersonAcronym
+                                  ? widget.oscar.name
+                                  : widget.oscar.film;
+                              var acronym = source
+                                  .split(RegExp(r'\s+'))
+                                  .where((word) => word.isNotEmpty)
+                                  .map((word) => word[0])
+                                  .join()
+                                  .toUpperCase();
+                              // Limit to first 4 characters
+                              if (acronym.length > 4) {
+                                acronym = acronym.substring(0, 4);
+                              }
+                              return acronym;
+                            }(),
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.onSurface,
-                              fontSize: 48,
+                              fontSize: 36,
                             ),
                             textAlign: TextAlign.center,
                           ),

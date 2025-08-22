@@ -1,4 +1,5 @@
 import 'dart:io' show Platform, exit;
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +11,62 @@ import '../design_system/design_system.dart';
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
 import '../providers/shade_opacity_provider.dart';
+import '../services/box_office_service.dart';
 import '../widgets/oscars_app_drawer_widget.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   Future<void> _clearDatabase(BuildContext context, WidgetRef ref) async {
+    // Confirm action with user
+    final bool? confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Clear Database'),
+        content: const Text(
+          'This will permanently clear the ObjectBox database and Box Office data. Are you sure you want to continue?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Clear'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
     final dbService = ref.read(databaseServiceProvider);
-    dbService.oscarBox.removeAll();
-    
+
+    // Show modal progress while clearing
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => WillPopScope(
+        onWillPop: () async => false,
+        child: const AlertDialog(
+          content: SizedBox(
+            height: 80,
+            child: Center(child: CircularProgressIndicator()),
+          ),
+        ),
+      ),
+    );
+
+    // Perform clear operations
+    await Future.microtask(() => dbService.oscarBox.removeAll());
+    await BoxOfficeService.instance.clearBoxOfficeData();
+
+    // Dismiss progress
+    if (context.mounted) Navigator.of(context).pop();
+
     // Trigger provider refresh using the helper
     ref.read(refreshOscarDataProvider)();
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -36,19 +81,65 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Future<void> _reloadDatabase(BuildContext context, WidgetRef ref) async {
+    // Confirm action with user
+    final bool? confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Reload Database'),
+        content: const Text(
+          'This will clear the ObjectBox database and Box Office data, then reload winners from CSV. Continue?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Reload'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
     final dbService = ref.read(databaseServiceProvider);
-    dbService.oscarBox.removeAll();
+
+    // Show modal progress while reloading
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => WillPopScope(
+        onWillPop: () async => false,
+        child: const AlertDialog(
+          content: SizedBox(
+            height: 80,
+            child: Center(child: CircularProgressIndicator()),
+          ),
+        ),
+      ),
+    );
+
+    // Perform reload operations
+    await Future.microtask(() => dbService.oscarBox.removeAll());
+    await BoxOfficeService.instance.clearBoxOfficeData();
     final List<OscarWinner> winners =
         await OscarWinnerFromNomineeCsvService.loadOscarWinnersFromNomineeCsv();
     await dbService.insertOscarWinners(winners);
-    
+
+    // Reload BoxOffice CSV into ObjectBox
+    await BoxOfficeService.instance.reloadBoxOfficeData();
+
+    // Dismiss progress
+    if (context.mounted) Navigator.of(context).pop();
+
     // Trigger provider refresh using the helper
     ref.read(refreshOscarDataProvider)();
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Reloaded ${winners.length} records from CSV.',
+          'Reloaded ${winners.length} records from CSV and re-imported BoxOffice data.',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onInverseSurface,
           ),
@@ -130,6 +221,36 @@ class SettingsScreen extends ConsumerWidget {
     }
   }
 
+  /// Print box office entries in chunks of 50 to the console
+  Future<void> _printBoxOfficeEntries(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    // Fetch all entries using BoxOfficeService
+    final entries = BoxOfficeService.instance.getAllBoxOfficeEntries();
+    if (entries.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No BoxOffice entries found')),
+      );
+      return;
+    }
+    for (var i = 0; i < entries.length; i += 50) {
+      final end = min(i + 50, entries.length);
+      final chunk = entries.sublist(i, end);
+      print('--- BoxOffice Entries ${i + 1} to $end ---');
+      for (var e in chunk) {
+        print(
+          '${e.id}, ${e.title}, ${e.domestic}, ${e.international}, ${e.worldwide}, ${e.url}',
+        );
+      }
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Printed ${entries.length} BoxOffice entries to console'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -209,10 +330,19 @@ class SettingsScreen extends ConsumerWidget {
                         color: Theme.of(context).colorScheme.onInverseSurface,
                       ),
                     ),
-                    backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.inverseSurface,
                   ),
                 );
               },
+              variant: OscarButtonVariant.secondary,
+              isFullWidth: true,
+            ),
+            const SizedBox(height: 16),
+            OscarButton(
+              text: 'Print BoxOffice Entries',
+              onPressed: () => _printBoxOfficeEntries(context, ref),
               variant: OscarButtonVariant.secondary,
               isFullWidth: true,
             ),

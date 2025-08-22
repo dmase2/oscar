@@ -1,10 +1,8 @@
-import 'dart:io';
-
-import 'package:path_provider/path_provider.dart';
-
+import '../models/box_office_entry.dart';
 import '../models/nominee.dart';
 import '../models/oscar_winner.dart';
 import '../models/poster_cache_entry.dart';
+import '../objectbox.dart';
 import '../objectbox.g.dart';
 
 class DatabaseService {
@@ -15,21 +13,18 @@ class DatabaseService {
   late final Box<OscarWinner> oscarBox;
   late final Box<PosterCacheEntry> posterCacheBox;
   late final Box<Nominee> nomineeBox;
+  late final Box<BoxOfficeEntry> boxOfficeEntryBox;
 
   DatabaseService._();
 
   Future<void> initialize() async {
-    final documentsDirectory = await getApplicationDocumentsDirectory();
-    final databaseDirectory = Directory('${documentsDirectory.path}/objectbox');
-    // Fix: Pass macosApplicationGroup for macOS sandboxed apps
-    store = await openStore(
-      directory: databaseDirectory.path,
-      macosApplicationGroup:
-          'com.example.oscars', // <= Set your app group here, must match entitlements
-    );
+    // Initialize ObjectBox store singleton (shared for all entities)
+    final objectBox = await ObjectBox.create();
+    store = objectBox.store;
     oscarBox = store.box<OscarWinner>();
     posterCacheBox = store.box<PosterCacheEntry>();
     nomineeBox = store.box<Nominee>();
+    boxOfficeEntryBox = store.box<BoxOfficeEntry>();
   }
 
   Future<void> insertOscarWinner(OscarWinner winner) async {

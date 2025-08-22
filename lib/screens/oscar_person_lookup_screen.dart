@@ -5,6 +5,7 @@ import 'package:oscars/models/nominee.dart';
 import 'package:oscars/models/oscar_winner.dart';
 import 'package:oscars/services/database_service.dart';
 import 'package:oscars/services/nominee_nominations_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/oscars_app_drawer_widget.dart';
 import '../widgets/summary_chip_widget.dart';
@@ -102,6 +103,96 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
     });
   }
 
+  void _showLinkOptions(
+    BuildContext context,
+    String nomineeName,
+    String nomineeId,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Open $nomineeName'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Where would you like to view more information?'),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.movie, color: Colors.orange),
+                title: const Text('IMDb'),
+                subtitle: const Text('Internet Movie Database'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  await _launchImdbUrl(nomineeName, nomineeId);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.public, color: Colors.blue),
+                title: const Text('Wikipedia'),
+                subtitle: const Text('Free encyclopedia'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  await _launchWikipediaUrl(nomineeName, nomineeId);
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _launchImdbUrl(String nomineeName, String nomineeId) async {
+    try {
+      // Construct IMDb URL - IDs should already be in correct format
+      String imdbUrl;
+      if (nomineeId.startsWith('nm')) {
+        // Person ID
+        imdbUrl = 'https://www.imdb.com/name/$nomineeId';
+      } else if (nomineeId.startsWith('tt')) {
+        // Title ID
+        imdbUrl = 'https://www.imdb.com/title/$nomineeId';
+      } else {
+        // Fallback: assume person ID
+        imdbUrl = 'https://www.imdb.com/name/nm$nomineeId';
+      }
+
+      final url = Uri.parse(imdbUrl);
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not open IMDb: $e')));
+      }
+    }
+  }
+
+  Future<void> _launchWikipediaUrl(String nomineeName, String nomineeId) async {
+    try {
+      // Create Wikipedia search URL using nominee name
+      final encodedName = Uri.encodeComponent(nomineeName);
+      final wikipediaUrl =
+          'https://en.wikipedia.org/wiki/Special:Search?search=$encodedName';
+
+      final url = Uri.parse(wikipediaUrl);
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not open Wikipedia: $e')));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,11 +237,35 @@ class _OscarPersonLookupScreenState extends State<OscarPersonLookupScreen> {
             const SizedBox(height: 24),
 
             if (_selectedPerson != null) ...[
-              Text(
-                _selectedPerson?.name ?? '',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              GestureDetector(
+                onTap: () {
+                  if ((_selectedPerson?.nomineeId ?? '').isNotEmpty) {
+                    _showLinkOptions(
+                      context,
+                      _selectedPerson!.name,
+                      _selectedPerson!.nomineeId,
+                    );
+                  } else {
+                    print('No nominee ID available');
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'No external links available for this person',
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: Text(
+                  _selectedPerson?.name ?? '',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
               const SizedBox(height: 8),
 

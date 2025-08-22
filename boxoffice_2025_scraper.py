@@ -32,6 +32,7 @@ def get_box_office(url):
     title = soup.find("h1").text.strip() if soup.find("h1") else ""
     
     domestic = ""
+    international = ""
     worldwide = ""
     imdb_id = ""
     
@@ -42,47 +43,142 @@ def get_box_office(url):
         if match:
             imdb_id = f"tt{match.group(1)}"
     
-    # Debug: Print URL and look for different selectors
     print(f"Scraping: {url}")
     
-    # Try multiple selector approaches
-    # Method 1: Original selector
-    for div in soup.find_all("div", class_="a-section a-spacing-none mojo-summary-values mojo-hidden-from-mobile"):
-        for row in div.find_all("div"):
-            label = row.find("span", class_="a-size-small")
-            value = row.find("span", class_="a-size-medium")
-            if label and value:
-                label_text = label.text.strip().lower()
-                if "domestic" in label_text:
-                    domestic = value.text.strip()
-                if "worldwide" in label_text:
-                    worldwide = value.text.strip()
+    # Extract all money values from spans on the page
+    all_spans = soup.find_all('span')
+    money_values = []
     
-    # Method 2: Try different selector patterns
-    if not domestic or not worldwide:
-        # Look for mojo-summary-table
-        summary_table = soup.find("div", class_="a-section mojo-summary-table")
-        if summary_table:
-            for row in summary_table.find_all("div", class_="a-section a-spacing-none"):
-                label = row.find("span", class_="a-size-small")
-                value = row.find("span", class_="a-size-medium")
-                if label and value:
-                    label_text = label.text.strip().lower()
-                    if "domestic" in label_text:
-                        domestic = value.text.strip()
-                    if "worldwide" in label_text:
-                        worldwide = value.text.strip()
+    for span in all_spans:
+        text = span.get_text(strip=True)
+        # Look for money values that start with $ and contain commas
+        if text.startswith('$') and ',' in text:
+            # Use a more robust regex to extract just the money part
+            money_pattern = re.findall(r'\$[\d,]+', text)
+            for match in money_pattern:
+                # Additional validation: ensure it's a reasonable box office figure
+                try:
+                    numeric_value = int(match.replace('$', '').replace(',', ''))
+                    # Box office figures should be at least $10K and less than $10B
+                    if 10000 <= numeric_value <= 10000000000:
+                        money_values.append(match)
+                except ValueError:
+                    continue
     
-    # Method 3: Look for any span with money values
-    if not domestic or not worldwide:
-        money_spans = soup.find_all("span", string=lambda text: text and "$" in text and "," in text)
-        if len(money_spans) >= 2:
-            domestic = money_spans[0].text.strip()
-            worldwide = money_spans[1].text.strip() if len(money_spans) > 1 else ""
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_money_values = []
+    for value in money_values:
+        if value not in seen:
+            seen.add(value)
+            unique_money_values.append(value)
     
-    return title, domestic, worldwide, imdb_id
-
-
+    # From analysis, Box Office Mojo typically shows money values in this order:
+    # 1. Domestic box office
+    # 2. International box office (if available)  
+    # 3. Worldwide box office
+    
+    if len(unique_money_values) >= 3:
+        # We have 3+ values - likely domestic, international, worldwide
+        # But sometimes the order might be domestic, worldwide, other
+        domestic = unique_money_values[0]
+        second_value = unique_money_values[1] 
+        third_value = unique_money_values[2]
+        
+        # Check if second value might actually be worldwide (very close to domestic + small amount)
+        try:
+            domestic_num = int(domestic.replace('$', '').replace(',', ''))
+            second_num = int(second_value.replace('$', '').replace(',', ''))
+            third_num = int(third_value.replace('$', '').replace(',', ''))
+            
+            # If second value is only slightly larger than domestic, it's likely worldwide
+            if second_num > domestic_num and second_num < domestic_num * 1.5:
+                # Second value is likely worldwide, calculate international
+                worldwide = second_value
+                international_num = second_num - domestic_num
+                international = f"${international_num:,}"
+            else:
+                # Standard order: domestic, international, worldwide  
+                international = second_value
+                worldwide = third_value
+        except ValueError:
+            # Fallback to standard order
+            international = second_value
+            worldwide = third_value
+        
+    elif len(unique_money_values) == 2:
+        # We have 2 values - could be domestic + worldwide (no international breakdown)
+        domestic = unique_money_values[0] 
+        worldwide = unique_money_values[1]
+        
+        # Calculate international if possible
+        try:
+            domestic_num = int(domestic.replace('$', '').replace(',', ''))
+            worldwide_num = int(worldwide.replace('$', '').replace(',', ''))
+            if worldwide_num > domestic_num:
+                international_num = worldwide_num - domestic_num
+                international = f"${international_num:,}"
+            else:
+                international = "$0"
+        except ValueError:
+            international = "$0"
+            
+    elif len(unique_money_values) == 1:
+        # Only one value - assume it's domestic only
+        domestic = unique_money_values[0]
+        international = "$0"
+        worldwide = domestic  # If no international, worldwide = domestic
+    
+    else:
+        # No money values found
+        domestic = "$0"
+        international = "$0"
+        worldwide = "$0"
+    
+    # Final validation and correction
+    try:
+        domestic_num = int(domestic.replace('$', '').replace(',', '')) if domestic != "$0" else 0
+        international_num = int(international.replace('$', '').replace(',', '')) if international != "$0" else 0
+        worldwide_num = int(worldwide.replace('$', '').replace(',', '')) if worldwide != "$0" else 0
+        
+        # Detect corrupted international data (common in pre-1985 Box Office Mojo pages)
+        international_corrupted = False
+        
+        # Check for obvious corruption patterns
+        if international != "$0":
+            # Pattern 1: International value contains malformed comma formatting
+            # Valid format: $X,XXX,XXX (groups of 3 digits)
+            if not re.match(r'^\$\d{1,3}(,\d{3})*$', international):
+                international_corrupted = True
+                print(f"    ⚠️ Malformed international format: {international}")
+            
+            # Pattern 2: International value is suspiciously large (>$1B for older movies)
+            elif international_num > 1000000000:
+                international_corrupted = True
+                print(f"    ⚠️ Impossible international value: ${international_num:,}")
+            
+            # Pattern 3: International is more than 50x domestic (unrealistic ratio)
+            elif domestic_num > 0 and international_num > domestic_num * 50:
+                international_corrupted = True
+                print(f"    ⚠️ Unrealistic international ratio: {international_num/domestic_num:.1f}x domestic")
+        
+        # If international data is corrupted, reset to conservative estimate
+        if international_corrupted:
+            print(f"    🔧 Resetting corrupted international data to $0")
+            international = "$0"
+            international_num = 0
+            worldwide = domestic  # Conservative: use domestic only when international is unreliable
+            print(f"    🔧 Using domestic-only worldwide: {domestic}")
+        else:
+            # Standard validation: ensure worldwide = domestic + international
+            expected_worldwide = domestic_num + international_num
+            if worldwide_num != expected_worldwide and expected_worldwide > 0:
+                worldwide = f"${expected_worldwide:,}"
+            
+    except ValueError:
+        pass
+    
+    return title, domestic, international, worldwide, imdb_id
 def main():
     parser = argparse.ArgumentParser(description="Scrape box office data from Box Office Mojo")
     parser.add_argument("--year", "-y", type=int, default=2024, 
@@ -148,12 +244,12 @@ def main():
         
         with open(filename, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
-            writer.writerow(["Title", "Domestic", "Worldwide", "ImdbID", "URL"])
+            writer.writerow(["Title", "Domestic", "International", "Worldwide", "ImdbID", "URL"])
             
             for i, link in enumerate(movie_links, 1):
-                title, domestic, worldwide, imdb_id = get_box_office(f"{BASE_URL}{link}")
-                print(f"[{i}/{movies_to_scrape}] {title}: Domestic={domestic}, Worldwide={worldwide}, IMDb={imdb_id}")
-                writer.writerow([title, domestic, worldwide, imdb_id, f"{BASE_URL}{link}"])
+                title, domestic, international, worldwide, imdb_id = get_box_office(f"{BASE_URL}{link}")
+                print(f"[{i}/{movies_to_scrape}] {title}: Domestic={domestic}, International={international}, Worldwide={worldwide}, IMDb={imdb_id}")
+                writer.writerow([title, domestic, international, worldwide, imdb_id, f"{BASE_URL}{link}"])
                 time.sleep(0.5)  # Be polite to the server
         
         print(f"✅ {year} completed! Data saved to: {filename}")

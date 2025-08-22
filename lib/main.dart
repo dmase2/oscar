@@ -8,11 +8,19 @@ import 'screens/nominee_lookup_screen.dart';
 import 'screens/oscars_home_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/statistics_screen.dart';
+import 'services/box_office_service.dart';
 import 'services/database_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize OscarWinner database
   await DatabaseService.instance.initialize();
+
+  // Initialize BoxOffice data from CSV
+  await BoxOfficeService.instance.initializeBoxOfficeData();
+
+  // Run the Flutter app
   runApp(const ProviderScope(child: MainApp()));
 }
 

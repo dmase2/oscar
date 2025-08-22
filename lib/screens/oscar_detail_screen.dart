@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oscars/design_system/design_system.dart';
 import 'package:oscars/widgets/omdb_info_box_widget.dart';
 import 'package:oscars/widgets/oscar_detail_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/oscar_winner.dart';
 import '../providers/oscar_providers.dart';
@@ -23,6 +24,86 @@ class MovieDetailScreen extends StatelessWidget {
     this.allOscars,
     this.currentIndex,
   });
+
+  Future<void> _showLinkOptions(
+    BuildContext context,
+    String nomineeName,
+    String nomineeId,
+  ) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Open $nomineeName in:'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.movie, color: Colors.orange),
+                title: const Text('IMDb'),
+                subtitle: const Text('Internet Movie Database'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  try {
+                    // Construct IMDb URL - IDs should already be in correct format
+                    String imdbUrl;
+                    if (nomineeId.startsWith('nm')) {
+                      // Person ID
+                      imdbUrl = 'https://www.imdb.com/name/$nomineeId';
+                    } else if (nomineeId.startsWith('tt')) {
+                      // Title ID
+                      imdbUrl = 'https://www.imdb.com/title/$nomineeId';
+                    } else {
+                      // Fallback: assume person ID
+                      imdbUrl = 'https://www.imdb.com/name/nm$nomineeId';
+                    }
+
+                    final url = Uri.parse(imdbUrl);
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Could not open IMDb: $e')),
+                      );
+                    }
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.public, color: Colors.blue),
+                title: const Text('Wikipedia'),
+                subtitle: const Text('Wikipedia article'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  try {
+                    // Create Wikipedia search URL with the nominee name
+                    final encodedName = Uri.encodeComponent(nomineeName);
+                    final wikipediaUrl =
+                        'https://en.wikipedia.org/wiki/$encodedName';
+
+                    final url = Uri.parse(wikipediaUrl);
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Could not open Wikipedia: $e')),
+                      );
+                    }
+                  }
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +236,7 @@ class MovieDetailScreen extends StatelessWidget {
 
                     OscarDetailSection(oscar: oscar),
 
+                    // Display Box Office info
                     if (oscar.className?.toLowerCase() != 'special') ...[
                       Text(
                         'All Nominations for this Movie:',
@@ -279,7 +361,7 @@ class MovieDetailScreen extends StatelessWidget {
                                                       .titleSmall
                                                       ?.copyWith(
                                                         fontWeight:
-                                                            FontWeight.normal,
+                                                            FontWeight.bold,
                                                       ),
                                                 ),
                                               ),
@@ -287,25 +369,9 @@ class MovieDetailScreen extends StatelessWidget {
                                               const SizedBox(width: 8),
                                             ],
                                           ),
-                                          const SizedBox(height: 12),
 
                                           // Individual nominees
                                           if (nominees.isNotEmpty) ...[
-                                            Text(
-                                              nominees.length == 1
-                                                  ? 'Nominee:'
-                                                  : 'Nominees:',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onSurface
-                                                        .withOpacity(0.7),
-                                                  ),
-                                            ),
                                             const SizedBox(height: 8),
                                             ...nominees.map((nominee) {
                                               final nomineeName =
@@ -347,16 +413,39 @@ class MovieDetailScreen extends StatelessWidget {
                                                     ),
                                                     const SizedBox(width: 8),
                                                     Expanded(
-                                                      child: Text(
-                                                        nomineeName,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyMedium
-                                                            ?.copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
+                                                      child: GestureDetector(
+                                                        onTap:
+                                                            nomineeId.isNotEmpty
+                                                            ? () =>
+                                                                  _showLinkOptions(
+                                                                    context,
+                                                                    nomineeName,
+                                                                    nomineeId,
+                                                                  )
+                                                            : null,
+                                                        child: Text(
+                                                          nomineeName,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodyLarge
+                                                              ?.copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color:
+                                                                    nomineeId
+                                                                        .isNotEmpty
+                                                                    ? Colors
+                                                                          .blue
+                                                                    : null,
+                                                                decoration:
+                                                                    nomineeId
+                                                                        .isNotEmpty
+                                                                    ? TextDecoration
+                                                                          .underline
+                                                                    : null,
+                                                              ),
+                                                        ),
                                                       ),
                                                     ),
                                                     const SizedBox(width: 8),
@@ -374,12 +463,9 @@ class MovieDetailScreen extends StatelessWidget {
                                                             ),
                                                           );
                                                         },
-                                                        icon: const Icon(
-                                                          Icons.list_alt,
-                                                          size: 14,
-                                                        ),
+
                                                         label: const Text(
-                                                          'View All',
+                                                          'Nominations',
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                           ),

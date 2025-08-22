@@ -57,5 +57,12 @@
 	        <string>app_icon</string>
 	    </dict>
 	</dict>
+	
+	<!-- Allow network access from the app. Use ATS exceptions only when necessary. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

@@ -146,11 +146,22 @@ class _NomineeNominationsDialogState extends State<NomineeNominationsDialog> {
                   itemBuilder: (context, idx) {
                     final m = movies[idx];
                     return ListTile(
-                      title: Text(m.film, overflow: TextOverflow.ellipsis),
-                      subtitle: Text(
-                        '${m.yearFilm} - ${m.category} ${m.winner ? '🏆' : ''}',
+                      title: Text(
+                        m.film,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
+                      ),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${m.yearFilm} - ${m.category}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                          const SizedBox(width: 8),
+                          if (m.winner) const Text('🏆'),
+                        ],
                       ),
                     );
                   },
